@@ -1,25 +1,27 @@
 {
   "name": "@netlify/plugin-lighthouse",
-  "private": true,
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "local": "node -e 'require(\"./index.js\").onSuccess()'",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "netlify",
-    "netlify-plugin"
+    "netlify-plugin",
+    "lighthouse"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "chalk": "^2.4.2",
-    "conf": "^5.0.0",
-    "execa": "^3.2.0",
-    "lighthouse-ci": "^1.10.0"
+    "chrome-launcher": "^0.13.2",
+    "dotenv": "^8.2.0",
+    "http-server": "^0.12.3",
+    "lighthouse": "^6.0.0",
+    "puppeteer": "^3.1.0"
   },
   "engines": {
-    "node": ">=8.12.0"
+    "node": ">=10.13"
   }
 }
