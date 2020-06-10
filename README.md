@@ -27,4 +27,9 @@ package = "@netlify/plugin-lighthouse"
     pwa = 0.9
 ```
 
-Run `netlify build` locally to check that the plugin works
+## Running Locally
+
+Create a `.env` file based on the [example](.env.example) and run
+```bash
+npm run local
+```
