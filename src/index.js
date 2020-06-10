@@ -1,8 +1,8 @@
-const httpServer = require("http-server");
-const puppeteer = require("puppeteer");
-const lighthouse = require("lighthouse");
-const chromeLauncher = require("chrome-launcher");
-require("dotenv").config();
+const httpServer = require('http-server');
+const puppeteer = require('puppeteer');
+const lighthouse = require('lighthouse');
+const chromeLauncher = require('chrome-launcher');
+require('dotenv').config();
 
 const getServer = (url, serveDir) => {
   if (url) {
@@ -18,13 +18,13 @@ const getServer = (url, serveDir) => {
   }
 
   if (!serveDir) {
-    throw new Error("Empty publish dir");
+    throw new Error('Empty publish dir');
   }
 
   console.log(`Serving and scanning site from directory '${serveDir}'`);
   const s = httpServer.createServer({ root: serveDir });
   const port = 5000;
-  const host = "localhost";
+  const host = 'localhost';
   const server = {
     listen: (func) => s.listen(port, host, func),
     close: () => s.close(),
@@ -35,7 +35,7 @@ const getServer = (url, serveDir) => {
 const belowThreshold = (id, expected, results) => {
   const category = results.find((c) => c.id === id);
   if (!category) {
-    console.warn("Could not find category", id);
+    console.warn('Could not find category', id);
   }
   const actual = category ? category.score : Number.MAX_SAFE_INTEGER;
   return actual < expected;
@@ -67,7 +67,7 @@ module.exports = {
         },
       };
 
-      if (typeof thresholds === "string") {
+      if (typeof thresholds === 'string') {
         thresholds = JSON.parse(thresholds);
       }
 
@@ -75,7 +75,7 @@ module.exports = {
       const browserFetcher = puppeteer.createBrowserFetcher();
       const revisions = await browserFetcher.localRevisions();
       if (revisions.length <= 0) {
-        throw new Error("Could not find local browser");
+        throw new Error('Could not find local browser');
       }
       const info = await browserFetcher.revisionInfo(revisions[0]);
 
@@ -85,7 +85,7 @@ module.exports = {
           try {
             chrome = await chromeLauncher.launch({
               chromePath: info.executablePath,
-              chromeFlags: ["--headless", "--no-sandbox", "--disable-gpu"],
+              chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'],
             });
             const results = await lighthouse(url, {
               port: chrome.port,
@@ -108,7 +108,7 @@ module.exports = {
         throw error;
       } else {
         const categories = Object.values(
-          results.lhr.categories
+          results.lhr.categories,
         ).map(({ title, score, id }) => ({ title, score, id }));
 
         const errors = Object.entries(thresholds)
@@ -122,7 +122,7 @@ module.exports = {
         });
 
         if (errors.length > 0) {
-          throw new Error(errors.join("\n"));
+          throw new Error(errors.join('\n'));
         }
       }
     } catch (error) {

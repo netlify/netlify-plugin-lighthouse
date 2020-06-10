@@ -1,11 +1,15 @@
 {
   "name": "@netlify/plugin-lighthouse",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Netlify Plugin to run Lighthouse on each build",
+  "main": "src/index.js",
   "scripts": {
-    "local": "node -e 'require(\"./index.js\").onSuccess()'",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "local": "node -e 'require(\"./src/index.js\").onSuccess()'",
+    "lint": "eslint 'src/**/*.js'",
+    "format": "prettier --write 'src/**/*.js'",
+    "format:ci": "prettier --check 'src/**/*.js'",
+    "tag": "git tag \"v$npm_package_version\" && git push --tags",
+    "postpublish": "npm run tag"
   },
   "keywords": [
     "netlify",
@@ -23,5 +27,17 @@
   },
   "engines": {
     "node": ">=10.13"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "eslint": "^7.0.0",
+    "husky": "^4.0.7",
+    "prettier": "^2.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }
