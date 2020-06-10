@@ -19,6 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^4.1.0",
     "chrome-launcher": "^0.13.2",
     "dotenv": "^8.2.0",
     "http-server": "^0.12.3",

@@ -1,41 +1,46 @@
-const httpServer = require('http-server');
-const puppeteer = require('puppeteer');
-const lighthouse = require('lighthouse');
-const chromeLauncher = require('chrome-launcher');
 require('dotenv').config();
+const httpServer = require('http-server');
+const chalk = require('chalk');
+const { getBrowserPath, runLighthouse } = require('./lighthouse');
 
-const getServer = (url, serveDir) => {
-  if (url) {
-    console.log(`Scanning url '${url}'`);
+const getServer = ({ serveDir, auditUrl }) => {
+  if (auditUrl) {
     // return a mock server for readability
     const server = {
       listen: async (func) => {
+        console.log(`Scanning url ${chalk.magenta(auditUrl)}`);
         await func();
       },
       close: () => undefined,
+      url: auditUrl,
     };
-    return { server, url };
+    return { server };
   }
 
   if (!serveDir) {
     throw new Error('Empty publish dir');
   }
 
-  console.log(`Serving and scanning site from directory '${serveDir}'`);
   const s = httpServer.createServer({ root: serveDir });
   const port = 5000;
   const host = 'localhost';
   const server = {
-    listen: (func) => s.listen(port, host, func),
+    listen: (func) => {
+      console.log(
+        `Serving and scanning site from directory ${chalk.magenta(serveDir)}`,
+      );
+      return s.listen(port, host, func);
+    },
     close: () => s.close(),
+    url: `http://${host}:${port}`,
   };
-  return { url: `http://${host}:${port}`, server };
+  return { server };
 };
 
-const belowThreshold = (id, expected, results) => {
-  const category = results.find((c) => c.id === id);
+const belowThreshold = (id, expected, categories) => {
+  const category = categories.find((c) => c.id === id);
   if (!category) {
-    console.warn('Could not find category', id);
+    console.warn(`Could not find category ${chalk.yellow(id)}`);
   }
   const actual = category ? category.score : Number.MAX_SAFE_INTEGER;
   return actual < expected;
@@ -43,91 +48,105 @@ const belowThreshold = (id, expected, results) => {
 
 const getError = (id, expected, results) => {
   const category = results.find((c) => c.id === id);
-  return `Expected category '${category.title}' to be greater or equal to '${expected}' but got '${category.score}'`;
+  return `Expected category ${chalk.magenta(
+    category.title,
+  )} to be greater or equal to ${chalk.green(expected)} but got ${chalk.red(
+    category.score,
+  )}`;
+};
+
+const formatResults = ({ results, thresholds }) => {
+  const categories = Object.values(
+    results.lhr.categories,
+  ).map(({ title, score, id }) => ({ title, score, id }));
+
+  const categoriesBelowThreshold = Object.entries(
+    thresholds,
+  ).filter(([id, expected]) => belowThreshold(id, expected, categories));
+
+  const errors = categoriesBelowThreshold.map(([id, expected]) =>
+    getError(id, expected, categories),
+  );
+
+  const summary = {
+    results: categories.map((cat) => ({
+      ...cat,
+      ...(thresholds[cat.id] ? { threshold: thresholds[cat.id] } : {}),
+    })),
+  };
+
+  return { summary, errors };
+};
+
+const getConfiguration = ({ constants, inputs }) => {
+  const serveDir =
+    (constants && constants.PUBLISH_DIR) || process.env.PUBLISH_DIR;
+  const auditUrl = (inputs && inputs.audit_url) || process.env.AUDIT_URL;
+  let thresholds =
+    (inputs && inputs.thresholds) || process.env.THRESHOLDS || {};
+  if (typeof thresholds === 'string') {
+    thresholds = JSON.parse(thresholds);
+  }
+
+  return { serveDir, auditUrl, thresholds };
+};
+
+const getUtils = ({ utils }) => {
+  const failBuild =
+    (utils && utils.build && utils.build.failBuild) ||
+    (() => {
+      process.exitCode = 1;
+    });
+
+  const show =
+    (utils && utils.status && utils.status.show) || (() => undefined);
+
+  return { failBuild, show };
 };
 
 module.exports = {
-  onSuccess: async ({
-    constants: { PUBLISH_DIR: serveDir = process.env.PUBLISH_DIR } = {},
-    utils,
-    inputs: {
-      audit_url: auditUrl = process.env.AUDIT_URL,
-      thresholds = process.env.THRESHOLDS || {},
-    } = {},
-  } = {}) => {
+  onSuccess: async ({ constants, utils, inputs } = {}) => {
+    const { failBuild, show } = getUtils({ utils });
+
     try {
-      utils = utils || {
-        build: {
-          failBuild: () => {
-            process.exit(1);
-          },
-        },
-        status: {
-          show: () => undefined,
-        },
-      };
+      const { serveDir, auditUrl, thresholds } = getConfiguration({
+        constants,
+        inputs,
+      });
 
-      if (typeof thresholds === 'string') {
-        thresholds = JSON.parse(thresholds);
-      }
+      const { server } = getServer({ serveDir, auditUrl });
 
-      const { server, url } = getServer(auditUrl, serveDir);
-      const browserFetcher = puppeteer.createBrowserFetcher();
-      const revisions = await browserFetcher.localRevisions();
-      if (revisions.length <= 0) {
-        throw new Error('Could not find local browser');
-      }
-      const info = await browserFetcher.revisionInfo(revisions[0]);
+      const browserPath = await getBrowserPath();
 
       const { error, results } = await new Promise((resolve) => {
         server.listen(async () => {
-          let chrome;
           try {
-            chrome = await chromeLauncher.launch({
-              chromePath: info.executablePath,
-              chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'],
-            });
-            const results = await lighthouse(url, {
-              port: chrome.port,
-            });
-            if (results.lhr.runtimeError) {
-              resolve({ error: new Error(results.lhr.runtimeError.message) });
-            }
+            const results = await runLighthouse(browserPath, server.url);
             resolve({ error: false, results });
           } catch (error) {
             resolve({ error });
           } finally {
-            if (chrome) {
-              await chrome.kill().catch(() => undefined);
-            }
             server.close();
           }
         });
       });
+
       if (error) {
         throw error;
       } else {
-        const categories = Object.values(
-          results.lhr.categories,
-        ).map(({ title, score, id }) => ({ title, score, id }));
-
-        const errors = Object.entries(thresholds)
-          .filter(([id, expected]) => belowThreshold(id, expected, categories))
-          .map(([id, expected]) => getError(id, expected, categories));
-
-        const summary = JSON.stringify({ results: categories }, null, 2);
+        const { summary, errors } = formatResults({ results, thresholds });
         console.log(summary);
-        utils.status.show({
+        show({
           summary,
         });
 
         if (errors.length > 0) {
-          throw new Error(errors.join('\n'));
+          throw new Error(`\n${errors.join('\n')}`);
         }
       }
     } catch (error) {
       console.error(`\nError: ${error.message}\n`);
-      utils.build.failBuild(`failed with error: ${error.message}`);
+      failBuild(`Failed with error: ${error.message}`);
     }
   },
 };
