@@ -8,8 +8,7 @@
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
     "format:ci": "prettier --check 'src/**/*.js'",
-    "tag": "git tag \"v$npm_package_version\" && git push --tags",
-    "release": "semantic-release"
+    "release": "semantic-release --no-ci && npm publish"
   },
   "keywords": [
     "netlify",
