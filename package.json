@@ -27,7 +27,7 @@
     "puppeteer": "^3.1.0"
   },
   "engines": {
-    "node": ">=10.13"
+    "node": ">=v10.21.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
