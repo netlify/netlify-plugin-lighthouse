@@ -1,34 +1,30 @@
-## Netlify Plugin Lighthouse
+# Netlify Plugin Lighthouse
 
-this does a basic lighthouse run and reports and stores the results. if it there has been a previous run, it also diffs
-the results to report improvements.
-
-This shows the diffs:
-
-![image](https://user-images.githubusercontent.com/6764957/62481118-8749c880-b77f-11e9-91d9-44ae028c452b.png)
+A Netlify plugin to generate a lighthouse report for every deploy
 
 ## Usage
 
-Inside your `netlify.yml`:
+This plugin can be included via npm. Install it as a dependency with the following command:
 
-```yaml
-plugins:
-  - type: '@netlify/plugin-lighthouse'
-    config:
-      currentVersion: '0.0.3'
-      compareWithVersion: '0.0.1'
+```bash
+npm install --save "@netlify/plugin-lighthouse"
 ```
 
-you can pin lighthouse result versions:
+To use a build plugin, create a `plugins` in your `netlify.toml` like so:
 
-```yaml
-plugins:
-  - type: '@netlify/plugin-lighthouse'
-    config:
-      currentVersion: '0.0.3'
-      compareWithVersion: '0.0.1'
+```toml
+[[plugins]]
+package = "@netlify/plugin-lighthouse"
+  [plugins.inputs]
+  # optional, defaults to scanning the current built version of the site
+  audit_url = 'https://www.my-custom-site.com'
+  # optional, fails build when a category is below a threshold
+  [plugins.inputs.thresholds]
+    performance = 0.9
+    accessibility = 0.9
+    best-practices = 0.9
+    seo = 0.9
+    pwa = 0.9
 ```
 
-## TODO
-
-https://github.com/netlify/build/issues/27
+Run `netlify build` locally to check that the plugin works

@@ -1,25 +1,44 @@
 {
   "name": "@netlify/plugin-lighthouse",
-  "private": true,
-  "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.0",
+  "description": "Netlify Plugin to run Lighthouse on each build",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "local": "node -e 'require(\"./src/index.js\").onSuccess()'",
+    "lint": "eslint 'src/**/*.js'",
+    "format": "prettier --write 'src/**/*.js'",
+    "format:ci": "prettier --check 'src/**/*.js'",
+    "tag": "git tag \"v$npm_package_version\" && git push --tags",
+    "postpublish": "npm run tag"
   },
   "keywords": [
     "netlify",
-    "netlify-plugin"
+    "netlify-plugin",
+    "lighthouse"
   ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
-    "chalk": "^2.4.2",
-    "conf": "^5.0.0",
-    "execa": "^3.2.0",
-    "lighthouse-ci": "^1.10.0"
+    "chalk": "^4.1.0",
+    "chrome-launcher": "^0.13.2",
+    "dotenv": "^8.2.0",
+    "http-server": "^0.12.3",
+    "lighthouse": "^6.0.0",
+    "puppeteer": "^3.1.0"
   },
   "engines": {
-    "node": ">=8.12.0"
+    "node": ">=10.13"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "eslint": "^7.0.0",
+    "husky": "^4.0.7",
+    "prettier": "^2.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

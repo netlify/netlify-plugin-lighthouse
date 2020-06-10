@@ -1,15 +1,18 @@
-## Contributing
+# Contributing
 
-First fork this project.  
+First fork this project
 
-* git clone <your-forked-repo>
-* npm install
+```bash
+git clone <your-forked-repo>
+yarn install
+git checkout -b my-fix
+```
 
-* git checkout -b my-fix
+Then fix some code and
 
-#### fix some code...
-
-* git commit -m "added this feature"
-* git push origin my-fix
+```bash
+git commit -m "added this feature"
+git push origin my-fix
+```
 
 Lastly, open a pull request on Github.
