@@ -30,6 +30,7 @@ package = "@netlify/plugin-lighthouse"
 ## Running Locally
 
 Create a `.env` file based on the [example](.env.example) and run
+
 ```bash
 npm run local
 ```
