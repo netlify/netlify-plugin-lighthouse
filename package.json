@@ -9,7 +9,7 @@
     "format": "prettier --write 'src/**/*.js'",
     "format:ci": "prettier --check 'src/**/*.js'",
     "tag": "git tag \"v$npm_package_version\" && git push --tags",
-    "postpublish": "npm run tag"
+    "release": "semantic-release"
   },
   "keywords": [
     "netlify",
@@ -36,9 +36,12 @@
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
+    "@semantic-release/changelog": "^5.0.1",
+    "@semantic-release/git": "^9.0.0",
     "eslint": "^7.0.0",
     "husky": "^4.0.7",
-    "prettier": "^2.0.0"
+    "prettier": "^2.0.0",
+    "semantic-release": "^17.0.8"
   },
   "husky": {
     "hooks": {
