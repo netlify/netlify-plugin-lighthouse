@@ -16,6 +16,10 @@
     "netlify-plugin",
     "lighthouse"
   ],
+  "files": [
+    "manifest.yml",
+    "src"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
