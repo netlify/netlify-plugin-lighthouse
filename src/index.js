@@ -137,7 +137,7 @@ module.exports = {
         const { summary, errors } = formatResults({ results, thresholds });
         console.log(summary);
         show({
-          summary,
+          summary: JSON.stringify(summary, null, 2),
         });
 
         if (errors.length > 0) {
