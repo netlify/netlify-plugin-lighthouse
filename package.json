@@ -19,7 +19,7 @@
     "manifest.yml",
     "src"
   ],
-  "author": "",
+  "author": "netlify-labs",
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
