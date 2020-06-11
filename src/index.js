@@ -75,7 +75,9 @@ const formatResults = ({ results, thresholds }) => {
     })),
   };
 
-  const message = categories.map(({ title, score }) => `${title}: ${score * 100}`).join(', ');
+  const message = categories
+    .map(({ title, score }) => `${title}: ${score * 100}`)
+    .join(', ');
 
   return { summary, message, errors };
 };
@@ -136,7 +138,10 @@ module.exports = {
       if (error) {
         throw error;
       } else {
-        const { summary, message, errors } = formatResults({ results, thresholds });
+        const { summary, message, errors } = formatResults({
+          results,
+          thresholds,
+        });
         console.log(summary);
         show(message);
 
