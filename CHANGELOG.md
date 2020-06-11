@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.0.1...v1.1.0) (2020-06-11)
+
+
+### Features
+
+* add overview messaging ([#20](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/20)) ([be94a37](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/be94a37ea9460cd32582a5ce5e64af8ea8663eca))
+
 ## [1.0.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.0.0...v1.0.1) (2020-06-11)
 
 
