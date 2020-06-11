@@ -8,6 +8,8 @@
     
 [[plugins]]
 package = "./src/index.js"
+  [plugins.inputs]
+  audit_url = 'https://erquh.art'
   [plugins.inputs.thresholds]
     performance = 0.9
     accessibility = 0.9
