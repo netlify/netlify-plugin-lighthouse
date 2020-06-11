@@ -32,5 +32,6 @@ package = "@netlify/plugin-lighthouse"
 Create a `.env` file based on the [example](.env.example) and run
 
 ```bash
-npm run local
+yarn install
+yarn local
 ```
