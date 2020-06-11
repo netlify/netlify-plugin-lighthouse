@@ -32,6 +32,13 @@
   "engines": {
     "node": ">=v10.21.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/netlify-labs/netlify-plugin-lighthouse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/netlify-labs/netlify-plugin-lighthouse/issues"
+  },
   "devDependencies": {
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
