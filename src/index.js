@@ -146,7 +146,7 @@ module.exports = {
       }
     } catch (error) {
       console.error(`\nError: ${error.message}\n`);
-      failBuild(`Failed with error: ${error.message}`);
+      failBuild(`Failed with error: ${error.message}`, { error });
     }
   },
 };
