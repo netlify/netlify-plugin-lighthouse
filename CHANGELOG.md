@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.1.0...v1.2.0) (2020-06-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency puppeteer to v4 ([#27](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/27)) ([86670f2](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/86670f2eb11d101774f3b1feba727244138b347e))
+
+
+### Features
+
+* enable lighthouse logging ([#29](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/29)) ([9225cdd](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/9225cddcbc366ae18ded5b7e5f2d50d7a0ae5e09))
+
 # [1.1.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.0.1...v1.1.0) (2020-06-11)
 
 
