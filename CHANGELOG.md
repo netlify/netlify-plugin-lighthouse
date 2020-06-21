@@ -1,3 +1,10 @@
+## [1.2.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.2.0...v1.2.1) (2020-06-21)
+
+
+### Bug Fixes
+
+* **logger:** pass colors=true to debug module ([#30](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/30)) ([d54f4ae](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/d54f4ae2bed3aef12110ac627b56cadb6a6ff28d))
+
 # [1.2.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.1.0...v1.2.0) (2020-06-21)
 
 
