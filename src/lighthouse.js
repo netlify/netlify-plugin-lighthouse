@@ -16,6 +16,8 @@ const getBrowserPath = async () => {
 const runLighthouse = async (browserPath, url) => {
   let chrome;
   try {
+    // prevent logger from prefixing a date when running in tty
+    require('debug').inspectOpts.colors = true;
     const logLevel = 'info';
     log.setLevel(logLevel);
     chrome = await chromeLauncher.launch({
