@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 const lighthouse = require('lighthouse');
+const log = require('lighthouse-logger');
 const chromeLauncher = require('chrome-launcher');
 
 const getBrowserPath = async () => {
@@ -15,12 +16,16 @@ const getBrowserPath = async () => {
 const runLighthouse = async (browserPath, url) => {
   let chrome;
   try {
+    const logLevel = 'info';
+    log.setLevel(logLevel);
     chrome = await chromeLauncher.launch({
       chromePath: browserPath,
       chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'],
+      logLevel,
     });
     const results = await lighthouse(url, {
       port: chrome.port,
+      logLevel,
     });
     if (results.lhr.runtimeError) {
       throw new Error(results.lhr.runtimeError.message);
