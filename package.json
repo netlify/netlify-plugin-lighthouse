@@ -27,7 +27,7 @@
     "dotenv": "^8.2.0",
     "http-server": "^0.12.3",
     "lighthouse": "^6.0.0",
-    "puppeteer": "^4.0.0"
+    "puppeteer": "^5.0.0"
   },
   "engines": {
     "node": ">=v10.21.0"
