@@ -51,7 +51,7 @@ const getError = (id, expected, results) => {
   return `Expected category ${chalk.magenta(
     category.title,
   )} to be greater or equal to ${chalk.green(expected)} but got ${chalk.red(
-    category.score,
+    category.score !== null ? category.score : 'unknown',
   )}`;
 };
 
