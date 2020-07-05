@@ -22,7 +22,12 @@ const runLighthouse = async (browserPath, url) => {
     log.setLevel(logLevel);
     chrome = await chromeLauncher.launch({
       chromePath: browserPath,
-      chromeFlags: ['--headless', '--no-sandbox', '--disable-gpu'],
+      chromeFlags: [
+        '--headless',
+        '--no-sandbox',
+        '--disable-gpu',
+        '--disable-dev-shm-usage',
+      ],
       logLevel,
     });
     const results = await lighthouse(url, {
