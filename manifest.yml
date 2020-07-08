@@ -3,6 +3,9 @@ inputs:
   - name: audit_url
     required: false
     description: Url of the site to audit, defaults to scanning the current built version of the site
+  - name: audit_path
+    required: false
+    description: Path to audit starts with `/`, defaults to root(= /index.html) and be ignored if audit_url is specified
   - name: thresholds
     required: false
     description: Key value mapping of thresholds that will fail the build when not passed

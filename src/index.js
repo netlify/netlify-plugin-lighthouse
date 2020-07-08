@@ -3,7 +3,7 @@ const httpServer = require('http-server');
 const chalk = require('chalk');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
 
-const getServer = ({ serveDir, auditUrl }) => {
+const getServer = ({ serveDir, auditUrl, auditPath }) => {
   if (auditUrl) {
     // return a mock server for readability
     const server = {
@@ -21,7 +21,12 @@ const getServer = ({ serveDir, auditUrl }) => {
     throw new Error('Empty publish dir');
   }
 
+  if (auditPath && !auditPath.startsWith('/')) {
+    throw new Error('Input audit_path must start with /');
+  }
+
   const s = httpServer.createServer({ root: serveDir });
+  const path = auditPath || '';
   const port = 5000;
   const host = 'localhost';
   const server = {
@@ -32,7 +37,7 @@ const getServer = ({ serveDir, auditUrl }) => {
       return s.listen(port, host, func);
     },
     close: () => s.close(),
-    url: `http://${host}:${port}`,
+    url: `http://${host}:${port}${path}`,
   };
   return { server };
 };
@@ -86,13 +91,15 @@ const getConfiguration = ({ constants, inputs }) => {
   const serveDir =
     (constants && constants.PUBLISH_DIR) || process.env.PUBLISH_DIR;
   const auditUrl = (inputs && inputs.audit_url) || process.env.AUDIT_URL;
+  const auditPath = (inputs && inputs.audit_path) || process.env.AUDIT_PATH;
+
   let thresholds =
     (inputs && inputs.thresholds) || process.env.THRESHOLDS || {};
   if (typeof thresholds === 'string') {
     thresholds = JSON.parse(thresholds);
   }
 
-  return { serveDir, auditUrl, thresholds };
+  return { serveDir, auditUrl, auditPath, thresholds };
 };
 
 const getUtils = ({ utils }) => {
@@ -113,12 +120,12 @@ module.exports = {
     const { failBuild, show } = getUtils({ utils });
 
     try {
-      const { serveDir, auditUrl, thresholds } = getConfiguration({
+      const { serveDir, auditUrl, auditPath, thresholds } = getConfiguration({
         constants,
         inputs,
       });
 
-      const { server } = getServer({ serveDir, auditUrl });
+      const { server } = getServer({ serveDir, auditUrl, auditPath });
 
       const browserPath = await getBrowserPath();
 
