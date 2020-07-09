@@ -206,7 +206,7 @@ module.exports = {
       show({ summary });
     } catch (error) {
       console.error(`\n${chalk.red('Failed with error')}: ${error.message}\n`);
-      failBuild(`Failed with error: ${error.message}`, { error });
+      failBuild(`Failed with error`, { error });
     }
   },
 };
