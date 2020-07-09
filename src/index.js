@@ -86,7 +86,8 @@ const formatResults = ({ results, thresholds }) => {
 const getUtils = ({ utils }) => {
   const failBuild =
     (utils && utils.build && utils.build.failBuild) ||
-    (() => {
+    ((message, { error }) => {
+      console.error(message, error.message);
       process.exitCode = 1;
     });
 
@@ -205,8 +206,7 @@ module.exports = {
       }
       show({ summary });
     } catch (error) {
-      console.error(`\n${chalk.red('Failed with error')}: ${error.message}\n`);
-      failBuild(`Failed with error`, { error });
+      failBuild(chalk.red('Failed with error:\n'), { error });
     }
   },
 };
