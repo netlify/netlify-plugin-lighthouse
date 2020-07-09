@@ -11,4 +11,4 @@ inputs:
 
   - name: audits
     required: false
-    description: A list audits to perform. Each list item is an object with either a url/path to scan and an optional thresholds mapping.
+    description: A list of audits to perform. Each list item is an object with either a url/path to scan and an optional thresholds mapping.
