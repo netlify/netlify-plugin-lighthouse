@@ -7,10 +7,19 @@
     YARN_VERSION = "1.22.4"
     
 [[plugins]]
-package = "./src/index.js"
+  package = "./src/index.js"
+
   [plugins.inputs.thresholds]
     performance = 0.9
     accessibility = 0.9
     best-practices = 0.9
     seo = 0.9
     pwa = 0.9
+
+  [[plugins.inputs.audits]]
+    path = "route1"
+  [[plugins.inputs.audits]]
+    path = "route2"
+  [[plugins.inputs.audits]]
+    path = ""
+    
