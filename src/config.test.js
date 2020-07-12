@@ -5,6 +5,7 @@ jest.mock('chalk', () => {
   return {
     green: (m) => m,
     yellow: (m) => m,
+    red: (m) => m,
   };
 });
 
@@ -84,7 +85,7 @@ describe('config', () => {
     });
   });
 
-  it('should use append audits path to PUBLISH_DIR', () => {
+  it('should append audits path to PUBLISH_DIR', () => {
     const constants = { PUBLISH_DIR: 'PUBLISH_DIR' };
     const inputs = { audits: [{ path: 'route1', thresholds: { seo: 1 } }] };
     const config = getConfiguration({ constants, inputs });
@@ -107,6 +108,33 @@ describe('config', () => {
         { path: 'PUBLISH_DIR/route1', thresholds: { seo: 1 } },
         { path: 'PUBLISH_DIR/route2', thresholds: { performance: 1 } },
       ],
+    });
+  });
+
+  it('should throw error on path traversal', () => {
+    const constants = { PUBLISH_DIR: 'PUBLISH_DIR' };
+    const inputs = {
+      thresholds: { performance: 1 },
+      audits: [{ path: '../' }],
+    };
+
+    expect(() => getConfiguration({ constants, inputs })).toThrow(
+      new Error(
+        'resolved path for ../ is outside publish directory PUBLISH_DIR',
+      ),
+    );
+  });
+
+  it('should treat audit path as relative path', () => {
+    const constants = { PUBLISH_DIR: 'PUBLISH_DIR' };
+    const inputs = {
+      audits: [{ path: '/a/b' }],
+    };
+
+    const config = getConfiguration({ constants, inputs });
+
+    expect(config).toEqual({
+      audits: [{ path: 'PUBLISH_DIR/a/b', thresholds: {} }],
     });
   });
 });
