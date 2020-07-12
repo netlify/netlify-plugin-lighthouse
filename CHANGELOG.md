@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.2.2...v1.3.0) (2020-07-12)
+
+
+### Features
+
+* support multiple audits urls and paths ([#45](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/45)) ([74dd46d](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/74dd46d5e36bb168e7b1bdb600d23a8deee93cdc))
+
 ## [1.2.2](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.2.1...v1.2.2) (2020-07-05)
 
 
