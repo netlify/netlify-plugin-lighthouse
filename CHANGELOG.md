@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.3.0...v1.3.1) (2020-07-13)
+
+
+### Bug Fixes
+
+* **lighthouse:** hide logs timestamp when running in tty ([#50](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/50)) ([b2187ca](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/b2187cac4413f993a8b27a47c49b0dfe48f9f044))
+
 # [1.3.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.2.2...v1.3.0) (2020-07-12)
 
 
