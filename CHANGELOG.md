@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.3.1...v1.3.2) (2020-07-13)
+
+
+### Bug Fixes
+
+* only set env.DEBUG_COLORS='true' for the plugin ([#51](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/51)) ([b2ace7e](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/b2ace7e15ce36084414d96dd0a7abb7a75948b54))
+
 ## [1.3.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.3.0...v1.3.1) (2020-07-13)
 
 
