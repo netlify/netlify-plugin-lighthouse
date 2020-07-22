@@ -47,32 +47,47 @@ const belowThreshold = (id, expected, categories) => {
   return actual < expected;
 };
 
-const getError = (id, expected, results) => {
-  const category = results.find((c) => c.id === id);
-  return `Expected category ${chalk.magenta(
+const getError = (id, expected, categories, audits) => {
+  const category = categories.find((c) => c.id === id);
+
+  const categoryError = `Expected category ${chalk.cyan(
     category.title,
   )} to be greater or equal to ${chalk.green(expected)} but got ${chalk.red(
     category.score !== null ? category.score : 'unknown',
   )}`;
+
+  const categoryAudits = category.auditRefs
+    .filter(({ weight, id }) => weight > 0 && audits[id].score < 1)
+    .map((ref) => {
+      const audit = audits[ref.id];
+      return `   '${chalk.cyan(
+        audit.title,
+      )}' received a score of ${chalk.yellow(audit.score)}`;
+    })
+    .join('\n');
+
+  return { message: categoryError, details: categoryAudits };
 };
 
 const formatResults = ({ results, thresholds }) => {
   const categories = Object.values(
     results.lhr.categories,
-  ).map(({ title, score, id }) => ({ title, score, id }));
+  ).map(({ title, score, id, auditRefs }) => ({ title, score, id, auditRefs }));
 
   const categoriesBelowThreshold = Object.entries(
     thresholds,
   ).filter(([id, expected]) => belowThreshold(id, expected, categories));
 
   const errors = categoriesBelowThreshold.map(([id, expected]) =>
-    getError(id, expected, categories),
+    getError(id, expected, categories, results.lhr.audits),
   );
 
   const summary = {
-    results: categories.map((cat) => ({
-      ...cat,
-      ...(thresholds[cat.id] ? { threshold: thresholds[cat.id] } : {}),
+    results: categories.map(({ title, score, id }) => ({
+      title,
+      score,
+      id,
+      ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
     })),
   };
 
@@ -86,8 +101,8 @@ const formatResults = ({ results, thresholds }) => {
 const getUtils = ({ utils }) => {
   const failBuild =
     (utils && utils.build && utils.build.failBuild) ||
-    ((message, { error }) => {
-      console.error(message, error.message);
+    ((message, { error } = {}) => {
+      console.error(message, error && error.message);
       process.exitCode = 1;
     });
 
@@ -126,7 +141,7 @@ const runAudit = async ({ path, url, thresholds }) => {
       return {
         summary,
         shortSummary,
-        error: errors.length > 0 ? new Error(`\n${errors.join('\n')}`) : false,
+        errors,
       };
     }
   } catch (error) {
@@ -134,26 +149,45 @@ const runAudit = async ({ path, url, thresholds }) => {
   }
 };
 
+const prefixString = ({ path, url, str }) => {
+  if (path) {
+    return `\n${chalk.red('Error')} for directory '${chalk.cyan(
+      path,
+    )}':\n${str}`;
+  } else if (url) {
+    return `\n${chalk.red('Error')} for url '${chalk.cyan(url)}':\n${str}`;
+  } else {
+    return `\n${str}`;
+  }
+};
+
 const processResults = ({ summaries, errors }) => {
   if (errors.length > 0) {
+    const error = errors.reduce(
+      (acc, { path, url, errors }) => {
+        const message = prefixString({
+          path,
+          url,
+          str: errors.map((e) => e.message).join('\n'),
+        });
+        const details = prefixString({
+          path,
+          url,
+          str: errors.map((e) => `${e.message}\n${e.details}`).join('\n'),
+        });
+
+        return {
+          message: `${acc.message}\n${message}`,
+          details: `${acc.details}\n${details}`,
+        };
+      },
+      {
+        message: '',
+        details: '',
+      },
+    );
     return {
-      error: new Error(
-        errors
-          .map(({ path, url, error }) => {
-            if (path) {
-              return `\n${chalk.red('Error')} for directory '${chalk.magenta(
-                path,
-              )}': ${error.message}`;
-            }
-            if (url) {
-              return `\n${chalk.red('Error')} for url '${chalk.magenta(
-                url,
-              )}': ${error.message}`;
-            }
-            return `\n${error.message}`;
-          })
-          .join('\n'),
-      ),
+      error,
     };
   } else {
     return {
@@ -182,10 +216,10 @@ module.exports = {
         inputs,
       });
 
-      const errors = [];
+      const allErrors = [];
       const summaries = [];
       for (const { path, url, thresholds } of audits) {
-        const { error, summary, shortSummary } = await runAudit({
+        const { errors, summary, shortSummary } = await runAudit({
           path,
           url,
           thresholds,
@@ -193,20 +227,30 @@ module.exports = {
         if (summary) {
           console.log(summary);
         }
-        if (error) {
-          errors.push({ path, url, error });
+        if (Array.isArray(errors) && errors.length > 0) {
+          allErrors.push({ path, url, errors });
         } else {
           summaries.push({ path, url, summary: shortSummary });
         }
       }
 
-      const { error, summary } = processResults({ summaries, errors, show });
+      const { error, summary } = processResults({
+        summaries,
+        errors: allErrors,
+        show,
+      });
+
       if (error) {
         throw error;
       }
       show({ summary });
     } catch (error) {
-      failBuild(chalk.red('Failed with error:\n'), { error });
+      if (error.details) {
+        console.error(error.details);
+        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
+      } else {
+        failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+      }
     }
   },
 };
