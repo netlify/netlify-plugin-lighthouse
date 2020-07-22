@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.3.2...v1.4.0) (2020-07-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency puppeteer to v5.2.1 ([#54](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/54)) ([176049b](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/176049ba7b45d10c82c3e9afb4fdd86204ac82a4))
+
+
+### Features
+
+* list relevant audits on category failure ([#56](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/56)) ([6b9a854](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/6b9a854189f489b65ebf63d384ca0d82bbe56ce5))
+
 ## [1.3.2](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.3.1...v1.3.2) (2020-07-13)
 
 
