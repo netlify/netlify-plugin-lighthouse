@@ -207,7 +207,7 @@ const processResults = ({ summaries, errors }) => {
 };
 
 module.exports = {
-  onSuccess: async ({ constants, utils, inputs } = {}) => {
+  onPostBuild: async ({ constants, utils, inputs } = {}) => {
     const { failBuild, show } = getUtils({ utils });
 
     try {
