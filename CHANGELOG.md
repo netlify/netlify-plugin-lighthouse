@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.0...v1.4.1) (2020-09-03)
+
+
+### Bug Fixes
+
+* use onPostBuild instead of onSuccess ([#75](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/75)) ([e998d06](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/e998d06c6e2e3041001a8fd70f4b1716c8d86c90))
+
 # [1.4.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.3.2...v1.4.0) (2020-07-22)
 
 
