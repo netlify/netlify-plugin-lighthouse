@@ -38,12 +38,20 @@ const getConfiguration = ({ constants, inputs } = {}) => {
     (inputs && inputs.thresholds) || process.env.THRESHOLDS || {};
 
   if (typeof thresholds === 'string') {
-    thresholds = JSON.parse(thresholds);
+    try {
+      thresholds = JSON.parse(thresholds);
+    } catch (e) {
+      throw new Error(`Invalid JSON for 'thresholds' input`);
+    }
   }
 
   let audits = (inputs && inputs.audits) || process.env.AUDITS;
   if (typeof audits === 'string') {
-    audits = JSON.parse(audits);
+    try {
+      audits = JSON.parse(audits);
+    } catch (e) {
+      throw new Error(`Invalid JSON for 'audits' input`);
+    }
   }
 
   if (!Array.isArray(audits)) {
