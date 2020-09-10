@@ -146,7 +146,9 @@ describe('config', () => {
     };
 
     expect(() => getConfiguration({ constants, inputs })).toThrow(
-      new Error(`Invalid JSON for 'thresholds' input: Unexpected token i in JSON at position 0`),
+      new Error(
+        `Invalid JSON for 'thresholds' input: Unexpected token i in JSON at position 0`,
+      ),
     );
   });
 
@@ -158,7 +160,9 @@ describe('config', () => {
     };
 
     expect(() => getConfiguration({ constants, inputs })).toThrow(
-      new Error(`Invalid JSON for 'audits' input: Unexpected token i in JSON at position 0`),
+      new Error(
+        `Invalid JSON for 'audits' input: Unexpected token i in JSON at position 0`,
+      ),
     );
   });
 });
