@@ -41,7 +41,7 @@ const getConfiguration = ({ constants, inputs } = {}) => {
     try {
       thresholds = JSON.parse(thresholds);
     } catch (e) {
-      throw new Error(`Invalid JSON for 'thresholds' input`);
+      throw new Error(`Invalid JSON for 'thresholds' input: ${e.message}`);
     }
   }
 
@@ -50,7 +50,7 @@ const getConfiguration = ({ constants, inputs } = {}) => {
     try {
       audits = JSON.parse(audits);
     } catch (e) {
-      throw new Error(`Invalid JSON for 'audits' input`);
+      throw new Error(`Invalid JSON for 'audits' input: ${e.message}`);
     }
   }
 
