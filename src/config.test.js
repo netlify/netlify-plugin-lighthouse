@@ -137,4 +137,32 @@ describe('config', () => {
       audits: [{ path: 'PUBLISH_DIR/a/b', thresholds: {} }],
     });
   });
+
+  it('should throw error on invalid thresholds json input', () => {
+    const constants = { THRESHOLDS: 'PUBLISH_DIR' };
+    const inputs = {
+      thresholds: 'invalid_json',
+      audits: [{}],
+    };
+
+    expect(() => getConfiguration({ constants, inputs })).toThrow(
+      new Error(
+        `Invalid JSON for 'thresholds' input: Unexpected token i in JSON at position 0`,
+      ),
+    );
+  });
+
+  it('should throw error on invalid audits json input', () => {
+    const constants = { THRESHOLDS: 'PUBLISH_DIR' };
+    const inputs = {
+      thresholds: { performance: 1 },
+      audits: 'invalid_json',
+    };
+
+    expect(() => getConfiguration({ constants, inputs })).toThrow(
+      new Error(
+        `Invalid JSON for 'audits' input: Unexpected token i in JSON at position 0`,
+      ),
+    );
+  });
 });
