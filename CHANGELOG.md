@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.1...v1.4.2) (2020-09-10)
+
+
+### Bug Fixes
+
+* report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
+
 ## [1.4.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.0...v1.4.1) (2020-09-03)
 
 
