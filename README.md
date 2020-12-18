@@ -4,13 +4,17 @@ A Netlify plugin to generate a lighthouse report for every deploy
 
 ## Usage
 
-This plugin can be included via npm. Install it as a dependency with the following command:
+You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) or from the [Plugins directory](https://app.netlify.com/plugins).
+
+You can also install it manually:
+
+From your project's base directory, use npm, yarn, or any other Node.js package manager to add the plugin to `devDependencies` in `package.json`.
 
 ```bash
-npm install --save "@netlify/plugin-lighthouse"
+npm install -D @netlify/plugin-lighthouse
 ```
 
-Add the plugin to your `netlify.toml` configuration file:
+Then add the plugin to your `netlify.toml` configuration file:
 
 ```toml
 [[plugins]]
