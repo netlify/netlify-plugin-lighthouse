@@ -8,8 +8,7 @@
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
     "test": "jest",
-    "format:ci": "prettier --check 'src/**/*.js'",
-    "release": "HUSKY_SKIP_HOOKS=1 CI=true semantic-release && npm publish"
+    "format:ci": "prettier --check 'src/**/*.js'"
   },
   "keywords": [
     "netlify",
@@ -43,13 +42,10 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
-    "@semantic-release/changelog": "^5.0.1",
-    "@semantic-release/git": "^9.0.0",
     "eslint": "^7.0.0",
     "husky": "^4.0.7",
     "jest": "^26.1.0",
-    "prettier": "^2.0.0",
-    "semantic-release": "^17.0.8"
+    "prettier": "^2.0.0"
   },
   "husky": {
     "hooks": {
