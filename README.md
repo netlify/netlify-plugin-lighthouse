@@ -55,6 +55,8 @@ You can customize the behavior via the `audits` input:
 
 ## Running Locally
 
+Fork and clone this repo.
+
 Create a `.env` file based on the [example](.env.example) and run
 
 ```bash
