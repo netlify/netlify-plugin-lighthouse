@@ -5,6 +5,16 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
+### [1.4.3](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.2...v1.4.3) (2021-03-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency puppeteer to v7 ([#153](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/153)) ([9da372f](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/9da372f9b0a69f111a0036c57210f1e3bf8297eb))
+* **deps:** update dependency puppeteer to v8 ([#162](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/162)) ([d5668d0](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/d5668d08a8ed756846477a5d6fb00b31df31677d))
+* **docs:** align readme with plugins installation flow ([fe5d80e](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/fe5d80eb3ccaa1760ada523778be2d0c626e19cf))
+* **docs:** update local dev instructions ([#151](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/151)) ([3841d96](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/3841d960f55e215392fbacd739f2fdc4708ec2ab))
+
 ## [1.4.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.0...v1.4.1) (2020-09-03)
 
 
