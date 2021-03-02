@@ -30,7 +30,7 @@
     "puppeteer": "^8.0.0"
   },
   "engines": {
-    "node": ">=v10.22.1"
+    "node": ">=12.13.0"
   },
   "repository": {
     "type": "git",
