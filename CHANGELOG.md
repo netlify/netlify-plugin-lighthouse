@@ -5,6 +5,23 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
+## [2.0.0](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.3...v2.0.0) (2021-03-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** update dependency lighthouse to v7 (#134)
+* drop support for Node 10 (#165)
+
+### Bug Fixes
+
+* **deps:** update dependency lighthouse to v7 ([#134](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/134)) ([9ee4580](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/9ee4580368ec16a9f9895e9038d3301acbe582fe))
+
+
+### Miscellaneous Chores
+
+* drop support for Node 10 ([#165](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/165)) ([f750f58](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/f750f5895c5993b75520a0c83ef5e85277479287))
+
 ### [1.4.3](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.2...v1.4.3) (2021-03-01)
 
 
