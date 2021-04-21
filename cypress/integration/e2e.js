@@ -1,4 +1,4 @@
-describe('Detects frameworks', () => {
+describe('Generates Lighthouse reports', () => {
   it('Verify report on root path', () => {
     cy.visit('/reports/lighthouse.html');
     cy.contains('Performance');
