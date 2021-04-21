@@ -1,6 +1,8 @@
 require('dotenv').config();
+const { join, dirname } = require('path');
 const httpServer = require('http-server');
 const chalk = require('chalk');
+const fs = require('fs').promises;
 const { getConfiguration } = require('./config');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
 
@@ -98,6 +100,11 @@ const formatResults = ({ results, thresholds }) => {
   return { summary, shortSummary, errors };
 };
 
+const persistResults = async ({ results, path }) => {
+  await fs.mkdir(dirname(path), { recursive: true });
+  await fs.writeFile(path, results.report);
+};
+
 const getUtils = ({ utils }) => {
   const failBuild =
     (utils && utils.build && utils.build.failBuild) ||
@@ -113,7 +120,7 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-const runAudit = async ({ path, url, thresholds }) => {
+const runAudit = async ({ path, url, thresholds, output_path }) => {
   try {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
@@ -137,6 +144,10 @@ const runAudit = async ({ path, url, thresholds }) => {
         results,
         thresholds,
       });
+
+      if (output_path) {
+        await persistResults({ results, path: join(path, output_path) });
+      }
 
       return {
         summary,
@@ -218,11 +229,12 @@ module.exports = {
 
       const allErrors = [];
       const summaries = [];
-      for (const { path, url, thresholds } of audits) {
+      for (const { path, url, thresholds, output_path } of audits) {
         const { errors, summary, shortSummary } = await runAudit({
           path,
           url,
           thresholds,
+          output_path,
         });
         if (summary) {
           console.log(summary);

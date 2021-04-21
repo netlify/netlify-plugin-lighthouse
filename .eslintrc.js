@@ -13,4 +13,16 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 11,
   },
+  overrides: [
+    {
+      files: ['cypress/**/*.js'],
+      parserOptions: {
+        sourceType: 'module',
+      },
+      env: {
+        'cypress/globals': true,
+      },
+      plugins: ['cypress'],
+    },
+  ],
 };

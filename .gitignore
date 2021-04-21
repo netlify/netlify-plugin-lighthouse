@@ -4,3 +4,6 @@ node_modules
 yarn-error.log
 # Local Netlify folder
 .netlify
+reports
+cypress/videos
+cypress/screenshots

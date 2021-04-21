@@ -47,6 +47,7 @@ const runLighthouse = async (browserPath, url) => {
     });
     const results = await lighthouse(url, {
       port: chrome.port,
+      output: 'html',
       logLevel,
     });
     if (results.lhr.runtimeError) {
