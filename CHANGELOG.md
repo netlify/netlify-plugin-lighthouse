@@ -5,6 +5,13 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
+## [2.1.0](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.0.0...v2.1.0) (2021-04-21)
+
+
+### Features
+
+* allow publishing the generated html repo ([#180](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/180)) ([53886d5](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/53886d592ac017f44e7959954b7ab2bcbd517b10))
+
 ## [2.0.0](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.3...v2.0.0) (2021-03-03)
 
 
