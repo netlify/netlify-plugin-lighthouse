@@ -80,7 +80,7 @@ describe('config', () => {
     const inputs = {
       audit_url: 'url',
       thresholds: { seo: 1 },
-      output_path: '.reports/lighthouse.html',
+      output_path: 'reports/lighthouse.html',
     };
     const config = getConfiguration({ constants, inputs });
 
@@ -90,7 +90,7 @@ describe('config', () => {
           path: 'PUBLISH_DIR',
           url: 'url',
           thresholds: { seo: 1 },
-          output_path: '.reports/lighthouse.html',
+          output_path: 'reports/lighthouse.html',
         },
       ],
     });
@@ -180,10 +180,10 @@ describe('config', () => {
   it('should use specific audit output_path when configured', () => {
     const constants = { PUBLISH_DIR: 'PUBLISH_DIR' };
     const inputs = {
-      output_path: '.reports/lighthouse.html',
+      output_path: 'reports/lighthouse.html',
       audits: [
         { path: 'route1' },
-        { path: 'route2', output_path: '.reports/route2.html' },
+        { path: 'route2', output_path: 'reports/route2.html' },
       ],
     };
     const config = getConfiguration({ constants, inputs });
@@ -192,12 +192,12 @@ describe('config', () => {
       audits: [
         {
           path: 'PUBLISH_DIR/route1',
-          output_path: '.reports/lighthouse.html',
+          output_path: 'reports/lighthouse.html',
           thresholds: {},
         },
         {
           path: 'PUBLISH_DIR/route2',
-          output_path: '.reports/route2.html',
+          output_path: 'reports/route2.html',
           thresholds: {},
         },
       ],

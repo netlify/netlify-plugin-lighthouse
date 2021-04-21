@@ -30,7 +30,7 @@ Then add the plugin to your `netlify.toml` configuration file:
 
   # optional, deploy the lighthouse report to a path under your site
   [plugins.inputs]
-    output_path = ".reports/lighthouse.html"
+    output_path = "reports/lighthouse.html"
 ```
 
 By default, the plugin will serve and audit the build directory of the site.
@@ -49,7 +49,7 @@ You can customize the behavior via the `audits` input:
     path = "route1"
 
     # you can specify output_path per audit, relative to the path
-    output_path = ".reports/route1.html"
+    output_path = "reports/route1.html"
 
   # to audit a specific absolute url
   [[plugins.inputs.audits]]
