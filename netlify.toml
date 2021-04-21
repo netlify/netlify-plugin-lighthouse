@@ -24,7 +24,7 @@ path = ""
 
 [[plugins]]
 package = "netlify-plugin-cypress"
-# do not run tests after deploy (testing)
+# do not run tests after deploy
 [plugins.inputs]
 enable = false
 # run tests after build
