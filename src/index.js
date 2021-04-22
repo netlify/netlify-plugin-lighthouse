@@ -120,14 +120,22 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-const runAudit = async ({ path, url, thresholds, output_path }) => {
+const runAudit = async ({
+  path,
+  url,
+  thresholds,
+  output_path,
+  extra_headers,
+}) => {
   try {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
     const { error, results } = await new Promise((resolve) => {
       server.listen(async () => {
         try {
-          const results = await runLighthouse(browserPath, server.url);
+          const results = await runLighthouse(browserPath, server.url, {
+            extraHeaders: extra_headers,
+          });
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
@@ -229,12 +237,19 @@ module.exports = {
 
       const allErrors = [];
       const summaries = [];
-      for (const { path, url, thresholds, output_path } of audits) {
+      for (const {
+        path,
+        url,
+        thresholds,
+        output_path,
+        extra_headers,
+      } of audits) {
         const { errors, summary, shortSummary } = await runAudit({
           path,
           url,
           thresholds,
           output_path,
+          extra_headers,
         });
         if (summary) {
           console.log(summary);
