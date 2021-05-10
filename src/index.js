@@ -72,13 +72,13 @@ const getError = (id, expected, categories, audits) => {
 };
 
 const formatResults = ({ results, thresholds }) => {
-  const categories = Object.values(
-    results.lhr.categories,
-  ).map(({ title, score, id, auditRefs }) => ({ title, score, id, auditRefs }));
+  const categories = Object.values(results.lhr.categories).map(
+    ({ title, score, id, auditRefs }) => ({ title, score, id, auditRefs }),
+  );
 
-  const categoriesBelowThreshold = Object.entries(
-    thresholds,
-  ).filter(([id, expected]) => belowThreshold(id, expected, categories));
+  const categoriesBelowThreshold = Object.entries(thresholds).filter(
+    ([id, expected]) => belowThreshold(id, expected, categories),
+  );
 
   const errors = categoriesBelowThreshold.map(([id, expected]) =>
     getError(id, expected, categories, results.lhr.audits),
