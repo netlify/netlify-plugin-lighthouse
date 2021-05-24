@@ -23,7 +23,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^4.1.0",
-    "chrome-launcher": "^0.13.2",
+    "chrome-launcher": "^0.14.0",
     "dotenv": "^9.0.0",
     "http-server": "^0.12.3",
     "lighthouse": "^7.0.0",
