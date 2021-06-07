@@ -5,6 +5,22 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
+### [2.1.1](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.0...v2.1.1) (2021-06-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency chalk to v4.1.1 ([a7ef976](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/a7ef976d9a211be51cd6f02702b712d52127a18b))
+* **deps:** update dependency chrome-launcher to ^0.14.0 ([ac5599a](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/ac5599a10463ef04b76c7d1c530cf404deaa510a))
+* **deps:** update dependency dotenv to v10 ([#206](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/206)) ([5fe5ce8](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/5fe5ce8a893c9f5224fbbe9b219d8e1217c2c38b))
+* **deps:** update dependency dotenv to v9 ([#195](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/195)) ([da1fdca](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/da1fdca91778a4b00b008b9af465cd7260c413dd))
+* **deps:** update dependency dotenv to v9.0.2 ([c10486b](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/c10486bb5561181c23efeb6c96df1a24f0b08938))
+* **deps:** update dependency lighthouse to v7.4.0 ([852f93a](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/852f93a182cce99dd8d3386638c860901807ff4c))
+* **deps:** update dependency lighthouse to v7.5.0 ([a620593](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/a62059372805284660e9db143f8d81919c0a3239))
+* **deps:** update dependency lighthouse to v8 ([#216](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/216)) ([5481656](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/5481656bd50e11068012a872926733564d4ac5ca))
+* **deps:** update dependency puppeteer to v10 ([#217](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/217)) ([0a163bb](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/0a163bbd066f0702cfa72720a5a27be0808af44d))
+* **deps:** update dependency puppeteer to v9 ([#185](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/185)) ([272ed72](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/272ed7267374059eb4c6e516f4f3050d00438390))
+
 ## [2.1.0](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.0.0...v2.1.0) (2021-04-21)
 
 
