@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { join, dirname } = require('path');
-const httpServer = require('http-server');
+const express = require('express');
+const compression = require('compression');
 const chalk = require('chalk');
 const fs = require('fs').promises;
 const { getConfiguration } = require('./config');
@@ -24,7 +25,10 @@ const getServer = ({ serveDir, auditUrl }) => {
     throw new Error('Empty publish dir');
   }
 
-  const s = httpServer.createServer({ root: serveDir });
+  const app = express();
+  app.use(compression());
+  app.use(express.static(serveDir));
+
   const port = 5000;
   const host = 'localhost';
   const server = {
@@ -32,9 +36,9 @@ const getServer = ({ serveDir, auditUrl }) => {
       console.log(
         `Serving and scanning site from directory ${chalk.magenta(serveDir)}`,
       );
-      return s.listen(port, host, func);
+      return app.listen(port, host, func);
     },
-    close: () => s.close(),
+    close: (instance) => instance.close(),
     url: `http://${host}:${port}`,
   };
   return { server };
@@ -125,14 +129,14 @@ const runAudit = async ({ path, url, thresholds, output_path }) => {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
     const { error, results } = await new Promise((resolve) => {
-      server.listen(async () => {
+      const instance = server.listen(async () => {
         try {
           const results = await runLighthouse(browserPath, server.url);
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
         } finally {
-          server.close();
+          server.close(instance);
         }
       });
     });
