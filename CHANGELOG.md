@@ -5,6 +5,13 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
+### [2.1.2](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.1...v2.1.2) (2021-06-13)
+
+
+### Bug Fixes
+
+* replace http-server by express to enable gzip compression ([#222](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/222)) ([a1962e5](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/a1962e57de1a13c98436646355f72019f4beca79))
+
 ### [2.1.1](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.0...v2.1.1) (2021-06-07)
 
 
