@@ -24,8 +24,9 @@
   "dependencies": {
     "chalk": "^4.1.0",
     "chrome-launcher": "^0.14.0",
+    "compression": "^1.7.4",
     "dotenv": "^10.0.0",
-    "http-server": "^0.12.3",
+    "express": "^4.17.1",
     "lighthouse": "^8.0.0",
     "puppeteer": "^10.0.0"
   },
