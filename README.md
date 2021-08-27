@@ -60,6 +60,27 @@ You can customize the behavior via the `audits` input:
       performance = 0.8
 ```
 
+The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
+```
+2:35:07 PM: ────────────────────────────────────────────────────────────────
+2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse        
+2:35:07 PM: ────────────────────────────────────────────────────────────────
+2:35:07 PM: ​
+2:35:07 PM: Serving and scanning site from directory dist
+
+...
+
+2:35:17 PM: {
+2:35:17 PM:   results: [
+2:35:17 PM:     { title: 'Performance', score: 0.91, id: 'performance' },
+2:35:17 PM:     { title: 'Accessibility', score: 0.93, id: 'accessibility' },
+2:35:17 PM:     { title: 'Best Practices', score: 0.93, id: 'best-practices' },
+2:35:17 PM:     { title: 'SEO', score: 0.81, id: 'seo' },
+2:35:17 PM:     { title: 'Progressive Web App', score: 0.4, id: 'pwa' }
+2:35:17 PM:   ]
+2:35:17 PM: }
+```
+
 ## Running Locally
 
 Fork and clone this repo.
