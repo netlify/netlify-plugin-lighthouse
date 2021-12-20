@@ -5,6 +5,20 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
+### [2.1.3](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.2...v2.1.3) (2021-12-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency chalk to v4.1.2 ([b4c1baf](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/b4c1baf3ddb298fc9053fc30b10ab95bd724b98d))
+* **deps:** update dependency chrome-launcher to ^0.15.0 ([a04050c](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/a04050c5ed853fa06ffb580f7e299149b312597d))
+* **deps:** update dependency chrome-launcher to v0.14.2 ([96f4f87](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/96f4f8723bd57a48cbc780890aa92749471c77a3))
+* **deps:** update dependency express to v4.17.2 ([94a9737](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/94a973766852ca44ad80eb62327bd7f90ead80a1))
+* **deps:** update dependency lighthouse to v8.2.0 ([7820eee](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/7820eee8e86c40b49ab28fd7ba8ac8f8135a8e9e))
+* **deps:** update dependency lighthouse to v8.3.0 ([e18ba36](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/e18ba3605541a3b8112e4bb66e947ace47f7fbad))
+* **deps:** update dependency lighthouse to v8.5.1 ([12316ad](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/12316ad61a88460e2cb1f134050de3d3a93f6322))
+* **deps:** update dependency lighthouse to v8.6.0 ([56a440f](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/56a440f934999c0dd66432e0d5224ff879795184))
+
 ### [2.1.2](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.1...v2.1.2) (2021-06-13)
 
 
