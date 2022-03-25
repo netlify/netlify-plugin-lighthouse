@@ -105,6 +105,7 @@ If you have multiple audits (directories, paths, etc) defined in your build, we 
 
 Some items of note:
 - The Lighthouse Build Plugin must be installed on your site(s) in order for these score visualizations to be displayed.
-- This Labs feature is currently only enabled at the user-level, so it will need to be enabled for each individual team member that wishes to see the Lighthouse scores displayed.
+- To view Lighthouse scores in the Netlify UI, you must [enable the feature through your Netlify settings](https://www.netlify.com/blog/2021/03/31/test-drive-netlify-beta-features-with-netlify-labs/). 
+- This Labs feature is currently only enabled at the user-level, so each Netlify team member must enable the feature before they can view the Lighthouse scores in the UI.
 
 We have a lot planned for this feature and will be adding functionality regularly, but we'd also love to hear your thoughts. Please click the "Give feedback" link under the Lighthouse scores to tell us what you think.
