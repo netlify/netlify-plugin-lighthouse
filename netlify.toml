@@ -3,7 +3,7 @@ command = "echo 'no op'"
 publish = "example"
 
 [build.environment]
-NODE_VERSION = "node"
+NODE_VERSION = "16.15.1"
 
 [[plugins]]
 package = "netlify-plugin-cypress"
