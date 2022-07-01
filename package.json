@@ -43,7 +43,7 @@
   "devDependencies": {
     "@commitlint/cli": "^16.0.0",
     "@commitlint/config-conventional": "^16.0.0",
-    "cypress": "^9.5.4",
+    "cypress": "^9.0.0",
     "eslint": "^7.0.0",
     "eslint-plugin-cypress": "^2.11.2",
     "husky": "^4.0.7",
