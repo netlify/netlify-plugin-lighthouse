@@ -1,6 +1,6 @@
 # Netlify Plugin Lighthouse
 
-A Netlify plugin to generate a lighthouse report for every deploy
+A Netlify plugin to generate a lighthouse report for every deploy.
 
 ## Usage
 
