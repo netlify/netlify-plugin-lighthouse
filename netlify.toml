@@ -22,3 +22,11 @@ path = "route2"
 [[plugins.inputs.audits]]
 path = ""
 
+[[plugins]]
+package = "netlify-plugin-cypress"
+# do not run tests after deploy
+[plugins.inputs]
+enable = false
+# run tests after build
+[plugins.inputs.postBuild]
+enable = true
