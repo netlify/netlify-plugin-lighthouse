@@ -5,9 +5,8 @@
 
 * report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
-### [2.1.4](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.3...v2.1.4) (2022-04-18)
-
 ### [3.0.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.3...v3.0.0) (2022-04-18)
+
 
 ### Bug Fixes
 
