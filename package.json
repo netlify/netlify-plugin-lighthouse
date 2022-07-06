@@ -35,10 +35,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/netlify-labs/netlify-plugin-lighthouse.git"
+    "url": "git+https://github.com/netlify/netlify-plugin-lighthouse.git"
   },
   "bugs": {
-    "url": "https://github.com/netlify-labs/netlify-plugin-lighthouse/issues"
+    "url": "https://github.com/netlify/netlify-plugin-lighthouse/issues"
   },
   "devDependencies": {
     "@commitlint/cli": "^16.0.0",
