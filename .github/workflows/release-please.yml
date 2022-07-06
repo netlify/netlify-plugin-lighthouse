@@ -18,3 +18,23 @@ jobs:
           token: ${{ steps.get-token.outputs.token }}
           release-type: node
           package-name: '@netlify/plugin-lighthouse'
+      - uses: actions/checkout@v2
+        if: ${{ steps.release.outputs.releases_created }}
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '*'
+          cache: 'npm'
+          check-latest: true
+          registry-url: 'https://registry.npmjs.org'
+        if: ${{ steps.release.outputs.releases_created }}
+      - run: npm publish
+        working-directory: plugin
+        if: ${{ steps.release.outputs.releases_created }}
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - uses: netlify/submit-build-plugin-action@v1
+        if: ${{ steps.release.outputs.releases_created }}
+        with:
+          github-token: ${{ steps.get-token.outputs.token }}
+          package-json-dir: plugin
+
