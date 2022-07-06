@@ -7,6 +7,7 @@
 
 ### [2.1.4](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.3...v2.1.4) (2022-04-18)
 
+### [3.0.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.3...v3.0.0) (2022-04-18)
 
 ### Bug Fixes
 
