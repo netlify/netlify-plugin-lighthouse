@@ -1,24 +1,3 @@
-## [1.4.2](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.1...v1.4.2) (2020-09-10)
-
-
-### Bug Fixes
-
-* report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
-
-### [3.0.0](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.3...v3.0.0) (2022-04-18)
-
-
-### Bug Fixes
-
-* **deps:** update dependency express to v4.17.3 ([4458347](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/4458347c583f22abef7703c7124124d6a5392a95))
-* **deps:** update dependency puppeteer to v13.1.2 ([af97807](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/af978071179a152df6e02298350f6b2680c482df))
-* **deps:** update dependency puppeteer to v13.1.3 ([73459cb](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/73459cb6adce80d80162310da180af155f39a4b3))
-* **deps:** update dependency puppeteer to v13.3.1 ([5a61a72](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/5a61a7280d63b0925f854e451b8b6eceb9ab8d8b))
-* **deps:** update dependency puppeteer to v13.4.0 ([efab3d9](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/efab3d9107d72ce01b6ad7d0328c0f40261dafa8))
-* **deps:** update dependency puppeteer to v13.4.1 ([16cdb32](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/16cdb32d77d36f8e25aebdb2147035e3d240106e))
-* **deps:** update dependency puppeteer to v13.5.1 ([d900737](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/d90073704a6b1937ac5244636479e1358fcc73ba))
-* **deps:** update dependency puppeteer to v13.5.2 ([c0f07fb](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/c0f07fbc38f7bf415e3befac026d2cb741d432cb))
-
 ### [2.1.3](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v2.1.2...v2.1.3) (2022-01-10)
 
 
@@ -90,6 +69,13 @@
 * **deps:** update dependency puppeteer to v8 ([#162](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/162)) ([d5668d0](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/d5668d08a8ed756846477a5d6fb00b31df31677d))
 * **docs:** align readme with plugins installation flow ([fe5d80e](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/fe5d80eb3ccaa1760ada523778be2d0c626e19cf))
 * **docs:** update local dev instructions ([#151](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/issues/151)) ([3841d96](https://www.github.com/netlify-labs/netlify-plugin-lighthouse/commit/3841d960f55e215392fbacd739f2fdc4708ec2ab))
+
+## [1.4.2](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.1...v1.4.2) (2020-09-10)
+
+
+### Bug Fixes
+
+* report relevant error on invalid jsons ([#80](https://github.com/netlify-labs/netlify-plugin-lighthouse/issues/80)) ([7417e91](https://github.com/netlify-labs/netlify-plugin-lighthouse/commit/7417e9170ba9865fb63ea1a34878b21bd5245232))
 
 ## [1.4.1](https://github.com/netlify-labs/netlify-plugin-lighthouse/compare/v1.4.0...v1.4.1) (2020-09-03)
 
