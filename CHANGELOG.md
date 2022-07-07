@@ -1,3 +1,27 @@
+## [3.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v2.1.3...v3.0.0) (2022-07-07)
+
+
+### Features
+
+* upgrade Lighthouse and node ([#422](https://github.com/netlify/netlify-plugin-lighthouse/issues/422)) ([be93d56](https://github.com/netlify/netlify-plugin-lighthouse/commit/be93d56b5172774f3096d4aa97069d9e75d36832))
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** update dependency lighthouse to v9 (#422)
+* drop support for Node 16 (#422)
+
+### Bug Fixes
+
+* **deps:** update dependency express to v4.17.3 ([4458347](https://github.com/netlify/netlify-plugin-lighthouse/commit/4458347c583f22abef7703c7124124d6a5392a95))
+* **deps:** update dependency puppeteer to v13.1.2 ([af97807](https://github.com/netlify/netlify-plugin-lighthouse/commit/af978071179a152df6e02298350f6b2680c482df))
+* **deps:** update dependency puppeteer to v13.1.3 ([73459cb](https://github.com/netlify/netlify-plugin-lighthouse/commit/73459cb6adce80d80162310da180af155f39a4b3))
+* **deps:** update dependency puppeteer to v13.3.1 ([5a61a72](https://github.com/netlify/netlify-plugin-lighthouse/commit/5a61a7280d63b0925f854e451b8b6eceb9ab8d8b))
+* **deps:** update dependency puppeteer to v13.4.0 ([efab3d9](https://github.com/netlify/netlify-plugin-lighthouse/commit/efab3d9107d72ce01b6ad7d0328c0f40261dafa8))
+* **deps:** update dependency puppeteer to v13.4.1 ([16cdb32](https://github.com/netlify/netlify-plugin-lighthouse/commit/16cdb32d77d36f8e25aebdb2147035e3d240106e))
+* **deps:** update dependency puppeteer to v13.5.1 ([d900737](https://github.com/netlify/netlify-plugin-lighthouse/commit/d90073704a6b1937ac5244636479e1358fcc73ba))
+* **deps:** update dependency puppeteer to v13.5.2 ([c0f07fb](https://github.com/netlify/netlify-plugin-lighthouse/commit/c0f07fbc38f7bf415e3befac026d2cb741d432cb))
+* update changelog to reflect already released ([#430](https://github.com/netlify/netlify-plugin-lighthouse/issues/430)) ([5825fdb](https://github.com/netlify/netlify-plugin-lighthouse/commit/5825fdbb3584a494dbe08b30bbe83e91bcfdb33f))
+
 ### [2.1.3](https://github.com/netlify/netlify-plugin-lighthouse/compare/v2.1.2...v2.1.3) (2022-01-10)
 
 
@@ -12,26 +36,6 @@
 * **deps:** update dependency lighthouse to v8.5.1 ([12316ad](https://github.com/netlify/netlify-plugin-lighthouse/commit/12316ad61a88460e2cb1f134050de3d3a93f6322))
 * **deps:** update dependency lighthouse to v8.6.0 ([56a440f](https://github.com/netlify/netlify-plugin-lighthouse/commit/56a440f934999c0dd66432e0d5224ff879795184))
 * **deps:** update dependency puppeteer to v13 ([#342](https://github.com/netlify/netlify-plugin-lighthouse/issues/342)) ([1b44c45](https://github.com/netlify/netlify-plugin-lighthouse/commit/1b44c45cb7686689e29756f379640a5937bad215))
-
-## [3.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v2.1.3...v3.0.0) (2022-07-07)
-
-
-### Features
-
-* upgrade Lighthouse and node ([#422](https://github.com/netlify/netlify-plugin-lighthouse/issues/422)) ([be93d56](https://github.com/netlify/netlify-plugin-lighthouse/commit/be93d56b5172774f3096d4aa97069d9e75d36832))
-
-
-### Bug Fixes
-
-* **deps:** update dependency express to v4.17.3 ([4458347](https://github.com/netlify/netlify-plugin-lighthouse/commit/4458347c583f22abef7703c7124124d6a5392a95))
-* **deps:** update dependency puppeteer to v13.1.2 ([af97807](https://github.com/netlify/netlify-plugin-lighthouse/commit/af978071179a152df6e02298350f6b2680c482df))
-* **deps:** update dependency puppeteer to v13.1.3 ([73459cb](https://github.com/netlify/netlify-plugin-lighthouse/commit/73459cb6adce80d80162310da180af155f39a4b3))
-* **deps:** update dependency puppeteer to v13.3.1 ([5a61a72](https://github.com/netlify/netlify-plugin-lighthouse/commit/5a61a7280d63b0925f854e451b8b6eceb9ab8d8b))
-* **deps:** update dependency puppeteer to v13.4.0 ([efab3d9](https://github.com/netlify/netlify-plugin-lighthouse/commit/efab3d9107d72ce01b6ad7d0328c0f40261dafa8))
-* **deps:** update dependency puppeteer to v13.4.1 ([16cdb32](https://github.com/netlify/netlify-plugin-lighthouse/commit/16cdb32d77d36f8e25aebdb2147035e3d240106e))
-* **deps:** update dependency puppeteer to v13.5.1 ([d900737](https://github.com/netlify/netlify-plugin-lighthouse/commit/d90073704a6b1937ac5244636479e1358fcc73ba))
-* **deps:** update dependency puppeteer to v13.5.2 ([c0f07fb](https://github.com/netlify/netlify-plugin-lighthouse/commit/c0f07fbc38f7bf415e3befac026d2cb741d432cb))
-* update changelog to reflect already released ([#430](https://github.com/netlify/netlify-plugin-lighthouse/issues/430)) ([5825fdb](https://github.com/netlify/netlify-plugin-lighthouse/commit/5825fdbb3584a494dbe08b30bbe83e91bcfdb33f))
 
 ### [2.1.2](https://www.github.com/netlify/netlify-plugin-lighthouse/compare/v2.1.1...v2.1.2) (2021-06-13)
 
