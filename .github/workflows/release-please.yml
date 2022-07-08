@@ -29,7 +29,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
         if: ${{ steps.release.outputs.releases_created }}
       - run: npm publish
-        working-directory: plugin
         if: ${{ steps.release.outputs.releases_created }}
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
@@ -37,5 +36,4 @@ jobs:
         if: ${{ steps.release.outputs.releases_created }}
         with:
           github-token: ${{ steps.get-token.outputs.token }}
-          package-json-dir: plugin
 
