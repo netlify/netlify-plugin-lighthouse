@@ -1,6 +1,5 @@
 {
   "name": "@netlify/plugin-lighthouse",
-
   "version": "3.0.0",
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
