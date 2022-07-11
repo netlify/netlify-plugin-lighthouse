@@ -23,5 +23,5 @@ path = "route2"
 path = ""
 
 # run tests after build
-[plugins.inputs.postBuild]
-enable = true
+#[plugins.inputs.postBuild]
+# enable = true
