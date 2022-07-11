@@ -46,7 +46,7 @@
     "cypress": "^9.0.0",
     "eslint": "^7.0.0",
     "eslint-plugin-cypress": "^2.11.2",
-    "husky": "^4.0.7",
+    "husky": "^8.0.0",
     "jest": "^28.0.0",
     "netlify-plugin-cypress": "^2.2.0",
     "prettier": "^2.0.0"
