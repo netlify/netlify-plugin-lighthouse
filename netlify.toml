@@ -3,7 +3,7 @@ command = "echo 'no op'"
 publish = "example"
 
 [build.environment]
-NODE_VERSION = "17.9.0"
+NODE_VERSION = "17.8.0"
 
 [[plugins]]
 package = "./src/index.js"
