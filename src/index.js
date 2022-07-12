@@ -206,16 +206,16 @@ const processResults = ({ summaries, errors }) => {
       error,
     };
   } else {
-    const extra_data = [];
+    let extra_data = {};
     return {
       summary: summaries
         .map(({ path, url, summary, results }) => {
           if (path) {
-            extra_data.push({ path, summary, extra_data: results.report });
+            extra_data = { path, summary, reportHtml: results.report };
             return `Summary for directory '${chalk.magenta(path)}': ${summary}`;
           }
           if (url) {
-            extra_data.push({ url, summary, extra_data: results.report });
+            extra_data = { url, summary, reportHtml: results.report };
             return `Summary for url '${chalk.magenta(url)}': ${summary}`;
           }
           return `${summary}`;
@@ -255,7 +255,7 @@ module.exports = {
         }
       }
 
-      const { error, summary } = processResults({
+      const { error, summary, extra_data } = processResults({
         summaries,
         errors: allErrors,
         show,
@@ -263,6 +263,15 @@ module.exports = {
 
       if (error) {
         throw error;
+      }
+
+      if (extra_data) {
+        const size = Buffer.byteLength(JSON.stringify(extra_data.reportHtml));
+        console.log(
+          `Report metrics collected: audited_uri: '${chalk.magenta(
+            extra_data.url || extra_data.path,
+          )}', html_report_size: ${chalk.magenta(size / 1024)} kbs`,
+        );
       }
 
       show({ summary });
