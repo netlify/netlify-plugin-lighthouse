@@ -177,7 +177,7 @@ const prefixString = ({ path, url, str }) => {
   }
 };
 
-const processResults = ({ summaries, errors }) => {
+const processResults = ({ data, errors }) => {
   if (errors.length > 0) {
     const error = errors.reduce(
       (acc, { path, url, errors }) => {
@@ -208,7 +208,7 @@ const processResults = ({ summaries, errors }) => {
   } else {
     let extra_data = {};
     return {
-      summary: summaries
+      summary: data
         .map(({ path, url, summary, results }) => {
           if (path) {
             extra_data = { path, summary, reportHtml: results.report };
@@ -237,7 +237,7 @@ module.exports = {
       });
 
       const allErrors = [];
-      const summaries = [];
+      const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
         const { errors, results, summary, shortSummary } = await runAudit({
           path,
@@ -251,12 +251,12 @@ module.exports = {
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
         } else {
-          summaries.push({ path, url, summary: shortSummary, results });
+          data.push({ path, url, summary: shortSummary, results });
         }
       }
 
       const { error, summary, extra_data } = processResults({
-        summaries,
+        data,
         errors: allErrors,
         show,
       });
