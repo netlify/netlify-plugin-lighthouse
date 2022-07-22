@@ -278,6 +278,10 @@ module.exports = {
         show,
       });
 
+      console.log('###################');
+      console.log(extraData);
+      console.log('###################');
+
       if (error) {
         throw error;
       }
