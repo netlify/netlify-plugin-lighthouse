@@ -4,6 +4,7 @@ const express = require('express');
 const compression = require('compression');
 const chalk = require('chalk');
 const fs = require('fs').promises;
+const minify = require('html-minifier').minify;
 const { getConfiguration } = require('./config');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
 
@@ -101,7 +102,15 @@ const formatResults = ({ results, thresholds }) => {
     .map(({ title, score }) => `${title}: ${score * 100}`)
     .join(', ');
 
-  const report = results.report;
+  const report = minify(results.report, {
+    removeAttributeQuotes: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    removeOptionalTags: true,
+    removeEmptyElements: true,
+    minifyCSS: true,
+    minifyJS: true,
+  });
 
   return { summary, shortSummary, report, errors };
 };
