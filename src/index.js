@@ -101,12 +101,14 @@ const formatResults = ({ results, thresholds }) => {
     .map(({ title, score }) => `${title}: ${score * 100}`)
     .join(', ');
 
-  return { summary, shortSummary, errors };
+  const report = results.report;
+
+  return { summary, shortSummary, report, errors };
 };
 
-const persistResults = async ({ results, path }) => {
+const persistResults = async ({ report, path }) => {
   await fs.mkdir(dirname(path), { recursive: true });
-  await fs.writeFile(path, results.report);
+  await fs.writeFile(path, report);
 };
 
 const getUtils = ({ utils }) => {
@@ -144,19 +146,19 @@ const runAudit = async ({ path, url, thresholds, output_path }) => {
     if (error) {
       return { error };
     } else {
-      const { summary, shortSummary, errors } = formatResults({
+      const { summary, shortSummary, report, errors } = formatResults({
         results,
         thresholds,
       });
 
       if (output_path) {
-        await persistResults({ results, path: join(path, output_path) });
+        await persistResults({ report, path: join(path, output_path) });
       }
 
       return {
-        results,
         summary,
         shortSummary,
+        report,
         errors,
       };
     }
@@ -206,22 +208,27 @@ const processResults = ({ data, errors }) => {
       error,
     };
   } else {
-    let extra_data = {};
+    const reports = [];
     return {
       summary: data
-        .map(({ path, url, summary, results }) => {
+        .map(({ path, url, summary, report }) => {
+          let obj = {};
+          obj = { summary, report };
+
           if (path) {
-            extra_data = { path, summary, reportHtml: results.report };
+            obj.path = path;
+            reports.push(obj);
             return `Summary for directory '${chalk.magenta(path)}': ${summary}`;
           }
           if (url) {
-            extra_data = { url, summary, reportHtml: results.report };
+            obj.url = url;
+            reports.push(obj);
             return `Summary for url '${chalk.magenta(url)}': ${summary}`;
           }
           return `${summary}`;
         })
         .join('\n'),
-      extra_data: extra_data,
+      extraData: reports,
     };
   }
 };
@@ -239,7 +246,7 @@ module.exports = {
       const allErrors = [];
       const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
-        const { errors, results, summary, shortSummary } = await runAudit({
+        const { errors, summary, shortSummary, report } = await runAudit({
           path,
           url,
           thresholds,
@@ -248,14 +255,24 @@ module.exports = {
         if (summary) {
           console.log(summary);
         }
+
+        if (report) {
+          const size = Buffer.byteLength(JSON.stringify(report));
+          console.log(
+            `Report collected: audited_uri: '${chalk.magenta(
+              url || path,
+            )}', html_report_size: ${chalk.magenta(size / 1024)} KiB`,
+          );
+        }
+
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
         } else {
-          data.push({ path, url, summary: shortSummary, results });
+          data.push({ path, url, summary: shortSummary, report });
         }
       }
 
-      const { error, summary, extra_data } = processResults({
+      const { error, summary, extraData } = processResults({
         data,
         errors: allErrors,
         show,
@@ -265,16 +282,7 @@ module.exports = {
         throw error;
       }
 
-      if (extra_data) {
-        const size = Buffer.byteLength(JSON.stringify(extra_data.reportHtml));
-        console.log(
-          `Report metrics collected: audited_uri: '${chalk.magenta(
-            extra_data.url || extra_data.path,
-          )}', html_report_size: ${chalk.magenta(size / 1024)} kbs`,
-        );
-      }
-
-      show({ summary });
+      show({ summary, extraData });
     } catch (error) {
       if (error.details) {
         console.error(error.details);
