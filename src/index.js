@@ -89,14 +89,12 @@ const formatResults = ({ results, thresholds }) => {
     getError(id, expected, categories, results.lhr.audits),
   );
 
-  const summary = {
-    results: categories.map(({ title, score, id }) => ({
-      title,
-      score,
-      id,
-      ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
-    })),
-  };
+  const summary = categories.map(({ title, score, id }) => ({
+    title,
+    score,
+    id,
+    ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
+  }));
 
   const shortSummary = categories
     .map(({ title, score }) => `${title}: ${score * 100}`)
@@ -263,7 +261,7 @@ module.exports = {
           output_path,
         });
         if (summary) {
-          console.log(summary);
+          console.log({ results: summary });
         }
 
         if (report) {
