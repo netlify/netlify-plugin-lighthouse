@@ -221,8 +221,7 @@ const processResults = ({ data, errors }) => {
     return {
       summary: data
         .map(({ path, url, summary, report }) => {
-          let obj = {};
-          obj = { summary, report };
+          const obj = { summary, report };
 
           if (path) {
             obj.path = path;
