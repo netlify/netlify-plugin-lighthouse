@@ -220,21 +220,22 @@ const processResults = ({ data, errors }) => {
     const reports = [];
     return {
       summary: data
-        .map(({ path, url, summary, report }) => {
-          let obj = {};
-          obj = { summary, report };
+        .map(({ path, url, summary, shortSummary, report }) => {
+          const obj = { summary, report };
 
           if (path) {
             obj.path = path;
             reports.push(obj);
-            return `Summary for directory '${chalk.magenta(path)}': ${summary}`;
+            return `Summary for directory '${chalk.magenta(
+              path,
+            )}': ${shortSummary}`;
           }
           if (url) {
             obj.url = url;
             reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${summary}`;
+            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
           }
-          return `${summary}`;
+          return `${shortSummary}`;
         })
         .join('\n'),
       extraData: reports,
@@ -277,7 +278,7 @@ module.exports = {
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
         } else {
-          data.push({ path, url, summary: shortSummary, report });
+          data.push({ path, url, summary, shortSummary, report });
         }
       }
 
