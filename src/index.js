@@ -4,6 +4,7 @@ const express = require('express');
 const compression = require('compression');
 const chalk = require('chalk');
 const fs = require('fs').promises;
+const minify = require('html-minifier').minify;
 const { getConfiguration } = require('./config');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
 
@@ -88,25 +89,33 @@ const formatResults = ({ results, thresholds }) => {
     getError(id, expected, categories, results.lhr.audits),
   );
 
-  const summary = {
-    results: categories.map(({ title, score, id }) => ({
-      title,
-      score,
-      id,
-      ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
-    })),
-  };
+  const summary = categories.map(({ title, score, id }) => ({
+    title,
+    score,
+    id,
+    ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
+  }));
 
   const shortSummary = categories
     .map(({ title, score }) => `${title}: ${score * 100}`)
     .join(', ');
 
-  return { summary, shortSummary, errors };
+  const report = minify(results.report, {
+    removeAttributeQuotes: true,
+    collapseWhitespace: true,
+    removeRedundantAttributes: true,
+    removeOptionalTags: true,
+    removeEmptyElements: true,
+    minifyCSS: true,
+    minifyJS: true,
+  });
+
+  return { summary, shortSummary, report, errors };
 };
 
-const persistResults = async ({ results, path }) => {
+const persistResults = async ({ report, path }) => {
   await fs.mkdir(dirname(path), { recursive: true });
-  await fs.writeFile(path, results.report);
+  await fs.writeFile(path, report);
 };
 
 const getUtils = ({ utils }) => {
@@ -144,18 +153,19 @@ const runAudit = async ({ path, url, thresholds, output_path }) => {
     if (error) {
       return { error };
     } else {
-      const { summary, shortSummary, errors } = formatResults({
+      const { summary, shortSummary, report, errors } = formatResults({
         results,
         thresholds,
       });
 
       if (output_path) {
-        await persistResults({ results, path: join(path, output_path) });
+        await persistResults({ report, path: join(path, output_path) });
       }
 
       return {
         summary,
         shortSummary,
+        report,
         errors,
       };
     }
@@ -176,7 +186,7 @@ const prefixString = ({ path, url, str }) => {
   }
 };
 
-const processResults = ({ summaries, errors }) => {
+const processResults = ({ data, errors }) => {
   if (errors.length > 0) {
     const error = errors.reduce(
       (acc, { path, url, errors }) => {
@@ -205,18 +215,28 @@ const processResults = ({ summaries, errors }) => {
       error,
     };
   } else {
+    const reports = [];
     return {
-      summary: summaries
-        .map(({ path, url, summary }) => {
+      summary: data
+        .map(({ path, url, summary, shortSummary, report }) => {
+          const obj = { summary, report };
+
           if (path) {
-            return `Summary for directory '${chalk.magenta(path)}': ${summary}`;
+            obj.path = path;
+            reports.push(obj);
+            return `Summary for directory '${chalk.magenta(
+              path,
+            )}': ${shortSummary}`;
           }
           if (url) {
-            return `Summary for url '${chalk.magenta(url)}': ${summary}`;
+            obj.url = url;
+            reports.push(obj);
+            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
           }
-          return `${summary}`;
+          return `${shortSummary}`;
         })
         .join('\n'),
+      extraData: reports,
     };
   }
 };
@@ -232,26 +252,36 @@ module.exports = {
       });
 
       const allErrors = [];
-      const summaries = [];
+      const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
-        const { errors, summary, shortSummary } = await runAudit({
+        const { errors, summary, shortSummary, report } = await runAudit({
           path,
           url,
           thresholds,
           output_path,
         });
         if (summary) {
-          console.log(summary);
+          console.log({ results: summary });
         }
+
+        if (report) {
+          const size = Buffer.byteLength(JSON.stringify(report));
+          console.log(
+            `Report collected: audited_uri: '${chalk.magenta(
+              url || path,
+            )}', html_report_size: ${chalk.magenta(size / 1024)} KiB`,
+          );
+        }
+
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
         } else {
-          summaries.push({ path, url, summary: shortSummary });
+          data.push({ path, url, summary, shortSummary, report });
         }
       }
 
-      const { error, summary } = processResults({
-        summaries,
+      const { error, summary, extraData } = processResults({
+        data,
         errors: allErrors,
         show,
       });
@@ -259,7 +289,8 @@ module.exports = {
       if (error) {
         throw error;
       }
-      show({ summary });
+
+      show({ summary, extraData });
     } catch (error) {
       if (error.details) {
         console.error(error.details);
