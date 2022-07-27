@@ -7,6 +7,19 @@
 * **deps:** update dependency puppeteer to v15 ([#436](https://github.com/netlify/netlify-plugin-lighthouse/issues/436)) ([15118d0](https://github.com/netlify/netlify-plugin-lighthouse/commit/15118d0a03e82900284132bcd0d1b55046301bd7))
 * specify node version `>=14.15 <18` ([#439](https://github.com/netlify/netlify-plugin-lighthouse/issues/439)) ([30cb14d](https://github.com/netlify/netlify-plugin-lighthouse/commit/30cb14d1ad721f15e48cefbdf23dc81bf6aa2ca9))
 
+## [3.1.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.0.1...v3.1.0) (2022-07-27)
+
+
+### Features
+
+* extract the full html report ([#440](https://github.com/netlify/netlify-plugin-lighthouse/issues/440)) ([0395dac](https://github.com/netlify/netlify-plugin-lighthouse/commit/0395dacf006d64a8cc8933c677e53bccc1653b43))
+
+
+### Bug Fixes
+
+* **deps:** update dependency puppeteer to v15.4.2 ([088882f](https://github.com/netlify/netlify-plugin-lighthouse/commit/088882fac2ac9c401e0a4c042403b411c683349f))
+* **deps:** update dependency puppeteer to v15.5.0 ([#446](https://github.com/netlify/netlify-plugin-lighthouse/issues/446)) ([5e5ef31](https://github.com/netlify/netlify-plugin-lighthouse/commit/5e5ef3170593e80d4c10be703d1f17cd2a3d8b8b))
+
 ## [3.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v2.1.3...v3.0.0) (2022-07-07)
 
 
