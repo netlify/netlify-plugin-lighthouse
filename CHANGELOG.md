@@ -1,3 +1,10 @@
+## [3.2.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.1.0...v3.2.0) (2022-08-01)
+
+
+### Features
+
+* feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
+
 ## [3.1.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.0.1...v3.1.0) (2022-07-27)
 
 
