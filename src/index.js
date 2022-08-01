@@ -219,7 +219,11 @@ const processResults = ({ data, errors }) => {
     return {
       summary: data
         .map(({ path, url, summary, shortSummary, report }) => {
-          const obj = { summary, report };
+          const extraDataSummary = Object.assign(
+            {},
+            ...summary.map((item) => ({ [item.id]: item.score * 100 })),
+          );
+          const obj = { summary: extraDataSummary, report };
 
           if (path) {
             obj.path = path;
