@@ -219,7 +219,13 @@ const processResults = ({ data, errors }) => {
     return {
       summary: data
         .map(({ path, url, summary, shortSummary, report }) => {
-          const obj = { summary, report };
+          const obj = {
+            summary: summary.reduce((acc, item) => {
+              acc[item.id] = item.score * 100;
+              return acc;
+            }, {}),
+            report,
+          };
 
           if (path) {
             obj.path = path;
