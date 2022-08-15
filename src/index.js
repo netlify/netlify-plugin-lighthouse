@@ -7,6 +7,7 @@ const fs = require('fs').promises;
 const minify = require('html-minifier').minify;
 const { getConfiguration } = require('./config');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
+const { makeReplacements } = require('./replacements');
 
 const getServer = ({ serveDir, auditUrl }) => {
   if (auditUrl) {
@@ -271,8 +272,11 @@ module.exports = {
           console.log({ results: summary });
         }
 
+        let formattedReport;
         if (report) {
-          const size = Buffer.byteLength(JSON.stringify(report));
+          formattedReport = makeReplacements(report);
+
+          const size = Buffer.byteLength(JSON.stringify(formattedReport));
           console.log(
             `Report collected: audited_uri: '${chalk.magenta(
               url || path,
@@ -283,7 +287,13 @@ module.exports = {
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
         } else {
-          data.push({ path, url, summary, shortSummary, report });
+          data.push({
+            path,
+            url,
+            summary,
+            shortSummary,
+            report: formattedReport,
+          });
         }
       }
 
