@@ -269,6 +269,7 @@ module.exports = {
           output_path,
         });
         if (summary) {
+          console.log('#############debugging###############');
           console.log({ results: summary });
         }
 
