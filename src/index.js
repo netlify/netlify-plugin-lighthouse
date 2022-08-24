@@ -295,15 +295,12 @@ module.exports = {
       utils.status.show({ summary, extraData });
 
       if (error && Object.keys(error).length !== 0) {
-        throw error;
-      }
-    } catch (error) {
-      if (error.details) {
         console.error(error.details);
         failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
-      } else {
-        failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+        // throw error;
       }
+    } catch (error) {
+      failBuild(`${chalk.red('Failed with error:\n')}`, { error });
     }
   },
 };
