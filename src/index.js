@@ -251,7 +251,7 @@ const processResults = ({ data, errors }) => {
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
-    const { failBuild, show } = getUtils({ utils });
+    const { failBuild } = getUtils({ utils });
 
     try {
       const { audits } = getConfiguration({
@@ -291,10 +291,9 @@ module.exports = {
       const { error, summary, extraData } = processResults({
         data,
         errors: allErrors,
-        show,
       });
 
-      show({ summary, extraData });
+      utils.status.show({ summary, extraData });
 
       if (error) {
         throw error;
