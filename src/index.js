@@ -269,7 +269,6 @@ module.exports = {
           output_path,
         });
         if (summary) {
-          console.log('#############debugging###############');
           console.log({ results: summary });
         }
 
@@ -303,6 +302,7 @@ module.exports = {
         console.error(error.details);
         failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
       } else {
+        console.error(error);
         failBuild(`${chalk.red('Failed with error:\n')}`, { error });
       }
     }
