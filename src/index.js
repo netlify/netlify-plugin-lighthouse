@@ -187,6 +187,7 @@ const prefixString = ({ path, url, str }) => {
 };
 
 const processResults = ({ data, errors }) => {
+  const err = {};
   if (errors.length > 0) {
     const error = errors.reduce(
       (acc, { path, url, errors }) => {
@@ -211,41 +212,41 @@ const processResults = ({ data, errors }) => {
         details: '',
       },
     );
-    return {
-      error,
-    };
-  } else {
-    const reports = [];
-    return {
-      summary: data
-        .map(({ path, url, summary, shortSummary, report }) => {
-          const obj = { report };
-
-          if (summary) {
-            obj.summary = summary.reduce((acc, item) => {
-              acc[item.id] = item.score * 100;
-              return acc;
-            }, {});
-          }
-
-          if (path) {
-            obj.path = path;
-            reports.push(obj);
-            return `Summary for directory '${chalk.magenta(
-              path,
-            )}': ${shortSummary}`;
-          }
-          if (url) {
-            obj.url = url;
-            reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
-          }
-          return `${shortSummary}`;
-        })
-        .join('\n'),
-      extraData: reports,
-    };
+    err.message = error.message;
+    err.details = error.details;
   }
+
+  const reports = [];
+  return {
+    error: err,
+    summary: data
+      .map(({ path, url, summary, shortSummary, report }) => {
+        const obj = { report };
+
+        if (summary) {
+          obj.summary = summary.reduce((acc, item) => {
+            acc[item.id] = item.score * 100;
+            return acc;
+          }, {});
+        }
+
+        if (path) {
+          obj.path = path;
+          reports.push(obj);
+          return `Summary for directory '${chalk.magenta(
+            path,
+          )}': ${shortSummary}`;
+        }
+        if (url) {
+          obj.url = url;
+          reports.push(obj);
+          return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+        }
+        return `${shortSummary}`;
+      })
+      .join('\n'),
+    extraData: reports,
+  };
 };
 
 module.exports = {
@@ -282,9 +283,8 @@ module.exports = {
 
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
-        } else {
-          data.push({ path, url, summary, shortSummary, report });
         }
+        data.push({ path, url, summary, shortSummary, report });
       }
 
       const { error, summary, extraData } = processResults({
@@ -293,11 +293,11 @@ module.exports = {
         show,
       });
 
+      show({ summary, extraData });
+
       if (error) {
         throw error;
       }
-
-      show({ summary, extraData });
     } catch (error) {
       if (error.details) {
         console.error(error.details);
