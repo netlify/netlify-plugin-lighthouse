@@ -294,7 +294,7 @@ module.exports = {
 
       utils.status.show({ summary, extraData });
 
-      if (error) {
+      if (error && Object.keys(error).length !== 0) {
         throw error;
       }
     } catch (error) {
@@ -302,7 +302,6 @@ module.exports = {
         console.error(error.details);
         failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
       } else {
-        console.error(error);
         failBuild(`${chalk.red('Failed with error:\n')}`, { error });
       }
     }
