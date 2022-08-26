@@ -5,6 +5,21 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.3.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.2.1...v3.3.0) (2022-08-26)
+
+
+### Features
+
+* inject theme-querying snippets to each report ([#455](https://github.com/netlify/netlify-plugin-lighthouse/issues/455)) ([646a06d](https://github.com/netlify/netlify-plugin-lighthouse/commit/646a06d2098377421fa667f8be69cbf85f73684b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency lighthouse to v9.6.5 ([#447](https://github.com/netlify/netlify-plugin-lighthouse/issues/447)) ([72fe792](https://github.com/netlify/netlify-plugin-lighthouse/commit/72fe792abb8e84c4d2b9521a3a544203148b09b6))
+* **deps:** update dependency lighthouse to v9.6.6 ([#456](https://github.com/netlify/netlify-plugin-lighthouse/issues/456)) ([194b212](https://github.com/netlify/netlify-plugin-lighthouse/commit/194b212db2cb138a6a685bc558527e0abfb60fa6))
+* **deps:** update dependency puppeteer to v16 ([#451](https://github.com/netlify/netlify-plugin-lighthouse/issues/451)) ([a0b315e](https://github.com/netlify/netlify-plugin-lighthouse/commit/a0b315e29af70eae5d367d2326d05975f675a769))
+* **deps:** update dependency puppeteer to v16.2.0 ([#457](https://github.com/netlify/netlify-plugin-lighthouse/issues/457)) ([19c9ee8](https://github.com/netlify/netlify-plugin-lighthouse/commit/19c9ee8fa5e2b596791f7ed12d1f40b5a682085d))
+
 ## [3.2.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.2.0...v3.2.1) (2022-08-09)
 
 
