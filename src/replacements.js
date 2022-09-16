@@ -44,7 +44,7 @@ const enablePostMessageCommunication = {
   </script></body>`,
 };
 
-const replacements = [forceThemeChecking, enablePostMessageCommunication];
+const replacements = [enablePostMessageCommunication];
 
 const makeReplacements = (str) => {
   return replacements.reduce((acc, { source, replacement }) => {
