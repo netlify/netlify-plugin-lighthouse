@@ -1,18 +1,10 @@
-const { makeReplacements } = require('./replacements');
+const { enablePostMessageCommunication } = require('./replacements');
 
 describe('replacements', () => {
-  it('should make forceThemeChecking replacement', () => {
-    const data = 'window.matchMedia("(prefers-color-scheme: dark)").matches';
-    const result = 'window.matchMedia("(prefers-color-scheme)").matches';
-    expect(makeReplacements(data)).toEqual(result);
-  });
-
-  it('should make enableQuerystringThemeCheck replacement', () => {
-    const data = 'prepended;const n=e.rootEl;appended';
-    expect(makeReplacements(data)).toContain('prepended;const n=e.rootEl;');
-    expect(makeReplacements(data)).toContain(
-      'URLSearchParams(window.location.search)',
-    );
-    expect(makeReplacements(data)).toContain('appended');
+  it('should make enablePostMessageCommunication replacement', () => {
+    const data = '</div></body></html>';
+    const replacedContent = enablePostMessageCommunication(data)
+    expect(replacedContent).toContain('</div><script>');
+    expect(replacedContent).toContain('</script></body></html>');
   });
 });

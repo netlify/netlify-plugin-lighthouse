@@ -1,46 +1,50 @@
 /*
- * Lighthouse only runs the theme checking function on load if a user is using
- * a dark theme. This change modifies the check to _always_ pass regardless of
- * theme preference.
- *
- * This ensures we always run the function on load, where we add additional
- * custom logic to test if a preferred theme was set as a querystring parameter,
- * falling back to a standard dark theme check.
+ * Adds postMessage functionality for iframe communication
+ * 1. We first check if the message origin is on our expected list.
+ * 2. Next we listen for a message to tell us which theme the user is using in
+ *    the Netlify UI, and we toggle classes so the report matches.
+ * 3. Finally we set up an intersection observer to send a message to the parent
+ *    window when the report footer is in view (triggers an Amplitude event to
+ *    log the report as been "viewed in full").
  */
-const forceThemeChecking = {
-  source: `(prefers-color-scheme: dark)`,
-  replacement: `(prefers-color-scheme)`,
-};
+const enablePostMessageCommunication = {
+  source: `</body>`,
+  replacement: `<script>
+    const handlePostMessageData = (event) => {
+      const validOrigins = [
+        'http://localhost',
+        '--app.netlify.app',
+        'https://app.netlify.com',
+      ];
+      const isValidOrigin = validOrigins.some((origin) =>
+        event.origin.includes(origin)
+      );
+      if (!isValidOrigin) return;
 
-/*
- * Relative line numbers of the replacements:
- * 1. Ensure original source line is retained
- * 2-3. We only want to trigger this on first run. This function is also run
- *    each time the theme is manually toggled using the dropdown menu and
- *    we don't want to interfere.
- * 4. Check the URL querystring for a light/dark theme preference.
- * 5-7. If we recognise the value, use it to set/remove the theme class.
- * 8-9. We made a change to the Lighthouse-supplied matchMedia check which
- *    runs on page load, to always trigger this function regardless of theme.
- *    This means we can't rely on the second parameter being passed to this
- *    function being accurate. If we make it this far, we need to run our own
- *    check to replicate that original functionality.
- */
-const enableQuerystringThemeCheck = {
-  source: `const n=e.rootEl;`,
-  replacement: `const n=e.rootEl;
-    if (!window.qsThemeChecked) {
-      window.qsThemeChecked = true;
-      const qsTheme = new URLSearchParams(window.location.search).get('theme');
-      if (qsTheme === 'dark' || qsTheme === 'light') {
-        return n.classList.toggle('lh-dark', qsTheme === 'dark');
+      const theme = event.data;
+      const rootEl = document.querySelector('.lh-root');
+      if (rootEl && (theme === 'dark' || theme === 'light')) {
+        document
+          .querySelector('.lh-root')
+          ?.classList.toggle('lh-dark', theme === 'dark');
       }
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      return n.classList.toggle('lh-dark', prefersDark);
-    }`,
+
+      const observer = new IntersectionObserver((matches) => {
+        if (matches[0].isIntersecting) {
+          event.source.postMessage(
+            'appLighthouseReportFullyScrolled',
+            event.origin
+          );
+        }
+      });
+      const footerEl = document.querySelector('.lh-footer');
+      if (footerEl) observer.observe(footerEl);
+    };
+    window.addEventListener('message', handlePostMessageData);
+  </script></body>`,
 };
 
-const replacements = [forceThemeChecking, enableQuerystringThemeCheck];
+const replacements = [forceThemeChecking, enablePostMessageCommunication];
 
 const makeReplacements = (str) => {
   return replacements.reduce((acc, { source, replacement }) => {
