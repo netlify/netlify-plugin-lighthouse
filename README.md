@@ -4,7 +4,13 @@ A Netlify plugin to generate a lighthouse report for every deploy
 
 ## Usage
 
-You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) or from the [Plugins directory](https://app.netlify.com/plugins).
+If you would like to run the Lighthouse build plugin for multiple site paths, such as for the site root path and a contact page, we recommend installing the build plugin manually in the `netlify.toml` file.
+
+### Install plugin through the Netlify UI
+
+You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) or from the [Plugins directory](https://app.netlify.com/plugins). 
+
+### Install plugin through the `netlify.toml` file
 
 You can also install it manually:
 
@@ -59,6 +65,23 @@ You can customize the behavior via the `audits` input:
     [plugins.inputs.audits.thresholds]
       performance = 0.8
 ```
+
+Example `netlify.toml` file that audits the site root path and a contact page:
+
+```
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+  
+  # Generate a Lighthouse report for the site's root path
+  [[plugins.inputs.audits]]
+  path = ""
+        
+  # Generate a Lighthouse report for the contact site path
+  [[plugins.inputs.audits]]
+  path = "contact"
+
+```
+
 
 The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
 ```
