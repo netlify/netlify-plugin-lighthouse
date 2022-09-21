@@ -101,7 +101,9 @@ const formatResults = ({ results, thresholds }) => {
     .map(({ title, score }) => `${title}: ${score * 100}`)
     .join(', ');
 
-  const report = minify(results.report, {
+  const formattedReport = makeReplacements(results.report);
+
+  const report = minify(formattedReport, {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
     removeRedundantAttributes: true,
@@ -272,11 +274,8 @@ module.exports = {
           console.log({ results: summary });
         }
 
-        let formattedReport;
         if (report) {
-          formattedReport = makeReplacements(report);
-
-          const size = Buffer.byteLength(JSON.stringify(formattedReport));
+          const size = Buffer.byteLength(JSON.stringify(report));
           console.log(
             `Report collected: audited_uri: '${chalk.magenta(
               url || path,
@@ -292,7 +291,7 @@ module.exports = {
             url,
             summary,
             shortSummary,
-            report: formattedReport,
+            report,
           });
         }
       }
