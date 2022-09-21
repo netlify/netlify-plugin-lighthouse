@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.4.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.4.0...v3.4.1) (2022-09-21)
+
+
+### Bug Fixes
+
+* run replacements function before HTML minification ([#469](https://github.com/netlify/netlify-plugin-lighthouse/issues/469)) ([1e74d86](https://github.com/netlify/netlify-plugin-lighthouse/commit/1e74d86bc0d18a084ea6802e3e4b92b427386b72))
+
 ## [3.4.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.3.0...v3.4.0) (2022-09-21)
 
 
