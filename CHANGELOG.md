@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.4.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.3.0...v3.4.0) (2022-09-21)
+
+
+### Features
+
+* Add support for theme matching and scroll reporting via `postMessage` ([#461](https://github.com/netlify/netlify-plugin-lighthouse/issues/461)) ([42822bc](https://github.com/netlify/netlify-plugin-lighthouse/commit/42822bca390d90f2573fc98ff9c4c33adf2c697d))
+
 ## [3.3.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.2.1...v3.3.0) (2022-08-26)
 
 
