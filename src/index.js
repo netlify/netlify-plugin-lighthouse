@@ -98,7 +98,7 @@ const formatResults = ({ results, thresholds }) => {
   }));
 
   const shortSummary = categories
-    .map(({ title, score }) => `${title}: ${score * 100}`)
+    .map(({ title, score }) => `${title}: ${Math.round(score * 100)}`)
     .join(', ');
 
   const formattedReport = makeReplacements(results.report);
@@ -226,7 +226,7 @@ const processResults = ({ data, errors }) => {
 
           if (summary) {
             obj.summary = summary.reduce((acc, item) => {
-              acc[item.id] = item.score * 100;
+              acc[item.id] = Math.round(item.score * 100);
               return acc;
             }, {});
           }
