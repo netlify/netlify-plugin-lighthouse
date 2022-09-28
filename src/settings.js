@@ -1,12 +1,18 @@
-const desktopOpts = require('lighthouse/lighthouse-core/config/desktop-config');
+const desktopConfig = require('lighthouse/lighthouse-core/config/desktop-config');
+const fullConfig = require('lighthouse/lighthouse-core/config/full-config');
 
-const getSettings = (settings) => {
-  console.log(111111, { settings });
-  if (!settings) return;
+const getSettings = (inputSettings) => {
+  if (!inputSettings) return;
 
-  if (settings.formFactor === 'desktop') {
-    return desktopOpts;
+  // Set a base-level config based on the formFactor (mobile/desktop)
+  const derivedSettings =
+    inputSettings.formFactor === 'desktop' ? desktopConfig : fullConfig;
+
+  if (inputSettings.locale) {
+    derivedSettings.settings.locale = inputSettings.locale;
   }
+
+  return derivedSettings;
 };
 
 module.exports = {
