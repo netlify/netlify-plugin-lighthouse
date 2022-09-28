@@ -104,15 +104,15 @@ The lighthouse report results are automatically printed to the **Deploy log** in
 2:35:17 PM: }
 ```
 
-We currently support the following settings which are passed directly to Lighthouse:
+We currently support the following settings, which are passed directly to Lighthouse:
 
 ```
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
   [[plugins.inputs.audits]]
-    formFactor = "desktop" # Either "mobile" (default), or "desktop"
-    locale = "es" # Any Lighthouse-supported locale to generate reports in a different language
+    preset = "desktop" # Optionally run Lighthouse using a desktop configuration
+    locale = "es" # Any Lighthouse-supported locale, used to generate reports in a different language
 ```
 
 ## Running Locally

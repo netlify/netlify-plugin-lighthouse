@@ -6,14 +6,8 @@ describe('replacements', () => {
     expect(getSettings({})).toEqual(undefined);
   });
 
-  it('should return a template config with formFactor set to mobile', () => {
-    const derivedSettings = getSettings({ formFactor: 'mobile' });
-    expect(derivedSettings.extends).toEqual('lighthouse:default');
-    expect(derivedSettings.settings.formFactor).toBeUndefined();
-  });
-
-  it('should return a template config with formFactor set to desktop', () => {
-    const derivedSettings = getSettings({ formFactor: 'desktop' });
+  it('should return a template config with preset set to desktop', () => {
+    const derivedSettings = getSettings({ preset: 'desktop' });
     expect(derivedSettings.extends).toEqual('lighthouse:default');
     expect(derivedSettings.settings.formFactor).toEqual('desktop');
   });
