@@ -111,8 +111,8 @@ We currently support the following settings which are passed directly to Lightho
   package = "@netlify/plugin-lighthouse"
 
   [[plugins.inputs.audits]]
-  formFactor = "desktop" # Either "mobile" (default), or "desktop"
-  locale = "es" # Any Lighthouse-supported locale to generate reports in a different language
+    formFactor = "desktop" # Either "mobile" (default), or "desktop"
+    locale = "es" # Any Lighthouse-supported locale to generate reports in a different language
 ```
 
 ## Running Locally

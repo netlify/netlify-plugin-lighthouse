@@ -266,7 +266,7 @@ module.exports = {
         inputs,
       });
 
-      const settings = getSettings(inputs.settings);
+      const settings = getSettings(inputs?.settings);
 
       const allErrors = [];
       const data = [];
