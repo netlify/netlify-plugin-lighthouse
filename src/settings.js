@@ -1,18 +1,38 @@
 const desktopConfig = require('lighthouse/lighthouse-core/config/desktop-config');
 const fullConfig = require('lighthouse/lighthouse-core/config/full-config');
 
+/*
+ * Check for settings added in `.env` file and merge with input settings
+ * specified in `netlify.toml`
+ */
+const mergeSettingsSources = (inputSettings = {}) => {
+  let envSettings = {};
+  if (typeof process.env.SETTINGS === 'string') {
+    try {
+      envSettings = JSON.parse(process.env.SETTINGS);
+    } catch (e) {
+      throw new Error(`Invalid JSON for 'settings' input: ${e.message}`);
+    }
+  }
+
+  // Shallow merge of input and env settings.
+  // Review the need for a deep merge if/when more complex settings are added.
+  return Object.assign({}, inputSettings, envSettings);
+};
+
 const getSettings = (inputSettings) => {
-  if (!inputSettings || Object.keys(inputSettings).length === 0) return;
+  const settings = mergeSettingsSources(inputSettings);
+  if (Object.keys(settings).length === 0) return;
 
   // Set a base-level config based on the preset input value
   // (desktop is currently the only supported option)
   const derivedSettings =
-    inputSettings.preset === 'desktop' ? desktopConfig : fullConfig;
+    settings.preset === 'desktop' ? desktopConfig : fullConfig;
 
   // The following are added to the `settings` object of the selected base config
-
-  if (inputSettings.locale) {
-    derivedSettings.settings.locale = inputSettings.locale;
+  // We add individually to avoid passing anything unexpected to Lighthouse.
+  if (settings.locale) {
+    derivedSettings.settings.locale = settings.locale;
   }
 
   return derivedSettings;
