@@ -11,6 +11,8 @@ const getSettings = (inputSettings) => {
   if (inputSettings.locale) {
     derivedSettings.settings.locale = inputSettings.locale;
   }
+  console.log('Settings specified in netlify.toml: ' + inputSettings);
+  console.log('Final derived settings: ' + derivedSettings);
 
   return derivedSettings;
 };
