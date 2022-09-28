@@ -15,9 +15,9 @@ const mergeSettingsSources = (inputSettings = {}) => {
     }
   }
 
-  // Shallow merge of input and env settings.
+  // Shallow merge of input and env settings, with input taking priority.
   // Review the need for a deep merge if/when more complex settings are added.
-  return Object.assign({}, inputSettings, envSettings);
+  return Object.assign({}, envSettings, inputSettings);
 };
 
 const getSettings = (inputSettings) => {
