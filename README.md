@@ -110,7 +110,7 @@ We currently support the following settings, which are passed directly to Lighth
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
-  [[plugins.inputs.settings]]
+  [plugins.inputs.settings]
     preset = "desktop" # Optionally run Lighthouse using a desktop configuration
     locale = "es" # Any Lighthouse-supported locale, used to generate reports in a different language
 ```
