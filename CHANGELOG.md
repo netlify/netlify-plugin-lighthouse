@@ -5,6 +5,21 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.5.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.4.1...v3.5.0) (2022-09-29)
+
+
+### Features
+
+* Add initial support for Lighthouse settings ([#474](https://github.com/netlify/netlify-plugin-lighthouse/issues/474)) ([587f9d6](https://github.com/netlify/netlify-plugin-lighthouse/commit/587f9d6276def4017b9d430b596cd407911be3e5))
+
+
+### Bug Fixes
+
+* adds score rounding to avoid floating point errors ([#473](https://github.com/netlify/netlify-plugin-lighthouse/issues/473)) ([8b2f4cf](https://github.com/netlify/netlify-plugin-lighthouse/commit/8b2f4cfdf3d0197b731acd5dd7e86c3ed8ac9ff2))
+* **deps:** update dependency dotenv to v16.0.2 ([#462](https://github.com/netlify/netlify-plugin-lighthouse/issues/462)) ([d76b6a6](https://github.com/netlify/netlify-plugin-lighthouse/commit/d76b6a611948778b2c5b158d51e5bd1217ee951d))
+* **deps:** update dependency lighthouse to v9.6.7 ([#463](https://github.com/netlify/netlify-plugin-lighthouse/issues/463)) ([43dfe6d](https://github.com/netlify/netlify-plugin-lighthouse/commit/43dfe6db2d05316183ca3e00a71b136e1ca6da2f))
+* **deps:** update dependency puppeteer to v18 ([#472](https://github.com/netlify/netlify-plugin-lighthouse/issues/472)) ([bf1c432](https://github.com/netlify/netlify-plugin-lighthouse/commit/bf1c432db1f4269ca0f2bed828a2cbf8c3256127))
+
 ## [3.4.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.4.0...v3.4.1) (2022-09-21)
 
 
