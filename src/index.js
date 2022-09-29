@@ -104,7 +104,9 @@ const formatResults = ({ results, thresholds }) => {
 
   const formattedReport = makeReplacements(results.report);
 
-  const installable = results.lhr.audits['installable-manifest'].score === 1;
+  const installable =
+    results.lhr.audits['installable-manifest'].score === 1 &&
+    results.lhr.audits['service-worker'].score === 1;
 
   const report = minify(formattedReport, {
     removeAttributeQuotes: true,
