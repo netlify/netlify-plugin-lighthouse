@@ -13,7 +13,7 @@ We recommend installing the Lighthouse plugin with a `netlify.toml` file for the
 
 ### Install plugin through the Netlify UI
 
-You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) or from the [Plugins directory](https://app.netlify.com/plugins).
+For UI-based installation, you can install this plugin from the [Integrations Hub](https://www.netlify.com/integrations/lighthouse/), the [Plugins directory](https://app.netlify.com/plugins) for your site, or through this [direct installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install).
 
 ### Install plugin with a `netlify.toml` file
 
