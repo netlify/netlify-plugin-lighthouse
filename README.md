@@ -2,7 +2,6 @@
 
 A Netlify plugin to run Lighthouse for every deploy.
 
-## Usage
 
 If you would like to run the Lighthouse build plugin for multiple site paths, such as for the site root path and a contact page, we recommend installing the build plugin manually in the `netlify.toml` file.
 
