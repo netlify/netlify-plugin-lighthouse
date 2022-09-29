@@ -97,9 +97,9 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 ### Run Lighthouse for different site paths
 
-To understand how your site's performance compares across different parts of your site, you can specify different site paths where you'd like to run Lighthouse audits.
+To understand how your site's performance compares across different parts of your site, you can specify different site paths where you'd like to run Lighthouse audits.  Updates to `netlify.toml` will take effect for new builds.
 
-For example, this `netlify.toml` file configures Lighthouse audits for the root path of a site (the default path used to run audits) and the contact page:
+For example, this `netlify.toml` file configures Lighthouse audits for the root path of a site and the contact page:
 
 ```
 [[plugins]]
@@ -115,11 +115,11 @@ For example, this `netlify.toml` file configures Lighthouse audits for the root 
 
 ```
 
-### Run Lighthouse for different devices
+### Run Lighthouse for the desktop experience
 
-By default, Lighthouse takes a mobile-first performance testing approach and runs audits for mobile devices.
+By default, Lighthouse takes a mobile-first performance testing approach and runs its audits for the mobile device experience.  Updates to `netlify.toml` will take effect for new builds.
 
-You can optionally run Lighthouse audits for a desktop device by including `preset = "desktop"` in your `netlify.toml` file:
+You can optionally run Lighthouse audits for the desktop experience by including `preset = "desktop"` in your `netlify.toml` file:
 
 ```
 [[plugins]]
@@ -131,11 +131,11 @@ You can optionally run Lighthouse audits for a desktop device by including `pres
 
 To return to running Lighthouse audits for the mobile experience, just remove the line `preset = "desktop"`. New builds will run Lighthouse for the mobile experience.
 
-### Run Lighthouse in a different device
+### Generate Lighthouse results in other languages
 
-To preview Lighthouse audit results in a different language, include the language code from any Lighthouse-supported locale.
+By default, Lighthouse results are generated in English. To preview Lighthouse results in other languages, include the language code from any Lighthouse-supported locale in your `netlify.toml` file. Updates to `netlify.toml` will take effect for new builds.
 
-Example for Spanish:
+#### Generate Lighthouse results in Español
 
 ```
 [[plugins]]
@@ -145,7 +145,8 @@ Example for Spanish:
     locale = "es" # generates reports in Español
 ```
 
-Example for Portuguese:
+
+#### Generate Lighthouse results in Português
 
 ```
 [[plugins]]
