@@ -71,23 +71,7 @@ You can customize the behavior via the `audits` input:
       performance = 0.8
 ```
 
-Example `netlify.toml` file that audits the site root path and a contact page:
-
-```
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  # Generate a Lighthouse report for the site's root path
-  [[plugins.inputs.audits]]
-  path = ""
-
-  # Generate a Lighthouse report for the contact site path
-  [[plugins.inputs.audits]]
-  path = "contact"
-
-```
-
-The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
+The lighthouse scores are automatically printed to the **Deploy log** in the Netlify UI. For example:
 
 ```
 2:35:07 PM: ────────────────────────────────────────────────────────────────
@@ -109,7 +93,6 @@ The lighthouse report results are automatically printed to the **Deploy log** in
 2:35:17 PM: }
 ```
 
-We currently support the following settings, which are passed directly to Lighthouse:
 
 ```
 [[plugins]]
