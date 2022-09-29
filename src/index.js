@@ -96,9 +96,6 @@ const formatResults = ({ results, thresholds }) => {
     score,
     id,
     ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
-    ...(id === 'pwa' && {
-      installable: results.lhr.audits['installable-manifest'].score === 1,
-    }),
   }));
 
   const shortSummary = categories
@@ -106,6 +103,8 @@ const formatResults = ({ results, thresholds }) => {
     .join(', ');
 
   const formattedReport = makeReplacements(results.report);
+
+  const installable = results.lhr.audits['installable-manifest'].score === 1;
 
   const report = minify(formattedReport, {
     removeAttributeQuotes: true,
@@ -117,7 +116,7 @@ const formatResults = ({ results, thresholds }) => {
     minifyJS: true,
   });
 
-  return { summary, shortSummary, report, errors };
+  return { summary, shortSummary, installable, report, errors };
 };
 
 const persistResults = async ({ report, path }) => {
@@ -164,10 +163,11 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
     if (error) {
       return { error };
     } else {
-      const { summary, shortSummary, report, errors } = formatResults({
-        results,
-        thresholds,
-      });
+      const { summary, shortSummary, installable, report, errors } =
+        formatResults({
+          results,
+          thresholds,
+        });
 
       if (output_path) {
         await persistResults({ report, path: join(path, output_path) });
@@ -176,6 +176,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
       return {
         summary,
         shortSummary,
+        installable,
         report,
         errors,
       };
@@ -229,8 +230,8 @@ const processResults = ({ data, errors }) => {
     const reports = [];
     return {
       summary: data
-        .map(({ path, url, summary, shortSummary, report }) => {
-          const obj = { report };
+        .map(({ path, url, summary, shortSummary, installable, report }) => {
+          const obj = { report, installable };
 
           if (summary) {
             obj.summary = summary.reduce((acc, item) => {
@@ -274,13 +275,14 @@ module.exports = {
       const allErrors = [];
       const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
-        const { errors, summary, shortSummary, report } = await runAudit({
-          path,
-          url,
-          thresholds,
-          output_path,
-          settings,
-        });
+        const { errors, summary, shortSummary, installable, report } =
+          await runAudit({
+            path,
+            url,
+            thresholds,
+            output_path,
+            settings,
+          });
         if (summary) {
           console.log({ results: summary });
         }
@@ -302,6 +304,7 @@ module.exports = {
             url,
             summary,
             shortSummary,
+            installable,
             report,
           });
         }
