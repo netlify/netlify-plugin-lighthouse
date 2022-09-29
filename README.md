@@ -120,7 +120,7 @@ We currently support the following settings, which are passed directly to Lighth
     locale = "es" # Any Lighthouse-supported locale, used to generate reports in a different language
 ```
 
-## Running Locally
+### Run Lighthouse Locally
 
 Fork and clone this repo.
 
@@ -131,7 +131,7 @@ yarn install
 yarn local
 ```
 
-## Lighthouse Score Visualizations (Labs feature)
+## Preview Lighthouse results within the Netlify UI
 
 When you install the [Lighthouse Build Plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) on your site and enable this experimental feature, you can view the Lighthouse scores for each of your builds on your site's Deploy Details page with a much richer format.
 
