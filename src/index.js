@@ -293,7 +293,9 @@ module.exports = {
         errors: allErrors,
       });
 
-      show({ summary, extraData });
+      // show({ summary, extraData });
+      s.summary = summary;
+      s.extraData = extraData;
 
       if (error && Object.keys(error).length !== 0) {
         s.summary = error.message;
