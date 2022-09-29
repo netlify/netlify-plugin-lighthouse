@@ -131,16 +131,28 @@ You can optionally run Lighthouse audits for a desktop device by including `pres
 
 To return to running Lighthouse audits for the mobile experience, just remove the line `preset = "desktop"`. New builds will run Lighthouse for the mobile experience.
 
-### Run Lighthouse in a different language 
+### Run Lighthouse in a different device
 
-To preview Lighthouse audit results in a different language, include the language code
+To preview Lighthouse audit results in a different language, include the language code from any Lighthouse-supported locale.
+
+Example for Spanish:
 
 ```
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
   [plugins.inputs.settings]
-    locale = "es" # Any Lighthouse-supported locale, used to generate reports in a different language
+    locale = "es" # generates reports in Español
+```
+
+Example for Portuguese:
+
+```
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+  [plugins.inputs.settings]
+    locale = "por" # generates reports in Português
 ```
 
 ### Run Lighthouse Locally
