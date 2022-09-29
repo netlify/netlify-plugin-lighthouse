@@ -4,7 +4,9 @@ A Netlify plugin to run Lighthouse for every deploy.
 
 ## Installation options
 
-We recommend installing the Lighthouse plugin with a `netlify.toml` file for the most customizations options, including the option to:
+You can install the plugin manually using your site's `netlify.toml` file or the Netlify UI. 
+
+We recommend installing the Lighthouse plugin with a `netlify.toml` file for the most customization, including the option to:
     - [Run Lighthouse for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
     - [Generate Lighthouse results in a different language](#generate-lighthouse-results-in-a-different-language)
     - [Run Lighthouse for a desktop device](#run-lighthouse-for-a-desktop-device)
