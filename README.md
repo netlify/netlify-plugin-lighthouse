@@ -8,7 +8,7 @@ If you would like to run the Lighthouse build plugin for multiple site paths, su
 
 ### Install plugin through the Netlify UI
 
-You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) or from the [Plugins directory](https://app.netlify.com/plugins). 
+You can install this plugin in the Netlify UI from this [direct in-app installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) or from the [Plugins directory](https://app.netlify.com/plugins).
 
 ### Install plugin through the `netlify.toml` file
 
@@ -71,22 +71,22 @@ Example `netlify.toml` file that audits the site root path and a contact page:
 ```
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
-  
+
   # Generate a Lighthouse report for the site's root path
   [[plugins.inputs.audits]]
   path = ""
-        
+
   # Generate a Lighthouse report for the contact site path
   [[plugins.inputs.audits]]
   path = "contact"
 
 ```
 
-
 The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
+
 ```
 2:35:07 PM: ────────────────────────────────────────────────────────────────
-2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse        
+2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse
 2:35:07 PM: ────────────────────────────────────────────────────────────────
 2:35:07 PM: ​
 2:35:07 PM: Serving and scanning site from directory dist
@@ -102,6 +102,17 @@ The lighthouse report results are automatically printed to the **Deploy log** in
 2:35:17 PM:     { title: 'Progressive Web App', score: 0.4, id: 'pwa' }
 2:35:17 PM:   ]
 2:35:17 PM: }
+```
+
+We currently support the following settings, which are passed directly to Lighthouse:
+
+```
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+  [plugins.inputs.settings]
+    preset = "desktop" # Optionally run Lighthouse using a desktop configuration
+    locale = "es" # Any Lighthouse-supported locale, used to generate reports in a different language
 ```
 
 ## Running Locally
@@ -126,6 +137,7 @@ If you have multiple audits (directories, paths, etc) defined in your build, we 
 <img width="1400" alt="Deploy details with multiple audit Lighthouse results" src="https://user-images.githubusercontent.com/79875905/160019057-d29dffab-49f3-4fbf-a1ac-1f314e0cd837.png">
 
 Some items of note:
+
 - The [Lighthouse Build Plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) must be installed on your site(s) in order for these score visualizations to be displayed.
 - This Labs feature is currently only enabled at the user-level, so it will need to be enabled for each individual team member that wishes to see the Lighthouse scores displayed.
 

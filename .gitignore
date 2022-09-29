@@ -7,3 +7,4 @@ yarn-error.log
 reports
 cypress/videos
 cypress/screenshots
+coverage

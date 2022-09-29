@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const fs = require('fs').promises;
 const minify = require('html-minifier').minify;
 const { getConfiguration } = require('./config');
+const { getSettings } = require('./settings');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
 const { makeReplacements } = require('./replacements');
 
@@ -136,14 +137,18 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-const runAudit = async ({ path, url, thresholds, output_path }) => {
+const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
   try {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
-          const results = await runLighthouse(browserPath, server.url);
+          const results = await runLighthouse(
+            browserPath,
+            server.url,
+            settings,
+          );
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
@@ -261,6 +266,8 @@ module.exports = {
         inputs,
       });
 
+      const settings = getSettings(inputs?.settings);
+
       const allErrors = [];
       const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
@@ -269,6 +276,7 @@ module.exports = {
           url,
           thresholds,
           output_path,
+          settings,
         });
         if (summary) {
           console.log({ results: summary });
