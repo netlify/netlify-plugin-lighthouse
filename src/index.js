@@ -251,7 +251,8 @@ const processResults = ({ data, errors }) => {
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
-    const { failBuild } = getUtils({ utils });
+    const { show, failBuild } = getUtils({ utils });
+    let s = {};
 
     try {
       const { audits } = getConfiguration({
@@ -292,15 +293,23 @@ module.exports = {
         errors: allErrors,
       });
 
-      utils.status.show({ summary, extraData });
+      show({ summary, extraData });
 
       if (error && Object.keys(error).length !== 0) {
-        console.error(error.details);
-        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
-        // throw error;
+        s.summary = error.message;
+        s.extraData = extraData;
+        throw error;
       }
     } catch (error) {
-      failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+      if (error.details) {
+        console.error(error.details);
+        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
+      } else {
+        failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+      }
+    } finally {
+      const { summary, extraData } = s;
+      show({ summary, extraData });
     }
   },
 };
