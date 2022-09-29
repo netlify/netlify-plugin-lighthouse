@@ -96,6 +96,9 @@ const formatResults = ({ results, thresholds }) => {
     score,
     id,
     ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
+    ...(id === 'pwa' && {
+      installable: results.lhr.audits['installable-manifest'].score === 1,
+    }),
   }));
 
   const shortSummary = categories
