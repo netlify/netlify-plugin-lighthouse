@@ -123,7 +123,7 @@ const getUtils = ({ utils }) => {
     (utils && utils.build && utils.build.failBuild) ||
     ((message, { error } = {}) => {
       console.error(message, error && error.message);
-      process.exitCode = 1;
+      // process.exitCode = 1;
     });
 
   const show =
