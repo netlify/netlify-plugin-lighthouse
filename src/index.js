@@ -165,7 +165,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
       });
     });
 
-    if (error) {
+    if (error && Object.keys(error).length !== 0) {
       return { error };
     } else {
       const { summary, shortSummary, details, report, errors } = formatResults({
