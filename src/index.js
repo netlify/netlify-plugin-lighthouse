@@ -104,6 +104,13 @@ const formatResults = ({ results, thresholds }) => {
 
   const formattedReport = makeReplacements(results.report);
 
+  // Pull some additional details to pass to App
+  const { formFactor, locale } = results.lhr.configSettings;
+  const installable =
+    results.lhr.audits['installable-manifest'].score === 1 &&
+    results.lhr.audits['service-worker'].score === 1;
+  const details = { installable, formFactor, locale };
+
   const report = minify(formattedReport, {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
@@ -114,7 +121,7 @@ const formatResults = ({ results, thresholds }) => {
     minifyJS: true,
   });
 
-  return { summary, shortSummary, report, errors };
+  return { summary, shortSummary, details, report, errors };
 };
 
 const persistResults = async ({ report, path }) => {
@@ -161,7 +168,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
     if (error) {
       return { error };
     } else {
-      const { summary, shortSummary, report, errors } = formatResults({
+      const { summary, shortSummary, details, report, errors } = formatResults({
         results,
         thresholds,
       });
@@ -173,6 +180,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
       return {
         summary,
         shortSummary,
+        details,
         report,
         errors,
       };
@@ -226,8 +234,8 @@ const processResults = ({ data, errors }) => {
     const reports = [];
     return {
       summary: data
-        .map(({ path, url, summary, shortSummary, report }) => {
-          const obj = { report };
+        .map(({ path, url, summary, shortSummary, details, report }) => {
+          const obj = { report, details };
 
           if (summary) {
             obj.summary = summary.reduce((acc, item) => {
@@ -271,13 +279,14 @@ module.exports = {
       const allErrors = [];
       const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
-        const { errors, summary, shortSummary, report } = await runAudit({
-          path,
-          url,
-          thresholds,
-          output_path,
-          settings,
-        });
+        const { errors, summary, shortSummary, details, report } =
+          await runAudit({
+            path,
+            url,
+            thresholds,
+            output_path,
+            settings,
+          });
         if (summary) {
           console.log({ results: summary });
         }
@@ -299,6 +308,7 @@ module.exports = {
             url,
             summary,
             shortSummary,
+            details,
             report,
           });
         }
