@@ -267,7 +267,7 @@ const processResults = ({ data, errors }) => {
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     const { failBuild, show } = getUtils({ utils });
-    let extraInfo = {};
+    let extraInfo = [];
 
     try {
       const { audits } = getConfiguration({
@@ -303,16 +303,15 @@ module.exports = {
 
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
-        } else {
-          data.push({
-            path,
-            url,
-            summary,
-            shortSummary,
-            details,
-            report,
-          });
         }
+        data.push({
+          path,
+          url,
+          summary,
+          shortSummary,
+          details,
+          report,
+        });
       }
 
       const { error, summary, extraData } = processResults({
@@ -320,7 +319,7 @@ module.exports = {
         errors: allErrors,
         show,
       });
-      extraInfo = extraData;
+      extraInfo.push(...extraData);
 
       if (error && Object.keys(error).length !== 0) {
         throw error;
