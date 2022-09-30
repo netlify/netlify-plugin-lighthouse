@@ -171,7 +171,7 @@ yarn local
 
 ## Preview Lighthouse results within the Netlify UI
 
-Netlify offers an experimental feature through Netlify Labs that allows you to view Lighthouse scores for each of your bilds on your site's Deploy Details page with a much richer format. 
+Netlify offers an experimental feature through Netlify Labs that allows you to view Lighthouse scores for each of your builds on your site's Deploy Details page with a much richer format. 
 
 You'll need to install the [Lighthouse build plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) on your site and then enable this experimental feature through Netlify Labs.
 
