@@ -203,6 +203,7 @@ const prefixString = ({ path, url, str }) => {
 };
 
 const processResults = ({ data, errors }) => {
+  const err = {};
   if (errors.length > 0) {
     const error = errors.reduce(
       (acc, { path, url, errors }) => {
@@ -227,46 +228,46 @@ const processResults = ({ data, errors }) => {
         details: '',
       },
     );
-    return {
-      error,
-    };
-  } else {
-    const reports = [];
-    return {
-      summary: data
-        .map(({ path, url, summary, shortSummary, details, report }) => {
-          const obj = { report, details };
-
-          if (summary) {
-            obj.summary = summary.reduce((acc, item) => {
-              acc[item.id] = Math.round(item.score * 100);
-              return acc;
-            }, {});
-          }
-
-          if (path) {
-            obj.path = path;
-            reports.push(obj);
-            return `Summary for directory '${chalk.magenta(
-              path,
-            )}': ${shortSummary}`;
-          }
-          if (url) {
-            obj.url = url;
-            reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
-          }
-          return `${shortSummary}`;
-        })
-        .join('\n'),
-      extraData: reports,
-    };
+    err.message = error.message;
+    err.details = error.details;
   }
+  const reports = [];
+  return {
+    error: err,
+    summary: data
+      .map(({ path, url, summary, shortSummary, details, report }) => {
+        const obj = { report, details };
+
+        if (summary) {
+          obj.summary = summary.reduce((acc, item) => {
+            acc[item.id] = Math.round(item.score * 100);
+            return acc;
+          }, {});
+        }
+
+        if (path) {
+          obj.path = path;
+          reports.push(obj);
+          return `Summary for directory '${chalk.magenta(
+            path,
+          )}': ${shortSummary}`;
+        }
+        if (url) {
+          obj.url = url;
+          reports.push(obj);
+          return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+        }
+        return `${shortSummary}`;
+      })
+      .join('\n'),
+    extraData: reports,
+  };
 };
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     const { failBuild, show } = getUtils({ utils });
+    let extraInfo = {};
 
     try {
       const { audits } = getConfiguration({
@@ -319,6 +320,7 @@ module.exports = {
         errors: allErrors,
         show,
       });
+      extraInfo = extraData;
 
       if (error) {
         throw error;
@@ -328,9 +330,11 @@ module.exports = {
     } catch (error) {
       if (error.details) {
         console.error(error.details);
-        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
+        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`, {
+          extraInfo,
+        });
       } else {
-        failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+        failBuild(`${chalk.red('Failed with error:\n')}`, { error, extraInfo });
       }
     }
   },
