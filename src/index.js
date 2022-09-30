@@ -165,7 +165,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
       });
     });
 
-    if (error && Object.keys(error).length !== 0) {
+    if (error) {
       return { error };
     } else {
       const { summary, shortSummary, details, report, errors } = formatResults({
@@ -322,7 +322,7 @@ module.exports = {
       });
       extraInfo = extraData;
 
-      if (error) {
+      if (error && Object.keys(error).length !== 0) {
         throw error;
       }
 
