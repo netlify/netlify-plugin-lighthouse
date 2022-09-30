@@ -8,7 +8,7 @@ You can install the plugin for your site using your `netlify.toml` file or the N
 
 For the most customization options, we recommend installing the Lighthouse plugin with a `netlify.toml` file.
 
-File-based installation allows you to:
+`netlify.toml` file-based installation allows you to:
   - [Run Lighthouse audits for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
   - [Run Lighthouse audits for a desktop device](#run-lighthouse-for-the-desktop-experience)
   - [Generate Lighthouse results in a language other than English](#generate-lighthouse-results-in-other-languages)
