@@ -136,7 +136,7 @@ To return to running Lighthouse audits for the mobile experience, just remove th
 ### Generate Lighthouse results in other languages
 
 By default, Lighthouse results are generated in English. To preview Lighthouse results in other languages, include the language code from any Lighthouse-supported locale in your `netlify.toml` file. Updates to `netlify.toml` will take effect for new builds.
-
+ You can check out the latest Lighthouse supported locales or language codes [here](https://github.com/GoogleChrome/lighthouse/blob/da3c865d698abc9365fa7bb087a08ce8c89b0a05/types/lhr/settings.d.ts#L9).
 #### Example to generate Lighthouse results in Spanish
 
 ```
@@ -148,15 +148,6 @@ By default, Lighthouse results are generated in English. To preview Lighthouse r
 ```
 
 
-#### Example to generate Lighthouse results in Portuguese
-
-```
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  [plugins.inputs.settings]
-    locale = "por" # generates reports in Português
-```
 
 ### Run Lighthouse Locally
 
