@@ -6,14 +6,14 @@ A Netlify plugin to run Lighthouse for every deploy.
 
 You can install the plugin manually using your site's `netlify.toml` file or the Netlify UI. 
 
-We recommend installing the Lighthouse plugin with a `netlify.toml` file for the most customization, including the option to:
-    - [Run Lighthouse for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
-    - [Generate Lighthouse results in a different language](#generate-lighthouse-results-in-a-different-language)
-    - [Run Lighthouse for a desktop device](#run-lighthouse-for-a-desktop-device)
+We recommend installing the Lighthouse plugin with a `netlify.toml` file for the most customization options, including:
+  - [Run Lighthouse for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
+  - [Generate Lighthouse results in a different language](#generate-lighthouse-results-in-a-different-language)
+  - [Run Lighthouse for a desktop device](#run-lighthouse-for-a-desktop-device)
 
 ### Install plugin through the Netlify UI
 
-For UI-based installation, you can install this plugin from the [Integrations Hub](https://www.netlify.com/integrations/lighthouse/), the [Plugins directory](https://app.netlify.com/plugins) for your site, or through this [direct installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install).
+For UI-based installation, you can install this plugin from the [Integrations Hub](https://www.netlify.com/integrations/lighthouse/), the [Plugins directory](https://app.netlify.com/plugins), or through this [direct installation link](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install).
 
 ### Install plugin with a `netlify.toml` file
 
@@ -93,7 +93,7 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 2:35:17 PM: }
 ```
 
-## Lighthouse plugin configuration options
+## Lighthouse build plugin configuration options
 
 ### Run Lighthouse for different site paths
 
@@ -135,7 +135,7 @@ To return to running Lighthouse audits for the mobile experience, just remove th
 
 By default, Lighthouse results are generated in English. To preview Lighthouse results in other languages, include the language code from any Lighthouse-supported locale in your `netlify.toml` file. Updates to `netlify.toml` will take effect for new builds.
 
-#### Generate Lighthouse results in Español
+#### Generate Lighthouse results in Spanish
 
 ```
 [[plugins]]
@@ -146,7 +146,7 @@ By default, Lighthouse results are generated in English. To preview Lighthouse r
 ```
 
 
-#### Generate Lighthouse results in Português
+#### Generate Lighthouse results in Portuguese
 
 ```
 [[plugins]]
