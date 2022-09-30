@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.6.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.5.0...v3.6.0) (2022-09-30)
+
+
+### Features
+
+* adds reporting around installable status and config settings ([#476](https://github.com/netlify/netlify-plugin-lighthouse/issues/476)) ([37ddec7](https://github.com/netlify/netlify-plugin-lighthouse/commit/37ddec7614497022a180f0c3c2c45643ac841754))
+
 ## [3.5.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.4.1...v3.5.0) (2022-09-29)
 
 
