@@ -95,7 +95,7 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 2:35:17 PM: }
 ```
 
-## Lighthouse build plugin configuration options
+## Lighthouse plugin configuration options
 
 ### Run Lighthouse for different site paths
 
