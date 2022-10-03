@@ -144,7 +144,14 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
+const runAudit = async ({
+  path,
+  urlPath = '',
+  url,
+  thresholds,
+  output_path,
+  settings,
+}) => {
   try {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
@@ -153,7 +160,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
         try {
           const results = await runLighthouse(
             browserPath,
-            server.url,
+            join(server.url + urlPath),
             settings,
           );
           resolve({ error: false, results });
@@ -278,10 +285,11 @@ module.exports = {
 
       const allErrors = [];
       const data = [];
-      for (const { path, url, thresholds, output_path } of audits) {
+      for (const { path, urlPath, url, thresholds, output_path } of audits) {
         const { errors, summary, shortSummary, details, report } =
           await runAudit({
             path,
+            urlPath,
             url,
             thresholds,
             output_path,
