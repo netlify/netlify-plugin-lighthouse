@@ -267,7 +267,7 @@ const processResults = ({ data, errors }) => {
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     const { failBuild, show } = getUtils({ utils });
-    let extraInfo = [];
+    let errorMetadata = [];
 
     try {
       const { audits } = getConfiguration({
@@ -319,7 +319,7 @@ module.exports = {
         errors: allErrors,
         show,
       });
-      extraInfo.push(...extraData);
+      errorMetadata.push(...extraData);
 
       if (error && Object.keys(error).length !== 0) {
         throw error;
@@ -330,10 +330,13 @@ module.exports = {
       if (error.details) {
         console.error(error.details);
         failBuild(`${chalk.red('Failed with error:\n')}${error.message}`, {
-          extraInfo,
+          errorMetadata,
         });
       } else {
-        failBuild(`${chalk.red('Failed with error:\n')}`, { error, extraInfo });
+        failBuild(`${chalk.red('Failed with error:\n')}`, {
+          error,
+          errorMetadata,
+        });
       }
     }
   },
