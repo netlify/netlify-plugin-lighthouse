@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.7.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.6.0...v3.7.0) (2022-10-03)
+
+
+### Features
+
+* send reports on threshold failure ([#479](https://github.com/netlify/netlify-plugin-lighthouse/issues/479)) ([2001e7e](https://github.com/netlify/netlify-plugin-lighthouse/commit/2001e7e1ac15a2c875cb78fdb66ee8b44b3af4ab))
+
 ## [3.6.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.5.0...v3.6.0) (2022-09-30)
 
 
