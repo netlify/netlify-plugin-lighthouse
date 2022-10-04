@@ -97,31 +97,8 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 ## Lighthouse plugin configuration options
 
-### Run Lighthouse for different site directories
 
-To understand how your site's performance compares across different parts of your site, you can specify different site paths where you'd like to run Lighthouse audits.  Updates to `netlify.toml` will take effect for new builds.
 
-### Example to audit a site's root path and the contact page
-
-```
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  # Generate a Lighthouse report for the site's root path
-  [[plugins.inputs.audits]]
-  path = ""
-
-  # Generate a Lighthouse report for the contact site path
-  [[plugins.inputs.audits]]
-  path = "contact"
-
-```
-
-### Run Lighthouse for the desktop experience
-
-By default, Lighthouse takes a mobile-first performance testing approach and runs audits for the mobile device experience.  Updates to `netlify.toml` will take effect for new builds.
-
-You can optionally run Lighthouse audits for the desktop experience by including `preset = "desktop"` in your `netlify.toml` file:
 
 ```
 [[plugins]]
