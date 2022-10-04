@@ -106,9 +106,7 @@ const formatResults = ({ results, thresholds }) => {
 
   // Pull some additional details to pass to App
   const { formFactor, locale } = results.lhr.configSettings;
-  const installable =
-    results.lhr.audits['installable-manifest'].score === 1 &&
-    results.lhr.audits['service-worker'].score === 1;
+  const installable = results.lhr.audits['installable-manifest'].score === 1;
   const details = { installable, formFactor, locale };
 
   const report = minify(formattedReport, {
