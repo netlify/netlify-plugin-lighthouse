@@ -97,6 +97,7 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 ## Lighthouse plugin configuration options
 
+To customize how Lighthouse runs audits, you can make changes to the `netlify.toml` file.
 
 
 
