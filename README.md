@@ -1,6 +1,6 @@
 # Netlify Plugin Lighthouse
 
-A Netlify plugin to generate a lighthouse report for every deploy
+A Netlify plugin to generate a Lighthouse report for every deploy
 
 ## Usage
 
@@ -82,7 +82,7 @@ Example `netlify.toml` file that audits the site root path and a contact page:
 
 ```
 
-The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
+The Lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
 
 ```
 2:35:07 PM: ────────────────────────────────────────────────────────────────
