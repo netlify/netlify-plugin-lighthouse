@@ -97,7 +97,7 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 ## Lighthouse plugin configuration options
 
-### Run Lighthouse for different site paths
+### Run Lighthouse for different site directories
 
 To understand how your site's performance compares across different parts of your site, you can specify different site paths where you'd like to run Lighthouse audits.  Updates to `netlify.toml` will take effect for new builds.
 
