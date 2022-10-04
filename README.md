@@ -99,7 +99,9 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 To customize how Lighthouse runs audits, you can make changes to the `netlify.toml` file.
 
+### Run Lighthouse audits for desktop
 
+By default, Lighthouse takes a mobile-first performance testing approach and runs audits for the mobile device experience. You can optionally run Lighthouse audits for the desktop experience by including `preset = "desktop"` in your `netlify.toml` file:
 
 ```
 [[plugins]]
@@ -108,6 +110,8 @@ To customize how Lighthouse runs audits, you can make changes to the `netlify.to
   [plugins.inputs.settings]
     preset = "desktop" # Optionally run Lighthouse using a desktop configuration
 ```
+
+Updates to `netlify.toml` will take effect for new builds.
 
 To return to running Lighthouse audits for the mobile experience, just remove the line `preset = "desktop"`. New builds will run Lighthouse for the mobile experience.
 
