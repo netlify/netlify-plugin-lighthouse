@@ -119,7 +119,7 @@ To understand how your site's performance compares across different parts of you
 
 ### Run Lighthouse for the desktop experience
 
-By default, Lighthouse takes a mobile-first performance testing approach and runs its audits for the mobile device experience.  Updates to `netlify.toml` will take effect for new builds.
+By default, Lighthouse takes a mobile-first performance testing approach and runs audits for the mobile device experience.  Updates to `netlify.toml` will take effect for new builds.
 
 You can optionally run Lighthouse audits for the desktop experience by including `preset = "desktop"` in your `netlify.toml` file:
 
