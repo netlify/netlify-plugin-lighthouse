@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.7.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.7.0...v3.7.1) (2022-10-04)
+
+
+### Bug Fixes
+
+* Reduce scope of 'installable' test ([#483](https://github.com/netlify/netlify-plugin-lighthouse/issues/483)) ([d88fd09](https://github.com/netlify/netlify-plugin-lighthouse/commit/d88fd09fe2135d935e7e9b4e5d39e04bfb207991))
+
 ## [3.7.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.6.0...v3.7.0) (2022-10-03)
 
 
