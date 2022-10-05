@@ -1,6 +1,6 @@
 {
   "name": "@netlify/plugin-lighthouse",
-  "version": "3.2.0",
+  "version": "3.7.1",
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "express": "^4.17.1",
     "html-minifier": "^4.0.0",
     "lighthouse": "^9.6.3",
-    "puppeteer": "^15.0.0"
+    "puppeteer": "^18.0.0"
   },
   "engines": {
     "node": ">=14.15 <18"

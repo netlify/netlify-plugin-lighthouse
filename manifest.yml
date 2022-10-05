@@ -16,3 +16,7 @@ inputs:
   - name: audits
     required: false
     description: A list of audits to perform. Each list item is an object with either a url/path to scan and an optional thresholds mapping.
+
+  - name: settings
+    required: false
+    description: Lighthouse-specific settings, used to modify reporting criteria

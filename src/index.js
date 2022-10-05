@@ -6,7 +6,9 @@ const chalk = require('chalk');
 const fs = require('fs').promises;
 const minify = require('html-minifier').minify;
 const { getConfiguration } = require('./config');
+const { getSettings } = require('./settings');
 const { getBrowserPath, runLighthouse } = require('./lighthouse');
+const { makeReplacements } = require('./replacements');
 
 const getServer = ({ serveDir, auditUrl }) => {
   if (auditUrl) {
@@ -97,10 +99,17 @@ const formatResults = ({ results, thresholds }) => {
   }));
 
   const shortSummary = categories
-    .map(({ title, score }) => `${title}: ${score * 100}`)
+    .map(({ title, score }) => `${title}: ${Math.round(score * 100)}`)
     .join(', ');
 
-  const report = minify(results.report, {
+  const formattedReport = makeReplacements(results.report);
+
+  // Pull some additional details to pass to App
+  const { formFactor, locale } = results.lhr.configSettings;
+  const installable = results.lhr.audits['installable-manifest'].score === 1;
+  const details = { installable, formFactor, locale };
+
+  const report = minify(formattedReport, {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
     removeRedundantAttributes: true,
@@ -110,7 +119,7 @@ const formatResults = ({ results, thresholds }) => {
     minifyJS: true,
   });
 
-  return { summary, shortSummary, report, errors };
+  return { summary, shortSummary, details, report, errors };
 };
 
 const persistResults = async ({ report, path }) => {
@@ -133,14 +142,18 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-const runAudit = async ({ path, url, thresholds, output_path }) => {
+const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
   try {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
-          const results = await runLighthouse(browserPath, server.url);
+          const results = await runLighthouse(
+            browserPath,
+            server.url,
+            settings,
+          );
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
@@ -153,7 +166,7 @@ const runAudit = async ({ path, url, thresholds, output_path }) => {
     if (error) {
       return { error };
     } else {
-      const { summary, shortSummary, report, errors } = formatResults({
+      const { summary, shortSummary, details, report, errors } = formatResults({
         results,
         thresholds,
       });
@@ -165,6 +178,7 @@ const runAudit = async ({ path, url, thresholds, output_path }) => {
       return {
         summary,
         shortSummary,
+        details,
         report,
         errors,
       };
@@ -187,6 +201,7 @@ const prefixString = ({ path, url, str }) => {
 };
 
 const processResults = ({ data, errors }) => {
+  const err = {};
   if (errors.length > 0) {
     const error = errors.reduce(
       (acc, { path, url, errors }) => {
@@ -211,45 +226,46 @@ const processResults = ({ data, errors }) => {
         details: '',
       },
     );
-    return {
-      error,
-    };
-  } else {
-    const reports = [];
-    return {
-      summary: data
-        .map(({ path, url, summary, shortSummary, report }) => {
-          const obj = {
-            summary: summary.reduce((acc, item) => {
-              acc[item.id] = item.score * 100;
-              return acc;
-            }, {}),
-            report,
-          };
-
-          if (path) {
-            obj.path = path;
-            reports.push(obj);
-            return `Summary for directory '${chalk.magenta(
-              path,
-            )}': ${shortSummary}`;
-          }
-          if (url) {
-            obj.url = url;
-            reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
-          }
-          return `${shortSummary}`;
-        })
-        .join('\n'),
-      extraData: reports,
-    };
+    err.message = error.message;
+    err.details = error.details;
   }
+  const reports = [];
+  return {
+    error: err,
+    summary: data
+      .map(({ path, url, summary, shortSummary, details, report }) => {
+        const obj = { report, details };
+
+        if (summary) {
+          obj.summary = summary.reduce((acc, item) => {
+            acc[item.id] = Math.round(item.score * 100);
+            return acc;
+          }, {});
+        }
+
+        if (path) {
+          obj.path = path;
+          reports.push(obj);
+          return `Summary for directory '${chalk.magenta(
+            path,
+          )}': ${shortSummary}`;
+        }
+        if (url) {
+          obj.url = url;
+          reports.push(obj);
+          return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+        }
+        return `${shortSummary}`;
+      })
+      .join('\n'),
+    extraData: reports,
+  };
 };
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     const { failBuild, show } = getUtils({ utils });
+    let errorMetadata = [];
 
     try {
       const { audits } = getConfiguration({
@@ -257,15 +273,19 @@ module.exports = {
         inputs,
       });
 
+      const settings = getSettings(inputs?.settings);
+
       const allErrors = [];
       const data = [];
       for (const { path, url, thresholds, output_path } of audits) {
-        const { errors, summary, shortSummary, report } = await runAudit({
-          path,
-          url,
-          thresholds,
-          output_path,
-        });
+        const { errors, summary, shortSummary, details, report } =
+          await runAudit({
+            path,
+            url,
+            thresholds,
+            output_path,
+            settings,
+          });
         if (summary) {
           console.log({ results: summary });
         }
@@ -281,9 +301,15 @@ module.exports = {
 
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
-        } else {
-          data.push({ path, url, summary, shortSummary, report });
         }
+        data.push({
+          path,
+          url,
+          summary,
+          shortSummary,
+          details,
+          report,
+        });
       }
 
       const { error, summary, extraData } = processResults({
@@ -291,8 +317,9 @@ module.exports = {
         errors: allErrors,
         show,
       });
+      errorMetadata.push(...extraData);
 
-      if (error) {
+      if (error && Object.keys(error).length !== 0) {
         throw error;
       }
 
@@ -300,9 +327,14 @@ module.exports = {
     } catch (error) {
       if (error.details) {
         console.error(error.details);
-        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
+        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`, {
+          errorMetadata,
+        });
       } else {
-        failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+        failBuild(`${chalk.red('Failed with error:\n')}`, {
+          error,
+          errorMetadata,
+        });
       }
     }
   },
