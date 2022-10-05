@@ -5,6 +5,78 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [3.7.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.7.0...v3.7.1) (2022-10-04)
+
+
+### Bug Fixes
+
+* Reduce scope of 'installable' test ([#483](https://github.com/netlify/netlify-plugin-lighthouse/issues/483)) ([d88fd09](https://github.com/netlify/netlify-plugin-lighthouse/commit/d88fd09fe2135d935e7e9b4e5d39e04bfb207991))
+
+## [3.7.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.6.0...v3.7.0) (2022-10-03)
+
+
+### Features
+
+* send reports on threshold failure ([#479](https://github.com/netlify/netlify-plugin-lighthouse/issues/479)) ([2001e7e](https://github.com/netlify/netlify-plugin-lighthouse/commit/2001e7e1ac15a2c875cb78fdb66ee8b44b3af4ab))
+
+## [3.6.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.5.0...v3.6.0) (2022-09-30)
+
+
+### Features
+
+* adds reporting around installable status and config settings ([#476](https://github.com/netlify/netlify-plugin-lighthouse/issues/476)) ([37ddec7](https://github.com/netlify/netlify-plugin-lighthouse/commit/37ddec7614497022a180f0c3c2c45643ac841754))
+
+## [3.5.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.4.1...v3.5.0) (2022-09-29)
+
+
+### Features
+
+* Add initial support for Lighthouse settings ([#474](https://github.com/netlify/netlify-plugin-lighthouse/issues/474)) ([587f9d6](https://github.com/netlify/netlify-plugin-lighthouse/commit/587f9d6276def4017b9d430b596cd407911be3e5))
+
+
+### Bug Fixes
+
+* adds score rounding to avoid floating point errors ([#473](https://github.com/netlify/netlify-plugin-lighthouse/issues/473)) ([8b2f4cf](https://github.com/netlify/netlify-plugin-lighthouse/commit/8b2f4cfdf3d0197b731acd5dd7e86c3ed8ac9ff2))
+* **deps:** update dependency dotenv to v16.0.2 ([#462](https://github.com/netlify/netlify-plugin-lighthouse/issues/462)) ([d76b6a6](https://github.com/netlify/netlify-plugin-lighthouse/commit/d76b6a611948778b2c5b158d51e5bd1217ee951d))
+* **deps:** update dependency lighthouse to v9.6.7 ([#463](https://github.com/netlify/netlify-plugin-lighthouse/issues/463)) ([43dfe6d](https://github.com/netlify/netlify-plugin-lighthouse/commit/43dfe6db2d05316183ca3e00a71b136e1ca6da2f))
+* **deps:** update dependency puppeteer to v18 ([#472](https://github.com/netlify/netlify-plugin-lighthouse/issues/472)) ([bf1c432](https://github.com/netlify/netlify-plugin-lighthouse/commit/bf1c432db1f4269ca0f2bed828a2cbf8c3256127))
+
+## [3.4.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.4.0...v3.4.1) (2022-09-21)
+
+
+### Bug Fixes
+
+* run replacements function before HTML minification ([#469](https://github.com/netlify/netlify-plugin-lighthouse/issues/469)) ([1e74d86](https://github.com/netlify/netlify-plugin-lighthouse/commit/1e74d86bc0d18a084ea6802e3e4b92b427386b72))
+
+## [3.4.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.3.0...v3.4.0) (2022-09-21)
+
+
+### Features
+
+* Add support for theme matching and scroll reporting via `postMessage` ([#461](https://github.com/netlify/netlify-plugin-lighthouse/issues/461)) ([42822bc](https://github.com/netlify/netlify-plugin-lighthouse/commit/42822bca390d90f2573fc98ff9c4c33adf2c697d))
+
+## [3.3.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.2.1...v3.3.0) (2022-08-26)
+
+
+### Features
+
+* inject theme-querying snippets to each report ([#455](https://github.com/netlify/netlify-plugin-lighthouse/issues/455)) ([646a06d](https://github.com/netlify/netlify-plugin-lighthouse/commit/646a06d2098377421fa667f8be69cbf85f73684b))
+
+
+### Bug Fixes
+
+* **deps:** update dependency lighthouse to v9.6.5 ([#447](https://github.com/netlify/netlify-plugin-lighthouse/issues/447)) ([72fe792](https://github.com/netlify/netlify-plugin-lighthouse/commit/72fe792abb8e84c4d2b9521a3a544203148b09b6))
+* **deps:** update dependency lighthouse to v9.6.6 ([#456](https://github.com/netlify/netlify-plugin-lighthouse/issues/456)) ([194b212](https://github.com/netlify/netlify-plugin-lighthouse/commit/194b212db2cb138a6a685bc558527e0abfb60fa6))
+* **deps:** update dependency puppeteer to v16 ([#451](https://github.com/netlify/netlify-plugin-lighthouse/issues/451)) ([a0b315e](https://github.com/netlify/netlify-plugin-lighthouse/commit/a0b315e29af70eae5d367d2326d05975f675a769))
+* **deps:** update dependency puppeteer to v16.2.0 ([#457](https://github.com/netlify/netlify-plugin-lighthouse/issues/457)) ([19c9ee8](https://github.com/netlify/netlify-plugin-lighthouse/commit/19c9ee8fa5e2b596791f7ed12d1f40b5a682085d))
+
+## [3.2.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.2.0...v3.2.1) (2022-08-09)
+
+
+### Bug Fixes
+
+* account for missing summary ([#452](https://github.com/netlify/netlify-plugin-lighthouse/issues/452)) ([e926936](https://github.com/netlify/netlify-plugin-lighthouse/commit/e9269364bbd59dc30f05f2a525aac845cdc8c89d))
+
 ## [3.1.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.0.1...v3.1.0) (2022-07-27)
 
 
