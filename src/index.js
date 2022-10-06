@@ -146,7 +146,7 @@ const getUtils = ({ utils }) => {
 
 const runAudit = async ({
   path,
-  urlPath = '',
+  fileName = '',
   url,
   thresholds,
   output_path,
@@ -159,8 +159,8 @@ const runAudit = async ({
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
-          const fullUrl = urlPath ? `${server.url}/${urlPath}` : server.url;
-          const results = await runLighthouse(browserPath, fullUrl, settings);
+          const fullPath = fileName ? `${server.url}/${fileName}` : server.url;
+          const results = await runLighthouse(browserPath, fullPath, settings);
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
@@ -284,11 +284,11 @@ module.exports = {
 
       const allErrors = [];
       const data = [];
-      for (const { path, urlPath, url, thresholds, output_path } of audits) {
+      for (const { path, fileName, url, thresholds, output_path } of audits) {
         const { errors, summary, shortSummary, details, report } =
           await runAudit({
             path,
-            urlPath,
+            fileName,
             url,
             thresholds,
             output_path,
