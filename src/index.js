@@ -159,7 +159,7 @@ const runAudit = async ({
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
-          const fullUrl = `${server.url}/${urlPath}`;
+          const fullUrl = urlPath ? `${server.url}/${urlPath}` : server.url;
           const results = await runLighthouse(browserPath, fullUrl, settings);
           resolve({ error: false, results });
         } catch (error) {
