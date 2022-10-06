@@ -30,7 +30,11 @@ const getServer = ({ serveDir, auditUrl }) => {
 
   const app = express();
   app.use(compression());
-  app.use(express.static(serveDir));
+  app.use(
+    express.static(serveDir),
+    express.static(`${serveDir}/static/css`),
+    express.static(`${serveDir}/static/js`),
+  );
 
   const port = 5000;
   const host = 'localhost';
