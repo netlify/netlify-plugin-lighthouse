@@ -155,7 +155,6 @@ const runAudit = async ({
   try {
     const { server } = getServer({ serveDir: path, auditUrl: url });
     const browserPath = await getBrowserPath();
-
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
@@ -191,7 +190,6 @@ const runAudit = async ({
       };
     }
   } catch (error) {
-    console.log(error);
     return { error };
   }
 };
