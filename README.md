@@ -79,7 +79,7 @@ You can customize the behavior via the `audits` input:
 
 ```
 
-The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
+The lighthouse scores are automatically printed to the **Deploy log** in the Netlify UI. For example:
 
 ```
 2:35:07 PM: ────────────────────────────────────────────────────────────────
