@@ -79,22 +79,6 @@ You can customize the behavior via the `audits` input:
 
 ```
 
-Example `netlify.toml` file that audits the site root path and a contact page contained in a sub-directory:
-
-```toml
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-
-  # Generate a Lighthouse report for the site's root path
-  [[plugins.inputs.audits]]
-    path = ""
-
-  # Generate a Lighthouse report for the contact site path
-  [[plugins.inputs.audits]]
-    path = "contact"
-
-```
-
 The lighthouse report results are automatically printed to the **Deploy log** in the Netlify UI. For example:
 
 ```
