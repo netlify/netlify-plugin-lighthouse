@@ -64,7 +64,7 @@ const getConfiguration = ({ constants, inputs } = {}) => {
         ...a,
         thresholds: a.thresholds || thresholds,
         output_path: a.output_path || output_path,
-        ...getServePath(serveDir, a.path),
+        ...getServePath(serveDir, a.path ?? ''),
       };
     });
   }

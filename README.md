@@ -39,7 +39,7 @@ Then add the plugin to your `netlify.toml` configuration file:
     output_path = "reports/lighthouse.html"
 ```
 
-By default, the plugin will serve and audit the build directory of the site.
+By default, the plugin will serve and audit the build directory of the site, inspecting the `index.html`.
 You can customize the behavior via the `audits` input:
 
 ```toml
@@ -57,6 +57,10 @@ You can customize the behavior via the `audits` input:
     # you can specify output_path per audit, relative to the path
     output_path = "reports/route1.html"
 
+  # to audit an HTML file other than index.html
+  [[plugins.inputs.audits]]
+    fileName = "contact.html"
+
   # to audit a specific absolute url
   [[plugins.inputs.audits]]
     url = "https://www.example.com"
@@ -64,21 +68,22 @@ You can customize the behavior via the `audits` input:
     # you can specify thresholds per audit
     [plugins.inputs.audits.thresholds]
       performance = 0.8
-```
-
-Example `netlify.toml` file that audits the site root path and a contact page:
 
 ```
+
+Example `netlify.toml` file that audits the site root path and a contact page contained in a sub-directory:
+
+```toml
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
   # Generate a Lighthouse report for the site's root path
   [[plugins.inputs.audits]]
-  path = ""
+    path = ""
 
   # Generate a Lighthouse report for the contact site path
   [[plugins.inputs.audits]]
-  path = "contact"
+    path = "contact"
 
 ```
 
@@ -106,7 +111,7 @@ The lighthouse report results are automatically printed to the **Deploy log** in
 
 We currently support the following settings, which are passed directly to Lighthouse:
 
-```
+```toml
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
