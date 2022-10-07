@@ -5,6 +5,22 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.7.1...v4.0.0) (2022-10-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* The `path` audit input option no longer affects the served directory for an audit. Use `serveDir` instead. Use `path` to specify the sub directory or `html` file within the served directory that should be audited.
+
+### Features
+
+* Allow running lighthouse on other pages available in publish folder ([#487](https://github.com/netlify/netlify-plugin-lighthouse/issues/487)) ([ea0856b](https://github.com/netlify/netlify-plugin-lighthouse/commit/ea0856b0980576942a0862b69d5b140a9b8025b3))
+
+
+### Bug Fixes
+
+* **deps:** update dependency dotenv to v16.0.3 ([#480](https://github.com/netlify/netlify-plugin-lighthouse/issues/480)) ([c204252](https://github.com/netlify/netlify-plugin-lighthouse/commit/c204252a18f63181381b6b0f7c5e5b34b5c9560e))
+
 ## [3.7.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v3.7.0...v3.7.1) (2022-10-04)
 
 
