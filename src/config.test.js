@@ -58,7 +58,11 @@ describe('config', () => {
 
     expect(config).toEqual({
       audits: [
-        { url: 'https://www.test.com', thresholds: { performance: 0.9 } },
+        {
+          url: 'https://www.test.com',
+          thresholds: { performance: 0.9 },
+          path: 'PUBLISH_DIR',
+        },
         { path: 'PUBLISH_DIR/route1', thresholds: { seo: 0.9 } },
       ],
     });
