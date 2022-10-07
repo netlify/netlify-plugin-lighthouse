@@ -106,9 +106,7 @@ const formatResults = ({ results, thresholds }) => {
 
   // Pull some additional details to pass to App
   const { formFactor, locale } = results.lhr.configSettings;
-  const installable =
-    results.lhr.audits['installable-manifest'].score === 1 &&
-    results.lhr.audits['service-worker'].score === 1;
+  const installable = results.lhr.audits['installable-manifest'].score === 1;
   const details = { installable, formFactor, locale };
 
   const report = minify(formattedReport, {
@@ -207,6 +205,7 @@ const prefixString = ({ path, url, str }) => {
 };
 
 const processResults = ({ data, errors }) => {
+  const err = {};
   if (errors.length > 0) {
     const error = errors.reduce(
       (acc, { path, url, errors }) => {
@@ -231,46 +230,46 @@ const processResults = ({ data, errors }) => {
         details: '',
       },
     );
-    return {
-      error,
-    };
-  } else {
-    const reports = [];
-    return {
-      summary: data
-        .map(({ path, url, summary, shortSummary, details, report }) => {
-          const obj = { report, details };
-
-          if (summary) {
-            obj.summary = summary.reduce((acc, item) => {
-              acc[item.id] = Math.round(item.score * 100);
-              return acc;
-            }, {});
-          }
-
-          if (path) {
-            obj.path = path;
-            reports.push(obj);
-            return `Summary for directory '${chalk.magenta(
-              path,
-            )}': ${shortSummary}`;
-          }
-          if (url) {
-            obj.url = url;
-            reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
-          }
-          return `${shortSummary}`;
-        })
-        .join('\n'),
-      extraData: reports,
-    };
+    err.message = error.message;
+    err.details = error.details;
   }
+  const reports = [];
+  return {
+    error: err,
+    summary: data
+      .map(({ path, url, summary, shortSummary, details, report }) => {
+        const obj = { report, details };
+
+        if (summary) {
+          obj.summary = summary.reduce((acc, item) => {
+            acc[item.id] = Math.round(item.score * 100);
+            return acc;
+          }, {});
+        }
+
+        if (path) {
+          obj.path = path;
+          reports.push(obj);
+          return `Summary for directory '${chalk.magenta(
+            path,
+          )}': ${shortSummary}`;
+        }
+        if (url) {
+          obj.url = url;
+          reports.push(obj);
+          return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+        }
+        return `${shortSummary}`;
+      })
+      .join('\n'),
+    extraData: reports,
+  };
 };
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     const { failBuild, show } = getUtils({ utils });
+    let errorMetadata = [];
 
     try {
       const { audits } = getConfiguration({
@@ -307,16 +306,15 @@ module.exports = {
 
         if (Array.isArray(errors) && errors.length > 0) {
           allErrors.push({ path, url, errors });
-        } else {
-          data.push({
-            path,
-            url,
-            summary,
-            shortSummary,
-            details,
-            report,
-          });
         }
+        data.push({
+          path,
+          url,
+          summary,
+          shortSummary,
+          details,
+          report,
+        });
       }
 
       const { error, summary, extraData } = processResults({
@@ -324,8 +322,9 @@ module.exports = {
         errors: allErrors,
         show,
       });
+      errorMetadata.push(...extraData);
 
-      if (error) {
+      if (error && Object.keys(error).length !== 0) {
         throw error;
       }
 
@@ -333,9 +332,14 @@ module.exports = {
     } catch (error) {
       if (error.details) {
         console.error(error.details);
-        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`);
+        failBuild(`${chalk.red('Failed with error:\n')}${error.message}`, {
+          errorMetadata,
+        });
       } else {
-        failBuild(`${chalk.red('Failed with error:\n')}`, { error });
+        failBuild(`${chalk.red('Failed with error:\n')}`, {
+          error,
+          errorMetadata,
+        });
       }
     }
   },

@@ -5,6 +5,6 @@ yarn-error.log
 # Local Netlify folder
 .netlify
 reports
+coverage
 cypress/videos
 cypress/screenshots
-coverage
