@@ -237,40 +237,28 @@ const processResults = ({ data, errors }) => {
   return {
     error: err,
     summary: data
-      .map(
-        ({ path, url, summary, shortSummary, details, report, fileName }) => {
-          const obj = { report, details };
+      .map(({ path, url, summary, shortSummary, details, report }) => {
+        const obj = { report, details };
 
-          if (summary) {
-            obj.summary = summary.reduce((acc, item) => {
-              acc[item.id] = Math.round(item.score * 100);
-              return acc;
-            }, {});
-          }
+        if (summary) {
+          obj.summary = summary.reduce((acc, item) => {
+            acc[item.id] = Math.round(item.score * 100);
+            return acc;
+          }, {});
+        }
 
-          if (fileName) {
-            obj.fileName = fileName;
-            reports.push(obj);
-            return `Summary for file '${chalk.magenta(
-              [path, fileName].join('/'),
-            )}': ${shortSummary}`;
-          }
-
-          if (path) {
-            obj.path = path;
-            reports.push(obj);
-            return `Summary for directory '${chalk.magenta(
-              path,
-            )}': ${shortSummary}`;
-          }
-          if (url) {
-            obj.url = url;
-            reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
-          }
-          return `${shortSummary}`;
-        },
-      )
+        if (path) {
+          obj.path = path;
+          reports.push(obj);
+          return `Summary for path '${chalk.magenta(path)}': ${shortSummary}`;
+        }
+        if (url) {
+          obj.url = url;
+          reports.push(obj);
+          return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+        }
+        return `${shortSummary}`;
+      })
       .join('\n'),
     extraData: reports,
   };
