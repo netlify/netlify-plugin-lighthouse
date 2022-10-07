@@ -305,9 +305,9 @@ module.exports = {
           console.log({ results: summary });
         }
 
+        const fullPath = [path, fileName].join('/');
         if (report) {
           const size = Buffer.byteLength(JSON.stringify(report));
-          const fullPath = [path, fileName].join('/');
           console.log(
             `Report collected: audited_uri: '${chalk.magenta(
               url || fullPath,
@@ -319,13 +319,12 @@ module.exports = {
           allErrors.push({ path, url, errors });
         }
         data.push({
-          path,
+          path: fullPath,
           url,
           summary,
           shortSummary,
           details,
           report,
-          fileName,
         });
       }
 
