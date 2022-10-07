@@ -143,20 +143,20 @@ const getUtils = ({ utils }) => {
 };
 
 const runAudit = async ({
-  path,
-  fileName = '',
+  serveDir,
+  path = '',
   url,
   thresholds,
   output_path,
   settings,
 }) => {
   try {
-    const { server } = getServer({ serveDir: path, auditUrl: url });
+    const { server } = getServer({ serveDir: serveDir, auditUrl: url });
     const browserPath = await getBrowserPath();
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
-          const fullPath = fileName ? `${server.url}/${fileName}` : server.url;
+          const fullPath = path ? `${server.url}/${path}` : server.url;
           const results = await runLighthouse(browserPath, fullPath, settings);
           resolve({ error: false, results });
         } catch (error) {
@@ -176,7 +176,7 @@ const runAudit = async ({
       });
 
       if (output_path) {
-        await persistResults({ report, path: join(path, output_path) });
+        await persistResults({ report, path: join(serveDir, output_path) });
       }
 
       return {
@@ -275,15 +275,17 @@ module.exports = {
         inputs,
       });
 
+      console.log('------', audits);
+
       const settings = getSettings(inputs?.settings);
 
       const allErrors = [];
       const data = [];
-      for (const { path, fileName, url, thresholds, output_path } of audits) {
+      for (const { serveDir, path, url, thresholds, output_path } of audits) {
         const { errors, summary, shortSummary, details, report } =
           await runAudit({
+            serveDir,
             path,
-            fileName,
             url,
             thresholds,
             output_path,
@@ -293,7 +295,7 @@ module.exports = {
           console.log({ results: summary });
         }
 
-        const fullPath = [path, fileName].join('/');
+        const fullPath = [serveDir, path].join('/');
         if (report) {
           const size = Buffer.byteLength(JSON.stringify(report));
           console.log(
@@ -304,7 +306,7 @@ module.exports = {
         }
 
         if (Array.isArray(errors) && errors.length > 0) {
-          allErrors.push({ path, url, errors });
+          allErrors.push({ serveDir, url, errors });
         }
         data.push({
           path: fullPath,
