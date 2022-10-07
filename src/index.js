@@ -307,9 +307,10 @@ module.exports = {
 
         if (report) {
           const size = Buffer.byteLength(JSON.stringify(report));
+          const fullPath = [path, fileName].join('/');
           console.log(
             `Report collected: audited_uri: '${chalk.magenta(
-              url || path,
+              url || fullPath,
             )}', html_report_size: ${chalk.magenta(size / 1024)} KiB`,
           );
         }
