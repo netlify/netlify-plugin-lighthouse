@@ -147,7 +147,7 @@ Updates to `netlify.toml` will take effect for new builds.
 
 #### Example to generate Lighthouse results in Spanish
 
-```
+```toml
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
