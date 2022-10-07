@@ -1,23 +1,23 @@
 const chalk = require('chalk');
 const { join } = require('path');
 
-const getServePath = (dir, path) => {
-  if (typeof path !== 'string' || typeof dir !== 'string') {
-    return { path: undefined };
+const getServePath = (dir, subDir) => {
+  if (typeof subDir !== 'string' || typeof dir !== 'string') {
+    return { serveDir: undefined };
   }
 
-  const resolvedPath = join(dir, path);
+  const resolvedPath = join(dir, subDir);
   if (!resolvedPath.startsWith(dir)) {
     throw new Error(
       chalk.red(
         `resolved path for ${chalk.red(
-          path,
+          subDir,
         )} is outside publish directory ${chalk.red(dir)}`,
       ),
     );
   }
 
-  return { path: resolvedPath };
+  return { serveDir: resolvedPath };
 };
 
 const getConfiguration = ({ constants, inputs } = {}) => {
@@ -57,14 +57,14 @@ const getConfiguration = ({ constants, inputs } = {}) => {
   }
 
   if (!Array.isArray(audits)) {
-    audits = [{ path: serveDir, url: auditUrl, thresholds, output_path }];
+    audits = [{ serveDir, url: auditUrl, thresholds, output_path }];
   } else {
     audits = audits.map((a) => {
       return {
         ...a,
         thresholds: a.thresholds || thresholds,
         output_path: a.output_path || output_path,
-        ...getServePath(serveDir, a.path),
+        ...getServePath(serveDir, a.serveDir ?? ''),
       };
     });
   }

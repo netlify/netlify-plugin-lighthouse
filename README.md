@@ -4,14 +4,15 @@ A Netlify plugin to generate a Lighthouse report for every deploy
 
 ## Installation options
 
-You can install the plugin for your site using your `netlify.toml` file or the Netlify UI. 
+You can install the plugin for your site using your `netlify.toml` file or the Netlify UI.
 
 For the most customization options, we recommend installing the Lighthouse plugin with a `netlify.toml` file.
 
 `netlify.toml` file-based installation allows you to:
-  - [Run Lighthouse audits for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
-  - [Run Lighthouse audits for a desktop device](#run-lighthouse-for-the-desktop-experience)
-  - [Generate Lighthouse results in a language other than English](#generate-lighthouse-results-in-other-languages)
+
+- [Run Lighthouse audits for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
+- [Run Lighthouse audits for a desktop device](#run-lighthouse-for-the-desktop-experience)
+- [Generate Lighthouse results in a language other than English](#generate-lighthouse-results-in-other-languages)
 
 ### Install plugin through the Netlify UI
 
@@ -46,7 +47,7 @@ Then add the plugin to your `netlify.toml` configuration file:
     output_path = "reports/lighthouse.html"
 ```
 
-By default, the plugin will serve and audit the build directory of the site.
+By default, the plugin will serve and audit the build directory of the site, inspecting the `index.html`.
 You can customize the behavior via the `audits` input:
 
 ```toml
@@ -64,6 +65,14 @@ You can customize the behavior via the `audits` input:
     # you can specify output_path per audit, relative to the path
     output_path = "reports/route1.html"
 
+  # to audit an HTML file other than index.html in the build directory
+  [[plugins.inputs.audits]]
+    path = "contact.html"
+
+  # to audit an HTML file other than index.html in a sub path of the build directory
+  [[plugins.inputs.audits]]
+    path = "pages/contact.html"
+
   # to audit a specific absolute url
   [[plugins.inputs.audits]]
     url = "https://www.example.com"
@@ -71,6 +80,12 @@ You can customize the behavior via the `audits` input:
     # you can specify thresholds per audit
     [plugins.inputs.audits.thresholds]
       performance = 0.8
+
+  # to serve only a sub directory of the build directory for an audit
+  # pages/index.html will be audited, and files outside of this directory will not be served
+  [[plugins.inputs.audits]]
+    serveDir = "pages"
+
 ```
 
 The lighthouse scores are automatically printed to the **Deploy log** in the Netlify UI. For example:
@@ -103,7 +118,7 @@ To customize how Lighthouse runs audits, you can make changes to the `netlify.to
 
 By default, Lighthouse takes a mobile-first performance testing approach and runs audits for the mobile device experience. You can optionally run Lighthouse audits for the desktop experience by including `preset = "desktop"` in your `netlify.toml` file:
 
-```
+```toml
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
@@ -117,7 +132,7 @@ To return to running Lighthouse audits for the mobile experience, just remove th
 
 ### Generate Lighthouse results in other languages
 
-By default, Lighthouse results are generated in English. To return Lighthouse results in other languages, include the language code from any Lighthouse-supported locale in your `netlify.toml` file. 
+By default, Lighthouse results are generated in English. To return Lighthouse results in other languages, include the language code from any Lighthouse-supported locale in your `netlify.toml` file.
 
 For the latest Lighthouse supported locales or language codes, check out this [official Lighthouse code](https://github.com/GoogleChrome/lighthouse/blob/da3c865d698abc9365fa7bb087a08ce8c89b0a05/types/lhr/settings.d.ts#L9).
 
@@ -125,7 +140,7 @@ Updates to `netlify.toml` will take effect for new builds.
 
 #### Example to generate Lighthouse results in Spanish
 
-```
+```toml
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
@@ -146,7 +161,7 @@ yarn local
 
 ## Preview Lighthouse results within the Netlify UI
 
-Netlify offers an experimental feature through Netlify Labs that allows you to view Lighthouse scores for each of your builds on your site's Deploy Details page with a much richer format. 
+Netlify offers an experimental feature through Netlify Labs that allows you to view Lighthouse scores for each of your builds on your site's Deploy Details page with a much richer format.
 
 You'll need to install the [Lighthouse build plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) on your site and then enable this experimental feature through Netlify Labs.
 

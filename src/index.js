@@ -142,18 +142,22 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
+const runAudit = async ({
+  serveDir,
+  path = '',
+  url,
+  thresholds,
+  output_path,
+  settings,
+}) => {
   try {
-    const { server } = getServer({ serveDir: path, auditUrl: url });
+    const { server } = getServer({ serveDir: serveDir, auditUrl: url });
     const browserPath = await getBrowserPath();
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
-          const results = await runLighthouse(
-            browserPath,
-            server.url,
-            settings,
-          );
+          const fullPath = path ? `${server.url}/${path}` : server.url;
+          const results = await runLighthouse(browserPath, fullPath, settings);
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
@@ -172,7 +176,7 @@ const runAudit = async ({ path, url, thresholds, output_path, settings }) => {
       });
 
       if (output_path) {
-        await persistResults({ report, path: join(path, output_path) });
+        await persistResults({ report, path: join(serveDir, output_path) });
       }
 
       return {
@@ -246,9 +250,7 @@ const processResults = ({ data, errors }) => {
         if (path) {
           obj.path = path;
           reports.push(obj);
-          return `Summary for directory '${chalk.magenta(
-            path,
-          )}': ${shortSummary}`;
+          return `Summary for path '${chalk.magenta(path)}': ${shortSummary}`;
         }
         if (url) {
           obj.url = url;
@@ -273,13 +275,16 @@ module.exports = {
         inputs,
       });
 
+      console.log('------', audits);
+
       const settings = getSettings(inputs?.settings);
 
       const allErrors = [];
       const data = [];
-      for (const { path, url, thresholds, output_path } of audits) {
+      for (const { serveDir, path, url, thresholds, output_path } of audits) {
         const { errors, summary, shortSummary, details, report } =
           await runAudit({
+            serveDir,
             path,
             url,
             thresholds,
@@ -290,20 +295,21 @@ module.exports = {
           console.log({ results: summary });
         }
 
+        const fullPath = [serveDir, path].join('/');
         if (report) {
           const size = Buffer.byteLength(JSON.stringify(report));
           console.log(
             `Report collected: audited_uri: '${chalk.magenta(
-              url || path,
+              url || fullPath,
             )}', html_report_size: ${chalk.magenta(size / 1024)} KiB`,
           );
         }
 
         if (Array.isArray(errors) && errors.length > 0) {
-          allErrors.push({ path, url, errors });
+          allErrors.push({ serveDir, url, errors });
         }
         data.push({
-          path,
+          path: fullPath,
           url,
           summary,
           shortSummary,

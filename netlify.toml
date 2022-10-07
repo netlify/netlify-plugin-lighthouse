@@ -16,11 +16,11 @@ performance = 0.9
 
 [[plugins.inputs.audits]]
 output_path = "reports/route1.html"
-path = "route1"
+serveDir = "route1"
 [[plugins.inputs.audits]]
-path = "route2"
+serveDir = "route2"
 [[plugins.inputs.audits]]
-path = ""
+serveDir = ""
 
 [[plugins]]
 package = "netlify-plugin-cypress"
