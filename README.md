@@ -65,9 +65,13 @@ You can customize the behavior via the `audits` input:
     # you can specify output_path per audit, relative to the path
     output_path = "reports/route1.html"
 
-  # to audit an HTML file other than index.html
+  # to audit an HTML file other than index.html in the build directory
   [[plugins.inputs.audits]]
-    fileName = "contact.html"
+    path = "contact.html"
+
+  # to audit an HTML file other than index.html in a sub path of the build directory
+  [[plugins.inputs.audits]]
+    path = "pages/contact.html"
 
   # to audit a specific absolute url
   [[plugins.inputs.audits]]
@@ -76,6 +80,11 @@ You can customize the behavior via the `audits` input:
     # you can specify thresholds per audit
     [plugins.inputs.audits.thresholds]
       performance = 0.8
+
+  # to serve only a sub directory of the build directory for an audit
+  # pages/index.html will be audited, and files outside of this directory will not be served
+  [[plugins.inputs.audits]]
+    serveDir = "pages"
 
 ```
 
