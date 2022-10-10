@@ -275,8 +275,6 @@ module.exports = {
         inputs,
       });
 
-      console.log('------', audits);
-
       const settings = getSettings(inputs?.settings);
 
       const allErrors = [];
