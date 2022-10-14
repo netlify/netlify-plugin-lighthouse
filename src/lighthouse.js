@@ -54,6 +54,12 @@ const runLighthouse = async (browserPath, url, settings) => {
       },
       settings,
     );
+    // console.log(Object.keys(results.lhr));
+    console.log({
+      finalUrl: results.lhr.finalUrl,
+      runWarnings: results.lhr.runWarnings,
+      runtimeError: results.lhr.runtimeError,
+    });
     if (results.lhr.runtimeError) {
       throw new Error(results.lhr.runtimeError.message);
     }

@@ -28,6 +28,18 @@ const getConfiguration = ({ constants, inputs } = {}) => {
 
   const output_path = (inputs && inputs.output_path) || process.env.OUTPUT_PATH;
 
+  console.log(
+    constants?.PUBLISH_DIR,
+    process?.env?.PUBLISH_DIR,
+    serveDir,
+    inputs?.audit_url,
+    process?.env?.AUDIT_URL,
+    auditUrl,
+    inputs?.output_path,
+    process?.env?.OUTPUT_PATH,
+    output_path,
+  );
+
   if (auditUrl) {
     console.warn(
       `${chalk.yellow(
