@@ -52,6 +52,12 @@ const persistResults = async ({ report, path }) => {
 };
 
 const getUtils = ({ utils }) => {
+  // This function checks to see if we're running within the Netlify Build system,
+  // and if so, we use the util functions. If not, we're likely running locally
+  // so fall back using console.log to emulate the output.
+
+  // If available, fails the Netlify build with the supplied message
+  // https://docs.netlify.com/integrations/build-plugins/create-plugins/#error-reporting
   const failBuild =
     (utils && utils.build && utils.build.failBuild) ||
     ((message, { error } = {}) => {
@@ -59,6 +65,8 @@ const getUtils = ({ utils }) => {
       process.exitCode = 1;
     });
 
+  // If available, displays the summary in the Netlify UI Deploy Summary section
+  // https://docs.netlify.com/integrations/build-plugins/create-plugins/#logging
   const show =
     (utils && utils.status && utils.status.show) ||
     (({ summary }) => console.log(summary));
@@ -94,10 +102,11 @@ const runAudit = async ({
     if (error) {
       return { error };
     } else {
-      const { summary, shortSummary, details, report, errors } = formatResults({
-        results,
-        thresholds,
-      });
+      const { summary, shortSummary, details, report, errors, runtimeError } =
+        formatResults({
+          results,
+          thresholds,
+        });
 
       if (output_path) {
         await persistResults({ report, path: join(serveDir, output_path) });
@@ -109,6 +118,7 @@ const runAudit = async ({
         details,
         report,
         errors,
+        runtimeError,
       };
     }
   } catch (error) {
@@ -161,28 +171,45 @@ const processResults = ({ data, errors }) => {
   return {
     error: err,
     summary: data
-      .map(({ path, url, summary, shortSummary, details, report }) => {
-        const obj = { report, details };
+      .map(
+        ({
+          path,
+          url,
+          summary,
+          shortSummary,
+          details,
+          report,
+          runtimeError,
+        }) => {
+          const obj = { report, details };
 
-        if (summary) {
-          obj.summary = summary.reduce((acc, item) => {
-            acc[item.id] = Math.round(item.score * 100);
-            return acc;
-          }, {});
-        }
+          if (!runtimeError && summary) {
+            obj.summary = summary.reduce((acc, item) => {
+              acc[item.id] = Math.round(item.score * 100);
+              return acc;
+            }, {});
+          }
 
-        if (path) {
-          obj.path = path;
-          reports.push(obj);
-          return `Summary for path '${chalk.magenta(path)}': ${shortSummary}`;
-        }
-        if (url) {
-          obj.url = url;
-          reports.push(obj);
-          return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
-        }
-        return `${shortSummary}`;
-      })
+          if (runtimeError) {
+            reports.push(obj);
+            return `Error testing '${chalk.magenta(path || url)}': ${
+              runtimeError.message
+            }`;
+          }
+
+          if (path) {
+            obj.path = path;
+            reports.push(obj);
+            return `Summary for path '${chalk.magenta(path)}': ${shortSummary}`;
+          }
+          if (url) {
+            obj.url = url;
+            reports.push(obj);
+            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+          }
+          return `${shortSummary}`;
+        },
+      )
       .join('\n'),
     extraData: reports,
   };
@@ -204,7 +231,7 @@ module.exports = {
       const allErrors = [];
       const data = [];
       for (const { serveDir, path, url, thresholds, output_path } of audits) {
-        const { errors, summary, shortSummary, details, report } =
+        const { errors, summary, shortSummary, details, report, runtimeError } =
           await runAudit({
             serveDir,
             path,
@@ -213,8 +240,12 @@ module.exports = {
             output_path,
             settings,
           });
-        if (summary) {
+
+        if (summary && !runtimeError) {
           console.log({ results: summary });
+        }
+        if (runtimeError) {
+          console.log({ runtimeError });
         }
 
         const fullPath = [serveDir, path].join('/');
@@ -239,6 +270,7 @@ module.exports = {
           shortSummary,
           details,
           report,
+          runtimeError,
         });
       }
 

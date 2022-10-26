@@ -106,24 +106,12 @@ describe('format', () => {
       { title: 'SEO', score: 0.7, id: 'seo' },
       { title: 'PWA', score: 0.6, id: 'pwa' },
     ];
-    const runtimeError = {
-      code: 'NO_FCP',
-      message:
-        'The page did not paint any content. Please ensure you keep the browser window in the foreground during the load and try again. (NO_FCP)',
-    };
 
     it('should return a shortSummary containing scores if available', () => {
-      const shortSummary = formatShortSummary({ categories });
+      const shortSummary = formatShortSummary(categories);
       expect(shortSummary).toEqual(
         'Performance: 100, Accessibility: 90, Best Practices: 80, SEO: 70, PWA: 60',
       );
-    });
-
-    it('should return a shortSummary error message', () => {
-      const shortSummary = formatShortSummary({
-        runtimeError,
-      });
-      expect(shortSummary).toEqual(runtimeError.message);
     });
   });
 

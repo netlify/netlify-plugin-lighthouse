@@ -33,47 +33,35 @@ const getError = (id, expected, categories, audits) => {
   return { message: categoryError, details: categoryAudits };
 };
 
-const formatShortSummary = ({ categories, runtimeError }) => {
-  if (runtimeError) {
-    return runtimeError.message;
-  }
+const formatShortSummary = (categories) => {
   return categories
     .map(({ title, score }) => `${title}: ${Math.round(score * 100)}`)
     .join(', ');
 };
 
 const formatResults = ({ results, thresholds }) => {
-  const hasScores = !results.lhr.runtimeError;
+  const runtimeError = results.lhr.runtimeError;
 
   const categories = Object.values(results.lhr.categories).map(
     ({ title, score, id, auditRefs }) => ({ title, score, id, auditRefs }),
   );
 
-  const categoriesBelowThreshold =
-    hasScores &&
-    Object.entries(thresholds).filter(([id, expected]) =>
-      belowThreshold(id, expected, categories),
-    );
+  const categoriesBelowThreshold = Object.entries(thresholds).filter(
+    ([id, expected]) => belowThreshold(id, expected, categories),
+  );
 
-  const errors =
-    hasScores &&
-    categoriesBelowThreshold.map(([id, expected]) =>
-      getError(id, expected, categories, results.lhr.audits),
-    );
+  const errors = categoriesBelowThreshold.map(([id, expected]) =>
+    getError(id, expected, categories, results.lhr.audits),
+  );
 
-  const summary =
-    hasScores &&
-    categories.map(({ title, score, id }) => ({
-      title,
-      score,
-      id,
-      ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
-    }));
+  const summary = categories.map(({ title, score, id }) => ({
+    title,
+    score,
+    id,
+    ...(thresholds[id] ? { threshold: thresholds[id] } : {}),
+  }));
 
-  const shortSummary = formatShortSummary({
-    categories,
-    runtimeError: results.lhr.runtimeError,
-  });
+  const shortSummary = formatShortSummary(categories);
 
   const formattedReport = makeReplacements(results.report);
 
@@ -92,7 +80,7 @@ const formatResults = ({ results, thresholds }) => {
     minifyJS: true,
   });
 
-  return { summary, shortSummary, details, report, errors };
+  return { summary, shortSummary, details, report, errors, runtimeError };
 };
 
 module.exports = {
