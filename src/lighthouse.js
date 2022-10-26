@@ -54,9 +54,6 @@ const runLighthouse = async (browserPath, url, settings) => {
       },
       settings,
     );
-    if (results.lhr.runtimeError) {
-      throw new Error(results.lhr.runtimeError.message);
-    }
     return results;
   } finally {
     if (chrome) {
