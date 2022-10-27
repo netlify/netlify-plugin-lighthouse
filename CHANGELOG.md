@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.0.2](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.1...v4.0.2) (2022-10-27)
+
+
+### Bug Fixes
+
+* Surface runtime errors in Deploy Log and Deploy Summary ([#505](https://github.com/netlify/netlify-plugin-lighthouse/issues/505)) ([77ccef3](https://github.com/netlify/netlify-plugin-lighthouse/commit/77ccef381d1311a8f42cd881b3b28c1aee762cdf))
+
 ## [4.0.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.0...v4.0.1) (2022-10-10)
 
 
