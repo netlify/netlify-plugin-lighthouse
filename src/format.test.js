@@ -6,14 +6,11 @@ const {
 } = require('./format');
 
 // Strip ANSI color codes from strings, as they make CI sad.
-const sanitizeString = (str) => {
-  return str
-    .replaceAll('\x1B[31m', '')
-    .replaceAll('\x1B[32m', '')
-    .replaceAll('\x1B[33m', '')
-    .replaceAll('\x1B[36m', '')
-    .replaceAll('\x1B[39m', '');
-};
+const stripAnsiCodes = (str) =>
+  str.replace(
+    /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g,
+    '',
+  );
 
 describe('format', () => {
   const getCategories = ({ score }) => [
@@ -60,21 +57,6 @@ describe('format', () => {
       'Expected category Performance to be greater or equal to 1 but got 0.5',
   };
 
-  it('returns an expected error message and list of details with valid score', () => {
-    const errorMessage = getError(
-      'performance',
-      1,
-      getCategories({ score: 0.5 }),
-      audits,
-    );
-    expect(sanitizeString(errorMessage.details)).toEqual(
-      formattedError.details,
-    );
-    expect(sanitizeString(errorMessage.message)).toEqual(
-      formattedError.message,
-    );
-  });
-
   describe('belowThreshold', () => {
     const categories = [
       { title: 'Performance', score: 0.9, id: 'performance' },
@@ -98,6 +80,21 @@ describe('format', () => {
   });
 
   describe('getError', () => {
+    it('returns an expected error message and list of details with valid score', () => {
+      const errorMessage = getError(
+        'performance',
+        1,
+        getCategories({ score: 0.5 }),
+        audits,
+      );
+      expect(stripAnsiCodes(errorMessage.details)).toEqual(
+        formattedError.details,
+      );
+      expect(stripAnsiCodes(errorMessage.message)).toEqual(
+        formattedError.message,
+      );
+    });
+
     it('returns an expected error message and list of details without valid score', () => {
       const errorMessage = getError(
         'performance',
@@ -105,8 +102,7 @@ describe('format', () => {
         getCategories({ score: null }),
         audits,
       );
-      // Matching is awkward as the strings contain ANSI escape codes for colours.
-      expect(sanitizeString(errorMessage.message)).toContain(
+      expect(stripAnsiCodes(errorMessage.message)).toContain(
         'to be greater or equal to 1 but got unknown',
       );
     });
@@ -184,10 +180,10 @@ describe('format', () => {
         results: getResults(),
         thresholds,
       });
-      expect(sanitizeString(formattedResults.errors[0].message)).toEqual(
+      expect(stripAnsiCodes(formattedResults.errors[0].message)).toEqual(
         formattedError.message,
       );
-      expect(sanitizeString(formattedResults.errors[0].details)).toEqual(
+      expect(stripAnsiCodes(formattedResults.errors[0].details)).toEqual(
         formattedError.details,
       );
       expect(formattedResults.summary).toEqual([
