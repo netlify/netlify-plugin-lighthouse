@@ -3,7 +3,7 @@
   "ignorePresets": [":prHourlyLimit2"],
   "semanticCommits": true,
   "dependencyDashboard": true,
-  "schedule": ["9am every friday"],
+  "schedule": ["before 9am on Friday"],
   "labels": ["area: dependencies"],
   "stabilityDays": 3,
   "prCreation": "not-pending"
