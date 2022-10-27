@@ -5,6 +5,16 @@ const {
   formatResults,
 } = require('./format');
 
+// Strip ANSI color codes from strings, as they make CI sad.
+const sanitizeString = (str) => {
+  return str
+    .replaceAll('\x1B[31m', '')
+    .replaceAll('\x1B[32m', '')
+    .replaceAll('\x1B[33m', '')
+    .replaceAll('\x1B[36m', '')
+    .replaceAll('\x1B[39m', '');
+};
+
 describe('format', () => {
   const getCategories = ({ score }) => [
     {
@@ -42,13 +52,12 @@ describe('format', () => {
     },
   };
 
-  // Awkward formatting as the strings contain ANSI escape codes for colours.
   const formattedError = {
     details:
-      "   '\x1B[36mrobots.txt is valid\x1B[39m' received a score of \x1B[33m0\x1B[39m\n" +
-      "   '\x1B[36mTap targets are sized appropriately\x1B[39m' received a score of \x1B[33m0.5\x1B[39m",
+      "   'robots.txt is valid' received a score of 0\n" +
+      "   'Tap targets are sized appropriately' received a score of 0.5",
     message:
-      'Expected category \x1B[36mPerformance\x1B[39m to be greater or equal to \x1B[32m1\x1B[39m but got \x1B[31m0.5\x1B[39m',
+      'Expected category Performance to be greater or equal to 1 but got 0.5',
   };
 
   it('returns an expected error message and list of details with valid score', () => {
@@ -58,7 +67,12 @@ describe('format', () => {
       getCategories({ score: 0.5 }),
       audits,
     );
-    expect(errorMessage).toEqual(formattedError);
+    expect(sanitizeString(errorMessage.details)).toEqual(
+      formattedError.details,
+    );
+    expect(sanitizeString(errorMessage.message)).toEqual(
+      formattedError.message,
+    );
   });
 
   describe('belowThreshold', () => {
@@ -92,8 +106,8 @@ describe('format', () => {
         audits,
       );
       // Matching is awkward as the strings contain ANSI escape codes for colours.
-      expect(errorMessage.message).toContain(
-        'to be greater or equal to \x1B[32m1\x1B[39m but got \x1B[31munknown\x1B[39m',
+      expect(sanitizeString(errorMessage.message)).toContain(
+        'to be greater or equal to 1 but got unknown',
       );
     });
   });
@@ -170,7 +184,12 @@ describe('format', () => {
         results: getResults(),
         thresholds,
       });
-      expect(formattedResults.errors).toEqual([formattedError]);
+      expect(sanitizeString(formattedResults.errors[0].message)).toEqual(
+        formattedError.message,
+      );
+      expect(sanitizeString(formattedResults.errors[0].details)).toEqual(
+        formattedError.details,
+      );
       expect(formattedResults.summary).toEqual([
         {
           id: 'performance',
