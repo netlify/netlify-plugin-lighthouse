@@ -2,5 +2,9 @@
   "extends": ["github>netlify/renovate-config:default"],
   "ignorePresets": [":prHourlyLimit2"],
   "semanticCommits": true,
-  "dependencyDashboard": true
+  "dependencyDashboard": true,
+  "schedule": ["before 9am on Friday"],
+  "labels": ["area: dependencies"],
+  "stabilityDays": 3,
+  "prCreation": "not-pending"
 }
