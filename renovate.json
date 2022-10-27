@@ -4,7 +4,7 @@
   "semanticCommits": true,
   "dependencyDashboard": true,
   "schedule": ["9am every friday"],
-  "labels": ["dependency-update"],
+  "labels": ["area: dependencies"],
   "stabilityDays": 3,
   "prCreation": "not-pending"
 }
