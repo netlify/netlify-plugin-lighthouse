@@ -148,6 +148,18 @@ Updates to `netlify.toml` will take effect for new builds.
     locale = "es" # generates Lighthouse reports in Español
 ```
 
+### Fail Builds Based on Score Thresholds
+
+By default, the Lighthouse will just report finding. To fail a build based on the findings, specify the inputs threasholds in your `netlify.toml` file. 
+
+```toml
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+  
+  [plugins.inputs.thresholds]
+    performance = 0.9
+```
+
 ### Run Lighthouse Locally
 
 Fork and clone this repo.
