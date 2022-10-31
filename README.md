@@ -150,7 +150,7 @@ Updates to `netlify.toml` will take effect for new builds.
 
 ### Fail Builds Based on Score Thresholds
 
-By default, the Lighthouse will just report finding. To fail a build based on the findings, specify the inputs threasholds in your `netlify.toml` file. 
+By default, the Lighthouse plugin will report the findings in the deploy logs. To fail a build based on a specific score, specify the inputs thresholds in your `netlify.toml` file. Set the threshold based on `performance`, `accessibility`, `best-practices`, `seo`, or `pwa`.
 
 ```toml
 [[plugins]]
