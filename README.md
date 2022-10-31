@@ -10,8 +10,8 @@ For the most customization options, we recommend installing the Lighthouse plugi
 
 `netlify.toml` file-based installation allows you to:
 
-- [Run Lighthouse audits for different site paths, such as the contact page and site home page](#run-lighthouse-for-different-site-paths)
-- [Run Lighthouse audits for a desktop device](#run-lighthouse-for-the-desktop-experience)
+- [Run Lighthouse audits for different site paths, such as the contact page and site home page](#lighthouse-plugin-configuration-options)
+- [Run Lighthouse audits for a desktop device](#run-lighthouse-audits-for-desktop)
 - [Generate Lighthouse results in a language other than English](#generate-lighthouse-results-in-other-languages)
 
 ### Install plugin through the Netlify UI
@@ -46,6 +46,32 @@ Then add the plugin to your `netlify.toml` configuration file:
   [plugins.inputs]
     output_path = "reports/lighthouse.html"
 ```
+
+The lighthouse scores are automatically printed to the **Deploy log** in the Netlify UI. For example:
+
+```
+2:35:07 PM: ────────────────────────────────────────────────────────────────
+2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse
+2:35:07 PM: ────────────────────────────────────────────────────────────────
+2:35:07 PM: 
+2:35:07 PM: Serving and scanning site from directory dist
+
+...
+
+2:35:17 PM: {
+2:35:17 PM:   results: [
+2:35:17 PM:     { title: 'Performance', score: 0.91, id: 'performance' },
+2:35:17 PM:     { title: 'Accessibility', score: 0.93, id: 'accessibility' },
+2:35:17 PM:     { title: 'Best Practices', score: 0.93, id: 'best-practices' },
+2:35:17 PM:     { title: 'SEO', score: 0.81, id: 'seo' },
+2:35:17 PM:     { title: 'Progressive Web App', score: 0.4, id: 'pwa' }
+2:35:17 PM:   ]
+2:35:17 PM: }
+```
+
+## Lighthouse plugin configuration options
+
+To customize how Lighthouse runs audits, you can make changes to the `netlify.toml` file.
 
 By default, the plugin will serve and audit the build directory of the site, inspecting the `index.html`.
 You can customize the behavior via the `audits` input:
@@ -87,32 +113,6 @@ You can customize the behavior via the `audits` input:
     serveDir = "pages"
 
 ```
-
-The lighthouse scores are automatically printed to the **Deploy log** in the Netlify UI. For example:
-
-```
-2:35:07 PM: ────────────────────────────────────────────────────────────────
-2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse
-2:35:07 PM: ────────────────────────────────────────────────────────────────
-2:35:07 PM: ​
-2:35:07 PM: Serving and scanning site from directory dist
-
-...
-
-2:35:17 PM: {
-2:35:17 PM:   results: [
-2:35:17 PM:     { title: 'Performance', score: 0.91, id: 'performance' },
-2:35:17 PM:     { title: 'Accessibility', score: 0.93, id: 'accessibility' },
-2:35:17 PM:     { title: 'Best Practices', score: 0.93, id: 'best-practices' },
-2:35:17 PM:     { title: 'SEO', score: 0.81, id: 'seo' },
-2:35:17 PM:     { title: 'Progressive Web App', score: 0.4, id: 'pwa' }
-2:35:17 PM:   ]
-2:35:17 PM: }
-```
-
-## Lighthouse plugin configuration options
-
-To customize how Lighthouse runs audits, you can make changes to the `netlify.toml` file.
 
 ### Run Lighthouse audits for desktop
 
