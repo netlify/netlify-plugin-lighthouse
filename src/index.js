@@ -31,7 +31,7 @@ const getServer = ({ serveDir, auditUrl }) => {
   app.use(compression());
   app.use(express.static(serveDir));
 
-  const port = 5000;
+  const port = 5100;
   const host = 'localhost';
   const server = {
     listen: (func) => {
