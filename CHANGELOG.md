@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.0.3](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.2...v4.0.3) (2022-11-17)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lighthouse to v9.6.8 ([#512](https://github.com/netlify/netlify-plugin-lighthouse/issues/512)) ([1edb983](https://github.com/netlify/netlify-plugin-lighthouse/commit/1edb9832df2ee413e6eb97a06c45cce4a985c5a2))
+
 ## [4.0.2](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.1...v4.0.2) (2022-10-27)
 
 
