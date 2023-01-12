@@ -1,4 +1,4 @@
-const { getConfiguration } = require('./config');
+const getConfiguration = require('.');
 
 jest.spyOn(console, 'warn').mockImplementation(() => {});
 jest.mock('chalk', () => {

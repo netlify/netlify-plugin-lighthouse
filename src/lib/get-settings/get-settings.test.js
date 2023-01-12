@@ -1,4 +1,4 @@
-const { getSettings } = require('./settings');
+const getSettings = require('.');
 
 describe('replacements', () => {
   it('should return nothing with no settings set', () => {

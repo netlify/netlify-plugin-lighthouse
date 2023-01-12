@@ -38,6 +38,4 @@ const getSettings = (inputSettings) => {
   return derivedSettings;
 };
 
-module.exports = {
-  getSettings,
-};
+module.exports = getSettings;
