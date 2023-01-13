@@ -29,7 +29,7 @@
     "express": "^4.17.1",
     "html-minifier": "^4.0.0",
     "lighthouse": "^9.6.3",
-    "puppeteer": "^18.0.0"
+    "puppeteer": "^19.5.2"
   },
   "engines": {
     "node": ">=14.15 <19"
