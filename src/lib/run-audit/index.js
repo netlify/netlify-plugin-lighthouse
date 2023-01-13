@@ -1,8 +1,8 @@
-const { formatResults } = require('../../format');
-const { runLighthouse, getBrowserPath } = require('../../lighthouse');
-const persistResults = require('../persist-results');
-const { join } = require('path');
-const getServer = require('../get-server');
+import { formatResults } from '../../format';
+import { runLighthouse, getBrowserPath } from '../../lighthouse';
+import persistResults from '../persist-results';
+import { join } from 'path';
+import getServer from '../get-server';
 
 const runAudit = async ({
   serveDir,
@@ -56,4 +56,4 @@ const runAudit = async ({
   }
 };
 
-module.exports = runAudit;
+export default runAudit;

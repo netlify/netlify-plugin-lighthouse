@@ -1,5 +1,5 @@
-const chalk = require('chalk');
-const { join } = require('path');
+import chalk from 'chalk';
+import { join } from 'path';
 
 const getServePath = (dir, subDir) => {
   if (typeof subDir !== 'string' || typeof dir !== 'string') {
@@ -20,4 +20,4 @@ const getServePath = (dir, subDir) => {
   return { serveDir: resolvedPath };
 };
 
-module.exports = getServePath;
+export default getServePath;

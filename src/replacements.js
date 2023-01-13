@@ -52,4 +52,4 @@ const makeReplacements = (str) => {
   }, str);
 };
 
-module.exports = { makeReplacements };
+export default makeReplacements;

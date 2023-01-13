@@ -4,10 +4,10 @@
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
   "scripts": {
-    "local": "node -e 'require(\"./src/index.js\").onPostBuild()'",
+    "local": "node --experimental-specifier-resolution=node --no-warnings -e 'import(\"./src/index.js\").then(index => index.onPostBuild());'",
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
-    "test": "jest",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "format:ci": "prettier --check 'src/**/*.js'"
   },
   "keywords": [
@@ -29,11 +29,13 @@
     "express": "^4.17.1",
     "html-minifier": "^4.0.0",
     "lighthouse": "^9.6.3",
-    "puppeteer": "^18.0.0"
+    "puppeteer": "^18.0.0",
+    "ts-jest": "^29.0.4"
   },
   "engines": {
     "node": ">=14.15 <19"
   },
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/netlify/netlify-plugin-lighthouse.git"

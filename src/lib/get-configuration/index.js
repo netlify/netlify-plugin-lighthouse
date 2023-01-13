@@ -1,5 +1,5 @@
-const chalk = require('chalk');
-const getServePath = require('../get-serve-path');
+import chalk from 'chalk';
+import getServePath from '../get-serve-path';
 
 const getConfiguration = ({ constants, inputs } = {}) => {
   const serveDir =
@@ -53,4 +53,4 @@ const getConfiguration = ({ constants, inputs } = {}) => {
   return { audits };
 };
 
-module.exports = getConfiguration;
+export default getConfiguration;

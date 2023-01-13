@@ -1,5 +1,5 @@
-const chalk = require('chalk');
-const { prefixString } = require('../prefix-string');
+import chalk from 'chalk';
+import prefixString from '../prefix-string';
 
 const processResults = ({ data, errors }) => {
   const err = {};
@@ -78,4 +78,4 @@ const processResults = ({ data, errors }) => {
   };
 };
 
-module.exports = processResults;
+export default processResults;

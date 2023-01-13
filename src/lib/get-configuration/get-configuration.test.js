@@ -1,13 +1,15 @@
-const getConfiguration = require('.');
-
 jest.spyOn(console, 'warn').mockImplementation(() => {});
-jest.mock('chalk', () => {
+jest.unstable_mockModule('chalk', () => {
   return {
-    green: (m) => m,
-    yellow: (m) => m,
-    red: (m) => m,
+    default: {
+      green: (m) => m,
+      yellow: (m) => m,
+      red: (m) => m,
+    },
   };
 });
+
+const getConfiguration = (await import('.')).default;
 
 describe('config', () => {
   beforeEach(() => {
@@ -71,9 +73,11 @@ describe('config', () => {
   it('should print deprecated warning when using audit_url', () => {
     const constants = {};
     const inputs = { audit_url: 'url' };
+
     getConfiguration({ constants, inputs });
 
     expect(console.warn).toHaveBeenCalledTimes(1);
+
     expect(console.warn).toHaveBeenCalledWith(
       'inputs.audit_url is deprecated, please use inputs.audits',
     );

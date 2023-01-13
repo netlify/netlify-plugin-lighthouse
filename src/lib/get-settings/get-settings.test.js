@@ -1,4 +1,4 @@
-const getSettings = require('.');
+import getSettings from '.';
 
 describe('replacements', () => {
   it('should return nothing with no settings set', () => {

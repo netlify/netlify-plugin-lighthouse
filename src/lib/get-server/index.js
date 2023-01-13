@@ -1,6 +1,6 @@
-const express = require('express');
-const compression = require('compression');
-const chalk = require('chalk');
+import express from 'express';
+import compression from 'compression';
+import chalk from 'chalk';
 
 const getServer = ({ serveDir, auditUrl }) => {
   if (auditUrl) {
@@ -40,4 +40,4 @@ const getServer = ({ serveDir, auditUrl }) => {
   return { server };
 };
 
-module.exports = getServer;
+export default getServer;

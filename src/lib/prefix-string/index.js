@@ -1,4 +1,4 @@
-const chalk = require('chalk');
+import chalk from 'chalk';
 
 const prefixString = ({ path, url, str }) => {
   if (path) {
@@ -12,4 +12,4 @@ const prefixString = ({ path, url, str }) => {
   }
 };
 
-module.export = prefixString;
+export default prefixString;

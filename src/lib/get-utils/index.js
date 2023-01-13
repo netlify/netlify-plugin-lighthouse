@@ -19,4 +19,4 @@ const getUtils = ({ utils }) => {
   return { failBuild, show };
 };
 
-module.exports = getUtils;
+export default getUtils;
