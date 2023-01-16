@@ -1,6 +1,7 @@
 import chalk from 'chalk';
 import { minify } from 'html-minifier';
-import makeReplacements from './replacements';
+
+import makeReplacements from './replacements.js';
 
 export const belowThreshold = (id, expected, categories) => {
   const category = categories.find((c) => c.id === id);

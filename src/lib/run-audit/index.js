@@ -1,8 +1,9 @@
-import { formatResults } from '../../format';
-import { runLighthouse, getBrowserPath } from '../../lighthouse';
-import persistResults from '../persist-results';
 import { join } from 'path';
-import getServer from '../get-server';
+
+import { formatResults } from '../../format.js';
+import { runLighthouse, getBrowserPath } from '../../lighthouse.js';
+import persistResults from '../persist-results/index.js';
+import getServer from '../get-server/index.js';
 
 const runAudit = async ({
   serveDir,

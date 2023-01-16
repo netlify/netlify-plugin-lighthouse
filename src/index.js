@@ -1,11 +1,12 @@
 import chalk from 'chalk';
-import processResults from './lib/process-results';
-import getUtils from './lib/get-utils';
-import getConfiguration from './lib/get-configuration';
-import getSettings from './lib/get-settings';
-
 import * as dotenv from 'dotenv';
-import runAudit from './lib/run-audit';
+
+import processResults from './lib/process-results/index.js';
+import getUtils from './lib/get-utils/index.js';
+import getConfiguration from './lib/get-configuration/index.js';
+import getSettings from './lib/get-settings/index.js';
+import runAudit from './lib/run-audit/index.js';
+
 dotenv.config();
 
 export const onPostBuild = async ({ constants, utils, inputs } = {}) => {

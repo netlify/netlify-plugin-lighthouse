@@ -1,5 +1,6 @@
 import chalk from 'chalk';
-import getServePath from '../get-serve-path';
+
+import getServePath from '../get-serve-path/index.js';
 
 const getConfiguration = ({ constants, inputs } = {}) => {
   const serveDir =

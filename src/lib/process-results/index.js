@@ -1,5 +1,6 @@
 import chalk from 'chalk';
-import prefixString from '../prefix-string';
+
+import prefixString from '../prefix-string/index.js';
 
 const processResults = ({ data, errors }) => {
   const err = {};

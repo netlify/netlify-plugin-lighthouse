@@ -4,7 +4,7 @@
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
   "scripts": {
-    "local": "node --experimental-specifier-resolution=node --no-warnings -e 'import(\"./src/index.js\").then(index => index.onPostBuild());'",
+    "local": "node -e 'import(\"./src/index.js\").then(index => index.onPostBuild());'",
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
@@ -49,6 +49,7 @@
     "cypress": "^12.0.0",
     "eslint": "^8.32.0",
     "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.27.4",
     "husky": "^8.0.1",
     "jest": "^29.0.0",
     "netlify-plugin-cypress": "^2.2.0",

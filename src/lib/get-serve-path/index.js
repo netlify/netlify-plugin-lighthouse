@@ -1,5 +1,6 @@
-import chalk from 'chalk';
 import { join } from 'path';
+
+import chalk from 'chalk';
 
 const getServePath = (dir, subDir) => {
   if (typeof subDir !== 'string' || typeof dir !== 'string') {
