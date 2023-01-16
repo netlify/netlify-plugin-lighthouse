@@ -6,8 +6,7 @@
   },
   "extends": ["eslint:recommended", "plugin:import/recommended"],
   "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "cy": true
   },
 
   "parserOptions": {

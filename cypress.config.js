@@ -1,9 +1,11 @@
 import { defineConfig } from 'cypress';
 
+import plugin from './cypress/plugins/index.js';
+
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
-      return require('./cypress/plugins/index.js')(on, config);
+      return plugin(on, config);
     },
   },
 });
