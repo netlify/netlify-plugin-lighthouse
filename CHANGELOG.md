@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.0.4](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.3...v4.0.4) (2023-01-16)
+
+
+### Miscellaneous Chores
+
+* **deps:** update dependency prettier to v2.8.2 ([#530](https://github.com/netlify/netlify-plugin-lighthouse/issues/530)) ([2adadfe](https://github.com/netlify/netlify-plugin-lighthouse/commit/2adadfed5476c3bc73156894c1200caa383ed036))
+
 ## [4.0.3](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.2...v4.0.3) (2022-11-17)
 
 
