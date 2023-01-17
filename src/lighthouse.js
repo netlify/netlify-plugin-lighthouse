@@ -21,7 +21,7 @@ if (debugColorsSet) {
 }
 
 const getBrowserPath = async () => {
-  console.log("------------------------------ YOU ARE RUNNING AGAINST 19.1.0")
+  
   const browserFetcher = puppeteer.createBrowserFetcher();
   const revisions = await browserFetcher.localRevisions();
   if (revisions.length <= 0) {
