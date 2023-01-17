@@ -83,8 +83,10 @@ const runAudit = async ({
   settings,
 }) => {
   try {
+    console.log('---- RUNNING AUDIT');
     const { server } = getServer({ serveDir: serveDir, auditUrl: url });
     const browserPath = await getBrowserPath();
+    console.log('BROWSER PATH', browserPath);
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
@@ -217,7 +219,9 @@ const processResults = ({ data, errors }) => {
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
-    console.log("------------------------------ YOU ARE RUNNING AGAINST 19.1.0 with path")
+    console.log(
+      '------------------------------ YOU ARE RUNNING AGAINST 19.1.0 with path',
+    );
 
     const { failBuild, show } = getUtils({ utils });
     let errorMetadata = [];
