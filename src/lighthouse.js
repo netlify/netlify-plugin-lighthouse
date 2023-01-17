@@ -25,7 +25,9 @@ const getBrowserPath = async () => {
   const browserFetcher = puppeteer.createBrowserFetcher({
     path: '~/.cache/puppeteer',
   });
-  const revisions = await browserFetcher.localRevisions();
+  const revisions = await browserFetcher.localRevisions({
+    path: '/.cache/puppeteer/',
+  });
   console.log('LOCAL REVISISIONS', revisions);
   if (revisions.length <= 0) {
     throw new Error('Could not find local browser');
