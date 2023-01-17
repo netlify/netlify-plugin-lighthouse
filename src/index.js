@@ -220,7 +220,7 @@ const processResults = ({ data, errors }) => {
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     console.log(
-      '------------------------------ YOU ARE RUNNING AGAINST 19.1.0 with path',
+      '------------------------------ YOU ARE RUNNING AGAINST 19.1.0 pointing explicitly at cache path',
     );
 
     const { failBuild, show } = getUtils({ utils });
