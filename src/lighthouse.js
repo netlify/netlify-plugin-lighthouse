@@ -25,13 +25,13 @@ const getBrowserPath = async () => {
   const browserFetcher = puppeteer.createBrowserFetcher({
     path: '~/.cache/puppeteer',
   });
-  const revisionInfo = await await browserFetcher.download('1069273');
-  console.log('LOCAL REVISISIONS', revisionInfo);
-  if (!revisionInfo) {
+  const revisions = await browserFetcher.localRevisions();
+  console.log('LOCAL REVISISIONS', revisions);
+  if (revisions.length <= 0) {
     throw new Error('Could not find local browser');
   }
-  // const info = await browserFetcher.revisionInfo(revisions[0]);
-  return revisionInfo.executablePath;
+  const info = await browserFetcher.revisionInfo(revisions[0]);
+  return info.executablePath;
 };
 
 const runLighthouse = async (browserPath, url, settings) => {
