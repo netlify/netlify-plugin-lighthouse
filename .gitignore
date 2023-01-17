@@ -8,3 +8,4 @@ reports
 coverage
 cypress/videos
 cypress/screenshots
+.cache
