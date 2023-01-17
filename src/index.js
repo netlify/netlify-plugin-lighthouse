@@ -220,7 +220,7 @@ const processResults = ({ data, errors }) => {
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     console.log(
-      '------------------------------ YOU ARE RUNNING AGAINST 19.1.0 with a new puppeteer config file',
+      '------------------------------ YOU ARE RUNNING AGAINST 19.1.0 with config file pointing at dirname',
     );
 
     const { failBuild, show } = getUtils({ utils });
