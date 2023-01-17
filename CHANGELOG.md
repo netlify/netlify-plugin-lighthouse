@@ -5,6 +5,22 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.0.5](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.4...v4.0.5) (2023-01-16)
+
+
+### Bug Fixes
+
+* **deps:** Revert "fix(deps) upgrade puppeteer to v 19.5.2 ([#532](https://github.com/netlify/netlify-plugin-lighthouse/issues/532))" ([#536](https://github.com/netlify/netlify-plugin-lighthouse/issues/536)) ([a319044](https://github.com/netlify/netlify-plugin-lighthouse/commit/a319044517c49d0f60d4f330ccba2756643bb929))
+
+## [4.0.4](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.3...v4.0.4) (2023-01-16)
+
+### Bug Fixes
+
+* **deps:** update dependency puppeteer to v19.5.2 ([#532](https://github.com/netlify/netlify-plugin-lighthouse/pull/532)) ([fa216b2](https://github.com/netlify/netlify-plugin-lighthouse/commit/fa216b249cbf4a7c7128c8fa323639a73a1246b2))
+### Miscellaneous Chores
+
+* **deps:** update dependency prettier to v2.8.2 ([#530](https://github.com/netlify/netlify-plugin-lighthouse/issues/530)) ([2adadfe](https://github.com/netlify/netlify-plugin-lighthouse/commit/2adadfed5476c3bc73156894c1200caa383ed036))
+
 ## [4.0.3](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.2...v4.0.3) (2022-11-17)
 
 
