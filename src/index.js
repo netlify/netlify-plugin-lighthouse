@@ -220,7 +220,7 @@ const processResults = ({ data, errors }) => {
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     console.log(
-      '------------------------------ YOU ARE RUNNING AGAINST 19.5.2 with config file pointing at cache folder',
+      '------------------------------ YOU ARE RUNNING AGAINST 19.5.2 bla',
     );
 
     const { failBuild, show } = getUtils({ utils });
