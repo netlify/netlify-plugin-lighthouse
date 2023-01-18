@@ -9,3 +9,4 @@ coverage
 cypress/videos
 cypress/screenshots
 .cache
+cache
