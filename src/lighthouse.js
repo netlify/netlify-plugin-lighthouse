@@ -7,6 +7,7 @@ if ('DEBUG_COLORS' in process.env) {
   debugColorsOriginalValue = process.env.DEBUG_COLORS;
 }
 process.env.DEBUG_COLORS = 'true';
+const { join } = require('path');
 
 const puppeteer = require('puppeteer');
 const lighthouse = require('lighthouse');
@@ -21,15 +22,24 @@ if (debugColorsSet) {
 }
 
 const getBrowserPath = async () => {
-  console.log('GETTING BROWSER PATH');
-  const browserFetcher = puppeteer.createBrowserFetcher();
+  console.log(
+    'GETTING BROWSER PATH',
+    join(__dirname, 'node_modules', '.cache', 'puppeteer'),
+  );
+  const browserFetcher = puppeteer.createBrowserFetcher({
+    path: join(__dirname, 'node_modules', '.cache', 'puppeteer'),
+    product: 'firefox',
+  });
   const revisions = await browserFetcher.localRevisions();
-  console.log('LOCAL REVISISIONS', revisions);
-  if (revisions.length <= 0) {
-    throw new Error('Could not find local browser');
+  if (revisions.length === 0) {
+    console.log('DOWNLOADING FRESH');
+    const revision = await browserFetcher.download('111.0a1');
+    return revision.executablePath;
+  } else {
+    console.log('USING CACHE');
+    const info = await browserFetcher.revisionInfo(revisions[0]);
+    return info.executablePath;
   }
-  const info = await browserFetcher.revisionInfo(revisions[0]);
-  return info.executablePath;
 };
 
 const runLighthouse = async (browserPath, url, settings) => {

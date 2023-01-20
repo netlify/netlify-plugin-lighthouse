@@ -19,9 +19,6 @@
     "manifest.yml",
     "src"
   ],
-  "puppeteer": {
-    "defaultProduct": "firefox"
-  },
   "author": "netlify-labs",
   "license": "MIT",
   "dependencies": {
