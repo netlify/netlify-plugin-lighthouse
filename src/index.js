@@ -219,7 +219,9 @@ const processResults = ({ data, errors }) => {
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
-    console.log('------------------------------ CONFIG SET TO FIREFOX');
+    console.log(
+      '------------------------------ CONFIG SET TO FIREFOX, different file name',
+    );
 
     const { failBuild, show } = getUtils({ utils });
     let errorMetadata = [];
