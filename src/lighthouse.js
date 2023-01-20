@@ -24,7 +24,7 @@ if (debugColorsSet) {
 const getBrowserPath = async () => {
   console.log('GETTING BROWSER PATH');
   const browserFetcher = puppeteer.createBrowserFetcher({
-    path: 'node_modules/.cache/puppeteer',
+    path: '/opt/buildhome/.cache/puppeteer',
   });
   const revisions = await browserFetcher.localRevisions();
   if (revisions.length === 0) {
