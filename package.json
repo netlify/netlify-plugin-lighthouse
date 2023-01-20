@@ -17,9 +17,11 @@
   ],
   "files": [
     "manifest.yml",
-    "puppeteer.config.js",
     "src"
   ],
+  "puppeteer": {
+    "defaultProduct": "firefox"
+  },
   "author": "netlify-labs",
   "license": "MIT",
   "dependencies": {
