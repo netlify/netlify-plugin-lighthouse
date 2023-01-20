@@ -219,9 +219,7 @@ const processResults = ({ data, errors }) => {
 
 module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
-    console.log(
-      '------------------------------ YOU ARE RUNNING AGAINST 19.5.2 bla',
-    );
+    console.log('------------------------------ CONFIG SET TO FIREFOX');
 
     const { failBuild, show } = getUtils({ utils });
     let errorMetadata = [];
