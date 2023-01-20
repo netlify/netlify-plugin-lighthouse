@@ -22,19 +22,20 @@ if (debugColorsSet) {
 }
 
 const getBrowserPath = async () => {
-  console.log(
-    'GETTING BROWSER PATH',
-    join(__dirname, 'node_modules', '.cache', 'puppeteer'),
-  );
+  console.log('GETTING BROWSER PATH');
   const browserFetcher = puppeteer.createBrowserFetcher({
-    path: join(__dirname, 'node_modules', '.cache', 'puppeteer'),
-    product: 'firefox',
+    path: 'node_modules/.cache/puppeteer',
   });
   const revisions = await browserFetcher.localRevisions();
   if (revisions.length === 0) {
     console.log('DOWNLOADING FRESH');
-    const revision = await browserFetcher.download('111.0a1');
-    return revision.executablePath;
+    try {
+      const revision = await browserFetcher.download('1083080');
+      console.log('DOWNLOADED REVISION', revision);
+      return revision.executablePath;
+    } catch (e) {
+      console.log('error in download', e);
+    }
   } else {
     console.log('USING CACHE');
     const info = await browserFetcher.revisionInfo(revisions[0]);
