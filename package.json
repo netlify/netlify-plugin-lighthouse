@@ -17,7 +17,7 @@
   ],
   "files": [
     "manifest.yml",
-    "puppeteer.config.json",
+    "puppeteer.config.js",
     "src"
   ],
   "author": "netlify-labs",
