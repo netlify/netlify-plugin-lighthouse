@@ -22,11 +22,14 @@ if (debugColorsSet) {
 
 const getBrowserPath = async () => {
   const browserFetcher = puppeteer.createBrowserFetcher();
+
   const revisions = await browserFetcher.localRevisions();
   if (revisions.length <= 0) {
+    console.log('**** ERROR: could not find local browser');
     throw new Error('Could not find local browser');
   }
   const info = await browserFetcher.revisionInfo(revisions[0]);
+  console.log('******* BROWSER FOUND AT LOCATION:', info.executablePath);
   return info.executablePath;
 };
 
