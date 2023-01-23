@@ -218,7 +218,9 @@ const processResults = ({ data, errors }) => {
 const restoreCache = async function ({ utils }) {
   console.log('ATTEMPTING TO RESTORE CACHE', utils?.cache);
   try {
-    const result = await utils?.cache.restore('~/.cache/puppeteer');
+    const result = await utils?.cache.restore(
+      '/opt/buildhome/.cache/puppeteer',
+    );
     console.log('restoring result', result);
   } catch (e) {
     console.log(e);
