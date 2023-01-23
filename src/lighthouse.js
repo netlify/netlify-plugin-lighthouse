@@ -22,9 +22,9 @@ if (debugColorsSet) {
 }
 
 const getBrowserPath = async () => {
-  console.log('GETTING BROWSER PATH');
+  // console.log('GETTING BROWSER PATH', puppeteer.PuppeteerNode.getBrowserPath());
   const browserFetcher = puppeteer.createBrowserFetcher({
-    path: '/opt/buildhome/.cache/puppeteer',
+    path: '/opt/buildhome/.netlify/plugins/node_modules/puppeteer',
   });
   const revisions = await browserFetcher.localRevisions();
   if (revisions.length === 0) {
