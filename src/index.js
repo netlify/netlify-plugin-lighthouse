@@ -231,7 +231,7 @@ module.exports = {
     console.log('ATTEMPTING TO SAVE PUPPETEER CACHE');
 
     try {
-      const result = await utils?.cache.save('~/.cache/puppeteer');
+      const result = await utils?.cache.save('/opt/buildhome/.cache/puppeteer');
       console.log('saving result', result);
     } catch (e) {
       console.log(e);
