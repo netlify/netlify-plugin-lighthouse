@@ -216,8 +216,13 @@ const processResults = ({ data, errors }) => {
 };
 
 const restoreCache = async function ({ utils }) {
-  console.log('ATTEMPTING TO RESTORE CACHE');
-  await utils?.cache.restore('~/.cache/puppeteer');
+  console.log('ATTEMPTING TO RESTORE CACHE', utils?.cache);
+  try {
+    const result = await utils?.cache.restore('~/.cache/puppeteer');
+    console.log('restoring result', result);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 module.exports = {
@@ -225,7 +230,12 @@ module.exports = {
   onPostBuild: async ({ constants, utils, inputs } = {}) => {
     console.log('ATTEMPTING TO SAVE PUPPETEER CACHE');
 
-    await utils?.cache.save('~/.cache/puppeteer');
+    try {
+      const result = await utils?.cache.save('~/.cache/puppeteer');
+      console.log('saving result', result);
+    } catch (e) {
+      console.log(e);
+    }
 
     const { failBuild, show } = getUtils({ utils });
     let errorMetadata = [];
