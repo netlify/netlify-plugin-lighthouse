@@ -1,4 +1,5 @@
 import { join } from 'path';
+import { homedir } from 'os';
 
 import chalk from 'chalk';
 import * as dotenv from 'dotenv';
@@ -10,7 +11,8 @@ import getSettings from './lib/get-settings/index.js';
 import runAudit from './lib/run-audit/index.js';
 
 dotenv.config();
-const puppeteerCacheDir = join(__dirname, '.cache', 'puppeteer');
+
+const puppeteerCacheDir = join(homedir(), '.cache', 'puppeteer');
 
 export const onPreBuild = async ({ utils } = {}) => {
   // Puppeteer relies on a global cache since v19.x, which otherwise would not be persisted in Netlify builds
