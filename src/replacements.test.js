@@ -1,4 +1,4 @@
-const { makeReplacements } = require('./replacements');
+import makeReplacements from './replacements.js';
 
 describe('replacements', () => {
   it('should make enablePostMessageCommunication replacement', () => {

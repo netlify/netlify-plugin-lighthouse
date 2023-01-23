@@ -1,5 +1,5 @@
-const desktopConfig = require('lighthouse/lighthouse-core/config/desktop-config');
-const fullConfig = require('lighthouse/lighthouse-core/config/full-config');
+import desktopConfig from 'lighthouse/lighthouse-core/config/desktop-config.js';
+import fullConfig from 'lighthouse/lighthouse-core/config/full-config.js';
 
 /*
  * Check for settings added in `.env` file and merge with input settings
@@ -38,6 +38,4 @@ const getSettings = (inputSettings) => {
   return derivedSettings;
 };
 
-module.exports = {
-  getSettings,
-};
+export default getSettings;

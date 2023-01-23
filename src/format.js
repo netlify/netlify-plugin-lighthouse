@@ -1,8 +1,9 @@
-const chalk = require('chalk');
-const { minify } = require('html-minifier');
-const { makeReplacements } = require('./replacements');
+import chalk from 'chalk';
+import { minify } from 'html-minifier';
 
-const belowThreshold = (id, expected, categories) => {
+import makeReplacements from './replacements.js';
+
+export const belowThreshold = (id, expected, categories) => {
   const category = categories.find((c) => c.id === id);
   if (!category) {
     console.warn(`Could not find category ${chalk.yellow(id)}`);
@@ -11,7 +12,7 @@ const belowThreshold = (id, expected, categories) => {
   return actual < expected;
 };
 
-const getError = (id, expected, categories, audits) => {
+export const getError = (id, expected, categories, audits) => {
   const category = categories.find((c) => c.id === id);
 
   const categoryError = `Expected category ${chalk.cyan(
@@ -33,13 +34,13 @@ const getError = (id, expected, categories, audits) => {
   return { message: categoryError, details: categoryAudits };
 };
 
-const formatShortSummary = (categories) => {
+export const formatShortSummary = (categories) => {
   return categories
     .map(({ title, score }) => `${title}: ${Math.round(score * 100)}`)
     .join(', ');
 };
 
-const formatResults = ({ results, thresholds }) => {
+export const formatResults = ({ results, thresholds }) => {
   const runtimeError = results.lhr.runtimeError;
 
   const categories = Object.values(results.lhr.categories).map(
@@ -81,11 +82,4 @@ const formatResults = ({ results, thresholds }) => {
   });
 
   return { summary, shortSummary, details, report, errors, runtimeError };
-};
-
-module.exports = {
-  belowThreshold,
-  getError,
-  formatShortSummary,
-  formatResults,
 };

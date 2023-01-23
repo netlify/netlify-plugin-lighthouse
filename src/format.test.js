@@ -1,9 +1,9 @@
-const {
+import {
   belowThreshold,
   getError,
   formatShortSummary,
   formatResults,
-} = require('./format');
+} from './format.js';
 
 // Strip ANSI color codes from strings, as they make CI sad.
 const stripAnsiCodes = (str) =>
