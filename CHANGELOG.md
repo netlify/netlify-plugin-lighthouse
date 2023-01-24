@@ -12,6 +12,10 @@
 
 * **deps:** Upgrade puppeteer using cache utils ([#540](https://github.com/netlify/netlify-plugin-lighthouse/issues/540)) ([f831eb1](https://github.com/netlify/netlify-plugin-lighthouse/commit/f831eb1ead7e0705e432ea5d7c6b1168a5db83c6))
 
+### Miscellaneous Chores
+
+* **chore:** Internal refactor to use ES modules ([#533](https://github.com/netlify/netlify-plugin-lighthouse/pull/533))
+
 ## [4.0.5](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.4...v4.0.5) (2023-01-16)
 
 
