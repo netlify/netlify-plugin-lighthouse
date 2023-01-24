@@ -14,7 +14,7 @@
 
 ### Miscellaneous Chores
 
-* **chore:** Internal refactor to use ES modules ([#533](https://github.com/netlify/netlify-plugin-lighthouse/pull/533))
+* **chore:** Internal refactor to use ES modules ([#533](https://github.com/netlify/netlify-plugin-lighthouse/pull/533)) ([bbb55c9](https://github.com/netlify/netlify-plugin-lighthouse/commit/bbb55c9decbe3923add6ea6008d2be3ba03fd6f2))
 
 ## [4.0.5](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.4...v4.0.5) (2023-01-16)
 
