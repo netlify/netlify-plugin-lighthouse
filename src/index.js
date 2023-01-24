@@ -15,13 +15,17 @@ dotenv.config();
 const puppeteerCacheDir = join(homedir(), '.cache', 'puppeteer');
 
 export const onPreBuild = async ({ utils } = {}) => {
+  console.log('Restoring Lighthouse cache...');
   // Puppeteer relies on a global cache since v19.x, which otherwise would not be persisted in Netlify builds
   await utils?.cache.restore(puppeteerCacheDir);
+  console.log('Lighthouse cache restored');
 };
 
 export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
   // Persist Puppeteer cache for subsequent builds/plugin runs
+  console.log('Persisting Lighthouse cache resources...');
   await utils?.cache.save(puppeteerCacheDir);
+  console.log('Lighthouse cache resources persisted');
 
   const { failBuild, show } = getUtils({ utils });
   let errorMetadata = [];
