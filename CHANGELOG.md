@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.0.7](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.6...v4.0.7) (2023-01-25)
+
+
+### Bug Fixes
+
+* **deps:** Revert "fix(deps): Upgrade puppeteer using cache utils ([#540](https://github.com/netlify/netlify-plugin-lighthouse/issues/540))" ([#544](https://github.com/netlify/netlify-plugin-lighthouse/issues/544)) ([7ea7fb9](https://github.com/netlify/netlify-plugin-lighthouse/commit/7ea7fb96d06181b5f88598c57e7d523089ef2b7d))
+
 ## [4.0.6](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.5...v4.0.6) (2023-01-24)
 
 
