@@ -112,6 +112,7 @@ export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
 
   // If we want to block deploys, we run this instead of onSuccess
   if (!inputs?.thresholds_block_deploy) {
+    console.log('lighthouse: thresholds_block_deploy is false, skipping');
     return show({ summary: 'Lighthouse will run after deploy' });
   }
 
