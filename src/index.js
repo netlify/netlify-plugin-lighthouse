@@ -15,6 +15,12 @@ export const onSuccess = async ({ constants, utils, inputs } = {}) => {
     return;
   }
 
+  console.log('Running Lighthouse Plugin (onSuccess)', {
+    inputs,
+    constants,
+    utils,
+  });
+
   const { failPlugin, show } = getUtils({ utils });
   let errorMetadata = [];
 
