@@ -107,13 +107,13 @@ export const onSuccess = async ({ constants, utils, inputs } = {}) => {
 };
 
 export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
-  // If we want to block deploys, we run this instead of onSuccess
-  if (!inputs?.thresholds_block_deploy) {
-    return;
-  }
-
   const { failBuild, show } = getUtils({ utils });
   let errorMetadata = [];
+
+  // If we want to block deploys, we run this instead of onSuccess
+  if (!inputs?.thresholds_block_deploy) {
+    return show({ summary: 'Lighthouse will run after deploy' });
+  }
 
   try {
     const { audits } = getConfiguration({
