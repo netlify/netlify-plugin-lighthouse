@@ -10,16 +10,16 @@ import runAudit from './lib/run-audit/index.js';
 dotenv.config();
 
 export const onSuccess = async ({ constants, utils, inputs } = {}) => {
-  // Run onSuccess by default, unless we want to block deploys
-  if (inputs?.thresholds_block_deploy) {
-    return;
-  }
-
   console.log('Running Lighthouse Plugin (onSuccess)', {
     inputs,
     constants,
     utils,
   });
+
+  // Run onSuccess by default, unless we want to block deploys
+  if (inputs?.thresholds_block_deploy) {
+    return;
+  }
 
   const { failPlugin, show } = getUtils({ utils });
   let errorMetadata = [];
