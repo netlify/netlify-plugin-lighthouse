@@ -12,11 +12,20 @@ const getUtils = ({ utils }) => {
       process.exitCode = 1;
     });
 
+  // If available, fails the Netlify build with the supplied message
+  // https://docs.netlify.com/integrations/build-plugins/create-plugins/#error-reporting
+  const failPlugin =
+    utils?.build?.failPlugin ||
+    ((message, { error } = {}) => {
+      console.error(message, error && error.message);
+      process.exitCode = 1;
+    });
+
   // If available, displays the summary in the Netlify UI Deploy Summary section
   // https://docs.netlify.com/integrations/build-plugins/create-plugins/#logging
   const show = utils?.status?.show || (({ summary }) => console.log(summary));
 
-  return { failBuild, show };
+  return { failBuild, failPlugin, show };
 };
 
 export default getUtils;

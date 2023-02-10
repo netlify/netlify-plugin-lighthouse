@@ -4,7 +4,9 @@
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
   "scripts": {
-    "local": "node -e 'import(\"./src/index.js\").then(index => index.onPostBuild());'",
+    "local": "npm run local:success",
+    "local:success": "node -e 'import(\"./src/index.js\").then(index => index.onSuccess());'",
+    "local:postBuild": "node -e 'import(\"./src/index.js\").then(index => index.onPostBuild());'",
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage",

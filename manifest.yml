@@ -20,3 +20,7 @@ inputs:
   - name: settings
     required: false
     description: Lighthouse-specific settings, used to modify reporting criteria
+
+  - name: thresholds_block_deploy
+    required: false
+    description: Switch to testing onPostBuild, where missing thresholds can block the deployment
