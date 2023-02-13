@@ -72,7 +72,7 @@ export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
         console.log('');
         console.log(chalk.cyan.bold(`Lighthouse scores for ${fullPath}`));
         summary.map((item) => {
-          console.log(`- ${item.title}: ${item.score}`);
+          console.log(`- ${item.title}: ${Math.floor(item.score * 100)}`);
         });
         console.log('');
       }
