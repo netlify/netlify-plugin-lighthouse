@@ -1,34 +1,22 @@
-import { join } from 'path';
-
 import { formatResults } from '../../format.js';
 import { runLighthouse, getBrowserPath } from '../../lighthouse.js';
-import persistResults from '../persist-results/index.js';
-import getServer from '../get-server/index.js';
 
-const runAudit = async ({
-  serveDir,
-  path = '',
-  url,
-  thresholds,
-  output_path,
-  settings,
-}) => {
+const runAudit = async ({ path = '', url, thresholds, settings }) => {
   try {
-    const { server } = getServer({ serveDir: serveDir, auditUrl: url });
     const browserPath = await getBrowserPath();
-    const { error, results } = await new Promise((resolve) => {
-      const instance = server.listen(async () => {
-        try {
-          const fullPath = path ? `${server.url}/${path}` : server.url;
-          const results = await runLighthouse(browserPath, fullPath, settings);
-          resolve({ error: false, results });
-        } catch (error) {
-          resolve({ error });
-        } finally {
-          server.close(instance);
-        }
-      });
-    });
+
+    const getResults = async () => {
+      const fullPath = path ? `${url}/${path}` : url;
+      const results = await runLighthouse(browserPath, fullPath, settings);
+
+      try {
+        return { results };
+      } catch (error) {
+        return new Error({ error });
+      }
+    };
+
+    const { error, results } = await getResults();
 
     if (error) {
       return { error };
@@ -38,10 +26,6 @@ const runAudit = async ({
           results,
           thresholds,
         });
-
-      if (output_path) {
-        await persistResults({ report, path: join(serveDir, output_path) });
-      }
 
       return {
         summary,

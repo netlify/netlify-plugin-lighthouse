@@ -8,8 +8,6 @@ const getConfiguration = ({ constants, inputs } = {}) => {
 
   const auditUrl = (inputs && inputs.audit_url) || process.env.AUDIT_URL;
 
-  const output_path = (inputs && inputs.output_path) || process.env.OUTPUT_PATH;
-
   if (auditUrl) {
     console.warn(
       `${chalk.yellow(
@@ -17,6 +15,8 @@ const getConfiguration = ({ constants, inputs } = {}) => {
       )} is deprecated, please use ${chalk.green('inputs.audits')}`,
     );
   }
+
+  const output_path = (inputs && inputs.output_path) || process.env.OUTPUT_PATH;
 
   let thresholds =
     (inputs && inputs.thresholds) || process.env.THRESHOLDS || {};
@@ -39,7 +39,14 @@ const getConfiguration = ({ constants, inputs } = {}) => {
   }
 
   if (!Array.isArray(audits)) {
-    audits = [{ serveDir, url: auditUrl, thresholds, output_path }];
+    audits = [
+      {
+        serveDir,
+        url: auditUrl,
+        thresholds,
+        output_path,
+      },
+    ];
   } else {
     audits = audits.map((a) => {
       return {
