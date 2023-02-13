@@ -66,24 +66,31 @@ export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
           settings,
         });
 
+      const fullPath = [serveDir, path].join('/');
       if (summary && !runtimeError) {
-        console.log({ results: summary });
+        // console.log({ results: summary });
+        console.log('');
+        console.log(chalk.cyan.bold(`Lighthouse scores for ${fullPath}`));
+        summary.map((item) => {
+          console.log(`- ${item.title}: ${item.score}`);
+        });
+        console.log('');
       }
+
       if (runtimeError) {
         console.log({ runtimeError });
       }
 
-      const fullPath = [serveDir, path].join('/');
-      if (report) {
-        const size = Buffer.byteLength(JSON.stringify(report));
-        console.log(
-          `Report collected: audited_uri: '${chalk.magenta(
-            url || fullPath,
-          )}', html_report_size: ${chalk.magenta(
-            +(size / 1024).toFixed(2),
-          )} KiB`,
-        );
-      }
+      // if (report) {
+      //   const size = Buffer.byteLength(JSON.stringify(report));
+      //   console.log(
+      //     `Report collected: audited_uri: '${chalk.magenta(
+      //       url || fullPath,
+      //     )}', html_report_size: ${chalk.magenta(
+      //       +(size / 1024).toFixed(2),
+      //     )} KiB`,
+      //   );
+      // }
 
       if (Array.isArray(errors) && errors.length > 0) {
         allErrors.push({ serveDir, url, errors });
@@ -193,24 +200,25 @@ export const onSuccess = async ({ constants, utils, inputs } = {}) => {
           settings,
         });
 
+      const fullPath = [deployUrl, path].join('/');
+
       if (summary && !runtimeError) {
-        console.log({ results: summary });
-      }
-      if (runtimeError) {
-        console.log({ runtimeError });
+        // console.log({ results: summary });
+
+        console.log('');
+        console.log(chalk.cyan.bold(`Lighthouse scores for ${fullPath}`));
+        summary.map((item) => {
+          console.log(`- ${item.title}: ${item.score}`);
+        });
+        console.log('');
       }
 
-      const fullPath = [serveDir, path].join('/');
-      if (report) {
-        const size = Buffer.byteLength(JSON.stringify(report));
-        console.log(
-          `Report collected: audited_uri: '${chalk.magenta(
-            deployUrl || fullPath,
-          )}', html_report_size: ${chalk.magenta(
-            +(size / 1024).toFixed(2),
-          )} KiB`,
-        );
-      }
+      // if (report) {
+      //   const size = Buffer.byteLength(JSON.stringify(report));
+      //   console.log(
+      //     `Report collected: ${chalk.magenta(+(size / 1024).toFixed(2))} KiB`,
+      //   );
+      // }
 
       if (Array.isArray(errors) && errors.length > 0) {
         allErrors.push({ serveDir, url: deployUrl, errors });
