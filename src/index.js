@@ -11,29 +11,29 @@ import runAuditWithServer from './lib/run-audit-with-server/index.js';
 dotenv.config();
 
 export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
+  const isVerbose = process.env.VERBOSE;
+
+  if (isVerbose) {
+    console.log(chalk.cyan.bold('---------------------------------------'));
+    console.log(chalk.cyan.bold('Running Lighthouse Plugin (onPostBuild)'));
+    console.log(chalk.cyan.bold('---------------------------------------'));
+    console.log();
+  }
+
   const { failBuild, show } = getUtils({ utils });
 
-  // If we want to block deploys, we run this instead of onSuccess
+  // If we want to thresholds to block deploys, we run the rest of onPostBuild.
+  // Otherwise, we return so reports can bu run during onSuccess.
   if (
     !(inputs?.thresholds_block_deploy || process.env.THRESHOLDS_BLOCK_DEPLOY)
   ) {
-    console.log(
-      'lighthouse: thresholds_block_deploy is not set, report will be generated during onSuccess deployment stage',
-    );
+    if (isVerbose) {
+      console.log(
+        chalk.yellow(`thresholds_block_deploy not set – skipping onPostBuild`),
+      );
+    }
     return show({ summary: 'Lighthouse will run after deploy completes' });
   }
-
-  console.warn(
-    `${chalk.yellow(
-      'thresholds_block_deploy',
-    )} is set, running during onPostBuild deploy stage. Non-static sites may not work as expected.`,
-  );
-
-  console.log('Running Lighthouse Plugin (onPostBuild)', {
-    inputs,
-    constants,
-    utils,
-  });
 
   let errorMetadata = [];
 
@@ -42,6 +42,14 @@ export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
       constants,
       inputs,
     });
+
+    if (!isVerbose) {
+      console.log(
+        `Generating Lighthouse report${
+          audits.length > 1 ? 's' : ''
+        }. This may take a minute…`,
+      );
+    }
 
     const settings = getSettings(inputs?.settings);
 
@@ -119,27 +127,36 @@ export const onPostBuild = async ({ constants, utils, inputs } = {}) => {
 };
 
 export const onSuccess = async ({ constants, utils, inputs } = {}) => {
-  // Run onSuccess by default, unless we want to block deploys
+  const isVerbose = process.env.VERBOSE;
+  const deployUrl = process.env.DEPLOY_URL;
+
+  if (isVerbose) {
+    console.log(chalk.cyan.bold('-------------------------------------'));
+    console.log(chalk.cyan.bold('Running Lighthouse Plugin (onSuccess)'));
+    console.log(chalk.cyan('Deploy URL: ' + deployUrl));
+    console.log(chalk.cyan.bold('-------------------------------------'));
+    console.log();
+  }
+
+  // If we want to thresholds to block deploys, we run don't need to continue.
+  // The onPostBuild will have already run, which already generated reports.
   if (inputs?.thresholds_block_deploy || process.env.THRESHOLDS_BLOCK_DEPLOY) {
-    console.warn(
-      `${chalk.yellow('thresholds_block_deploy')} is set. onSuccess skipped`,
-    );
+    if (isVerbose) {
+      console.log(
+        chalk.yellow(
+          '`thresholds_block_deploy` is set, so reports are generated during onPostBuild',
+        ),
+      );
+      console.log(chalk.yellow('Skipping onSuccess'));
+    }
     return;
   }
 
-  console.log('Running Lighthouse Plugin (onSuccess)', {
-    inputs,
-    constants,
-    utils,
-  });
-
-  console.log('DEPLOY_PRIME_URL: ', process.env.DEPLOY_PRIME_URL);
-  const deployPrimeUrl = process.env.DEPLOY_PRIME_URL;
-
-  if (!deployPrimeUrl) {
-    console.log(
-      'DEPLOY_PRIME_URL not set, skipping Lighthouse Plugin (onSuccess)',
-    );
+  // If we don't have the deploy URL to test against, we can't run Lighthouse.
+  // If running locally, ensure you have a DEPLOY_URL set in your .env file
+  // e.g., `DEPLOY_URL=https://www.netlify.com/`
+  if (!deployUrl) {
+    console.log('DEPLOY_URL not set, skipping Lighthouse Plugin');
     return;
   }
 
@@ -154,28 +171,27 @@ export const onSuccess = async ({ constants, utils, inputs } = {}) => {
       inputs: sanitizedInputs,
     });
 
+    if (!isVerbose) {
+      console.log(
+        `Generating Lighthouse report${
+          audits.length > 1 ? 's' : ''
+        }. This may take a minute…`,
+      );
+    }
+
     const settings = getSettings(inputs?.settings);
 
     const allErrors = [];
     const data = [];
-    for (const { serveDir, path, /*url, */ thresholds } of audits) {
+    for (const { serveDir, path, /* url, */ thresholds } of audits) {
       const { errors, summary, shortSummary, details, report, runtimeError } =
         await runAudit({
           serveDir,
           path,
-          url: deployPrimeUrl,
+          url: deployUrl,
           thresholds,
           settings,
         });
-
-      console.log('Hello', {
-        errors,
-        summary,
-        shortSummary,
-        details,
-        report,
-        runtimeError,
-      });
 
       if (summary && !runtimeError) {
         console.log({ results: summary });
@@ -189,7 +205,7 @@ export const onSuccess = async ({ constants, utils, inputs } = {}) => {
         const size = Buffer.byteLength(JSON.stringify(report));
         console.log(
           `Report collected: audited_uri: '${chalk.magenta(
-            deployPrimeUrl || fullPath,
+            deployUrl || fullPath,
           )}', html_report_size: ${chalk.magenta(
             +(size / 1024).toFixed(2),
           )} KiB`,
@@ -197,11 +213,11 @@ export const onSuccess = async ({ constants, utils, inputs } = {}) => {
       }
 
       if (Array.isArray(errors) && errors.length > 0) {
-        allErrors.push({ serveDir, url: deployPrimeUrl, errors });
+        allErrors.push({ serveDir, url: deployUrl, errors });
       }
       data.push({
         path: fullPath,
-        url: deployPrimeUrl,
+        url: deployUrl,
         summary,
         shortSummary,
         details,
