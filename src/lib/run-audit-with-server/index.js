@@ -13,7 +13,6 @@ const runAuditWithServer = async ({
   output_path,
   settings,
 }) => {
-  console.log(5);
   try {
     const { server } = getServer({ serveDir: serveDir, auditUrl: url });
     console.log({ server });

@@ -25,7 +25,9 @@ const getUtils = ({ utils }) => {
   // https://docs.netlify.com/integrations/build-plugins/create-plugins/#logging
   const show = utils?.status?.show || (({ summary }) => console.log(summary));
 
-  return { failBuild, failPlugin, show };
+  const isDevelopment = !utils?.build;
+
+  return { failBuild, failPlugin, show, isDevelopment };
 };
 
 export default getUtils;

@@ -4,7 +4,7 @@ import chalk from 'chalk';
 
 const getServePath = (dir, subDir) => {
   if (typeof subDir !== 'string' || typeof dir !== 'string') {
-    return { serveDir: undefined };
+    return undefined;
   }
 
   const resolvedPath = join(dir, subDir);
@@ -18,7 +18,7 @@ const getServePath = (dir, subDir) => {
     );
   }
 
-  return { serveDir: resolvedPath };
+  return resolvedPath;
 };
 
 export default getServePath;

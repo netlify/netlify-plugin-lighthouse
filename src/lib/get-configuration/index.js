@@ -2,7 +2,9 @@ import chalk from 'chalk';
 
 import getServePath from '../get-serve-path/index.js';
 
-const getConfiguration = ({ constants, inputs } = {}) => {
+const getConfiguration = ({ constants, inputs, deployUrl } = {}) => {
+  const useDeployUrl = !!deployUrl;
+
   const serveDir =
     (constants && constants.PUBLISH_DIR) || process.env.PUBLISH_DIR;
 
@@ -38,27 +40,37 @@ const getConfiguration = ({ constants, inputs } = {}) => {
     }
   }
 
+  let auditConfigs = [];
+
+  /** TODO: Simplify this…
+   *  When using a deployUrl (testing against the live deployed site), we don't
+   *  need to serve the site, so we can skip the serveDir and output_path
+   */
+
   if (!Array.isArray(audits)) {
-    audits = [
+    auditConfigs = [
       {
-        serveDir,
-        url: auditUrl,
+        serveDir: useDeployUrl ? undefined : serveDir,
+        url: useDeployUrl ? deployUrl : auditUrl,
         thresholds,
-        output_path,
+        output_path: useDeployUrl ? undefined : output_path,
       },
     ];
   } else {
-    audits = audits.map((a) => {
+    auditConfigs = audits.map((a) => {
       return {
         ...a,
         thresholds: a.thresholds || thresholds,
-        output_path: a.output_path || output_path,
-        ...getServePath(serveDir, a.serveDir ?? ''),
+        output_path: useDeployUrl ? undefined : a.output_path || output_path,
+        url: useDeployUrl ? deployUrl : a.url,
+        serveDir: useDeployUrl
+          ? undefined
+          : getServePath(serveDir, a.serveDir ?? ''),
       };
     });
   }
 
-  return { audits };
+  return { auditConfigs };
 };
 
 export default getConfiguration;
