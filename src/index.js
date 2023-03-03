@@ -48,7 +48,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
         });
 
         if (isDevelopment) {
-          console.log(chalk.gray('Completed onSuccess event\n'));
+          console.log(chalk.gray('Completed onPostBuild event\n'));
         }
       },
     };
