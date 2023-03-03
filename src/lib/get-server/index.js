@@ -3,8 +3,6 @@ import compression from 'compression';
 import chalk from 'chalk';
 
 const getServer = ({ serveDir, auditUrl }) => {
-  console.log('Hello');
-
   if (auditUrl) {
     // return a mock server for readability
     const server = {

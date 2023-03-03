@@ -15,7 +15,7 @@ const runAuditWithServer = async ({
 }) => {
   try {
     const { server } = getServer({ serveDir: serveDir, auditUrl: url });
-    console.log({ server });
+
     const browserPath = await getBrowserPath();
 
     const { error, results } = await new Promise((resolve) => {
