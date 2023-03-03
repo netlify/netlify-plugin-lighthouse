@@ -35,22 +35,26 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
 
   if (defaultEvent !== 'onSuccess') {
     return {
-      onPostBuild: () => {
+      onPostBuild: async () => {
         if (isDevelopment) {
           console.log(chalk.gray('Running onPostBuild event\n'));
         }
 
-        onEvent({
+        await onEvent({
           auditConfigs,
           inputs,
           onSuccess: show,
           onFail: failBuild,
         });
+
+        if (isDevelopment) {
+          console.log(chalk.gray('Completed onSuccess event\n'));
+        }
       },
     };
   } else {
     return {
-      onSuccess: () => {
+      onSuccess: async () => {
         if (isDevelopment) {
           console.log(chalk.gray('Running onSuccess event\n'));
         }
@@ -66,12 +70,16 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
           return;
         }
 
-        onEvent({
+        await onEvent({
           auditConfigs,
           inputs,
           onSuccess: show,
           onFail: failPlugin,
         });
+
+        if (isDevelopment) {
+          console.log(chalk.gray('Completed onSuccess event\n'));
+        }
       },
     };
   }
