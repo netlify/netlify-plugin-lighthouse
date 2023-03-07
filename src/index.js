@@ -8,8 +8,12 @@ import getConfiguration from './lib/get-configuration/index.js';
 dotenv.config();
 
 export default function lighthousePlugin({ constants, utils, inputs } = {}) {
+  // Use the availability of the plugin functions to determine if we're running
+  // in the Netlify Build system or not
+  const isDevelopment = !utils;
+
   // Mock the `utils` functions if running locally during development
-  const { failPlugin, failBuild, show, isDevelopment } = getUtils({ utils });
+  const { failPlugin, failBuild, show } = getUtils({ utils });
 
   // Run onPostBuild by default, unless RUN_ON_SUCCESS is set to true
   const defaultEvent =
@@ -24,7 +28,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
   const { auditConfigs } = getConfiguration({
     constants,
     inputs,
-    deployUrl,
+    deployUrl: defaultEvent === 'onSuccess' ? deployUrl : undefined,
   });
 
   if (isDevelopment) {
@@ -33,26 +37,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
     console.log(chalk.gray.bold('---------------------------------------\n'));
   }
 
-  if (defaultEvent !== 'onSuccess') {
-    return {
-      onPostBuild: async () => {
-        if (isDevelopment) {
-          console.log(chalk.gray('Running onPostBuild event\n'));
-        }
-
-        await onEvent({
-          auditConfigs,
-          inputs,
-          onSuccess: show,
-          onFail: failBuild,
-        });
-
-        if (isDevelopment) {
-          console.log(chalk.gray('Completed onPostBuild event\n'));
-        }
-      },
-    };
-  } else {
+  if (defaultEvent === 'onSuccess') {
     return {
       onSuccess: async () => {
         if (isDevelopment) {
@@ -69,16 +54,38 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
           );
           return;
         }
+        try {
+          await onEvent({
+            auditConfigs,
+            inputs,
+            onSuccess: show,
+            onFail: failPlugin,
+          });
+        } catch (err) {
+          console.log(err);
+        }
+
+        if (isDevelopment) {
+          console.log(chalk.gray('Completed onSuccess event\n'));
+        }
+      },
+    };
+  } else {
+    return {
+      onPostBuild: async () => {
+        if (isDevelopment) {
+          console.log(chalk.gray('Running onPostBuild event\n'));
+        }
 
         await onEvent({
           auditConfigs,
           inputs,
           onSuccess: show,
-          onFail: failPlugin,
+          onFail: failBuild,
         });
 
         if (isDevelopment) {
-          console.log(chalk.gray('Completed onSuccess event\n'));
+          console.log(chalk.gray('Completed onPostBuild event\n'));
         }
       },
     };

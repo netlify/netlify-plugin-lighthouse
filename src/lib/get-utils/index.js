@@ -25,11 +25,7 @@ const getUtils = ({ utils }) => {
   // https://docs.netlify.com/integrations/build-plugins/create-plugins/#logging
   const show = utils?.status?.show || (({ summary }) => console.log(summary));
 
-  // Use the availability of the plugin functions to determine if we're running
-  // in the Netlify Build system or not
-  const isDevelopment = !utils?.status?.show;
-
-  return { failBuild, failPlugin, show, isDevelopment };
+  return { failBuild, failPlugin, show };
 };
 
 export default getUtils;

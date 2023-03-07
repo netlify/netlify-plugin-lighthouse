@@ -70,17 +70,6 @@ const getConfiguration = ({ constants, inputs, deployUrl } = {}) => {
     });
   }
 
-  console.log({
-    auditConfigs,
-    useDeployUrl,
-    deployUrl,
-    audits,
-    thresholds,
-    serveDir,
-    auditUrl,
-    output_path,
-  });
-
   return { auditConfigs };
 };
 
