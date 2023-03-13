@@ -58,7 +58,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
           await onEvent({
             auditConfigs,
             inputs,
-            onSuccess: show,
+            onComplete: show,
             onFail: failPlugin,
           });
         } catch (err) {
@@ -80,7 +80,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
         await onEvent({
           auditConfigs,
           inputs,
-          onSuccess: show,
+          onComplete: show,
           onFail: failBuild,
         });
 

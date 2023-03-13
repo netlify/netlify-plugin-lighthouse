@@ -5,7 +5,7 @@ import processResults from '../../lib/process-results/index.js';
 import runAudit from '../../lib/run-audit/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
 
-const onEvent = async ({ auditConfigs, inputs, onFail, onSuccess } = {}) => {
+const onEvent = async ({ auditConfigs, inputs, onFail, onComplete } = {}) => {
   console.log(
     `Generating Lighthouse report${
       auditConfigs.length > 1 ? 's' : ''
@@ -26,13 +26,14 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onSuccess } = {}) => {
 
       const { serveDir, path, url, thresholds, output_path } = auditConfig;
       const fullPath = [serveDir, path].join('/');
+      const displayPath = [serveDir || url, path].join('/');
 
       let countMessage = '';
       if (auditConfigs.length > 1) {
         countMessage = ` (${i}/${auditConfigs.length})`;
       }
 
-      console.log(`\nRunning Lighthouse on ${fullPath}${countMessage}`);
+      console.log(`\nRunning Lighthouse on ${displayPath}${countMessage}`);
 
       const runner = serveDir ? runAuditWithServer : runAudit;
       const { errors, summary, shortSummary, details, report, runtimeError } =
@@ -47,7 +48,7 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onSuccess } = {}) => {
 
       if (summary && !runtimeError) {
         console.log(' ');
-        console.log(chalk.cyan.bold(`Lighthouse scores for ${fullPath}`));
+        console.log(chalk.cyan.bold(`Lighthouse scores for ${displayPath}`));
         summary.map((item) => {
           console.log(`- ${item.title}: ${Math.floor(item.score * 100)}`);
         });
@@ -55,7 +56,8 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onSuccess } = {}) => {
       }
 
       if (runtimeError) {
-        console.log({ runtimeError });
+        console.log(chalk.red.bold(runtimeError.code));
+        console.log(chalk.red(runtimeError.message));
       }
 
       if (Array.isArray(errors) && errors.length > 0) {
@@ -76,7 +78,7 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onSuccess } = {}) => {
     const { error, summary, extraData } = processResults({
       data,
       errors: allErrors,
-      show: onSuccess,
+      show: onComplete,
     });
     errorMetadata.push(...extraData);
 
@@ -84,7 +86,7 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onSuccess } = {}) => {
       throw error;
     }
 
-    onSuccess({ summary, extraData });
+    onComplete({ summary, extraData });
   } catch (error) {
     if (error.details) {
       console.error(error.details);
