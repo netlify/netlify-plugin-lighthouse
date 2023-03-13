@@ -86,15 +86,15 @@ const onEvent = async ({
     const { error, summary, extraData } = processResults({
       data,
       errors: allErrors,
-      show: onComplete,
     });
+
     errorMetadata.push(...extraData);
 
     if (error && Object.keys(error).length !== 0) {
       throw error;
     }
 
-    onComplete({ summary, extraData });
+    return onComplete({ summary, extraData });
   } catch (error) {
     if (error.details) {
       console.error(error.details);
