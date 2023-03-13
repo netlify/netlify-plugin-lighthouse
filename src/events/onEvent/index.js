@@ -5,7 +5,15 @@ import processResults from '../../lib/process-results/index.js';
 import runAudit from '../../lib/run-audit/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
 
-const onEvent = async ({ auditConfigs, inputs, onFail, onComplete } = {}) => {
+const onEvent = async ({
+  auditConfigs,
+  inputs,
+  onFail,
+  onComplete,
+  event,
+} = {}) => {
+  const isOnSuccess = event === 'onSuccess';
+
   console.log(
     `Generating Lighthouse report${
       auditConfigs.length > 1 ? 's' : ''
@@ -26,7 +34,7 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onComplete } = {}) => {
 
       const { serveDir, path, url, thresholds, output_path } = auditConfig;
       const fullPath = [serveDir, path].join('/');
-      const displayPath = [serveDir || url, path].join('/');
+      const displayPath = [isOnSuccess ? url : serveDir, path].join('/');
 
       let countMessage = '';
       if (auditConfigs.length > 1) {
@@ -35,7 +43,7 @@ const onEvent = async ({ auditConfigs, inputs, onFail, onComplete } = {}) => {
 
       console.log(`\nRunning Lighthouse on ${displayPath}${countMessage}`);
 
-      const runner = serveDir ? runAuditWithServer : runAudit;
+      const runner = isOnSuccess ? runAudit : runAuditWithServer;
       const { errors, summary, shortSummary, details, report, runtimeError } =
         await runner({
           serveDir,

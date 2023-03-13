@@ -60,6 +60,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
             inputs,
             onComplete: show,
             onFail: failPlugin,
+            event: 'onSuccess',
           });
         } catch (err) {
           console.log(err);
@@ -82,6 +83,7 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
           inputs,
           onComplete: show,
           onFail: failBuild,
+          event: 'onPostBuild',
         });
 
         if (isDevelopment) {
