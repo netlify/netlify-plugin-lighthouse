@@ -7,39 +7,43 @@ import getConfiguration from './lib/get-configuration/index.js';
 
 dotenv.config();
 
-export default function lighthousePlugin({ constants, utils, inputs } = {}) {
-  // Use the availability of the plugin functions to determine if we're running
-  // in the Netlify Build system or not
-  const isDevelopment = !utils;
-
-  // Mock the `utils` functions if running locally during development
-  const { failPlugin, failBuild, show } = getUtils({ utils });
-
+export default function lighthousePlugin(inputs) {
   // Run onPostBuild by default, unless RUN_ON_SUCCESS is set to true
   const defaultEvent =
     inputs?.run_on_success || process.env.RUN_ON_SUCCESS === 'true'
       ? 'onSuccess'
       : 'onPostBuild';
 
-  const deployUrl = process.env.DEPLOY_URL;
-
-  // Generate the config for each report we'll be running.
-  // The output differs based on the availability of a Deploy URL
-  const { auditConfigs } = getConfiguration({
-    constants,
-    inputs,
-    deployUrl: defaultEvent === 'onSuccess' ? deployUrl : undefined,
-  });
-
-  if (isDevelopment) {
-    console.log(chalk.gray.bold('\n---------------------------------------'));
-    console.log(chalk.gray.bold(`Running Lighthouse Plugin (${defaultEvent})`));
-    console.log(chalk.gray.bold('---------------------------------------\n'));
-  }
-
   if (defaultEvent === 'onSuccess') {
     return {
-      onSuccess: async () => {
+      onSuccess: async ({ constants, utils, inputs } = {}) => {
+        // Use the availability of the plugin functions to determine if we're running
+        // in the Netlify Build system or not
+        const isDevelopment = !utils;
+
+        // Mock the `utils` functions if running locally during development
+        const { failPlugin, show } = getUtils({ utils });
+
+        // Generate the config for each report we'll be running.
+        // For onSuccess, we pass a deployUrl
+        const { auditConfigs } = getConfiguration({
+          constants,
+          inputs,
+          deployUrl: process.env.DEPLOY_URL,
+        });
+
+        if (isDevelopment) {
+          console.log(
+            chalk.gray.bold('\n---------------------------------------'),
+          );
+          console.log(
+            chalk.gray.bold(`Running Lighthouse Plugin (${defaultEvent})`),
+          );
+          console.log(
+            chalk.gray.bold('---------------------------------------\n'),
+          );
+        }
+
         if (isDevelopment) {
           console.log(chalk.gray('Running onSuccess event\n'));
         }
@@ -62,7 +66,6 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
             event: 'onSuccess',
           });
 
-          console.log('Show results: ', results);
           show(results);
         } catch (err) {
           console.log(err);
@@ -75,7 +78,33 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
     };
   } else {
     return {
-      onPostBuild: async () => {
+      onPostBuild: async ({ constants, utils, inputs } = {}) => {
+        // Use the availability of the plugin functions to determine if we're running
+        // in the Netlify Build system or not
+        const isDevelopment = !utils;
+
+        // Mock the `utils` functions if running locally during development
+        const { failBuild, show } = getUtils({ utils });
+
+        // Generate the config for each report we'll be running.
+        // For onPostBuild, we don't pass a deployUrl
+        const { auditConfigs } = getConfiguration({
+          constants,
+          inputs,
+        });
+
+        if (isDevelopment) {
+          console.log(
+            chalk.gray.bold('\n---------------------------------------'),
+          );
+          console.log(
+            chalk.gray.bold(`Running Lighthouse Plugin (${defaultEvent})`),
+          );
+          console.log(
+            chalk.gray.bold('---------------------------------------\n'),
+          );
+        }
+
         if (isDevelopment) {
           console.log(chalk.gray('Running onPostBuild event\n'));
         }
@@ -87,7 +116,6 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
             event: 'onPostBuild',
           });
 
-          console.log('Show results: ', results);
           show(results);
         } catch (err) {
           console.log(err);
