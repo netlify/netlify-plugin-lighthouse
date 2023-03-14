@@ -5,13 +5,7 @@ import processResults from '../../lib/process-results/index.js';
 import runAudit from '../../lib/run-audit/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
 
-const onEvent = async ({
-  auditConfigs,
-  inputs,
-  onFail,
-  onComplete,
-  event,
-} = {}) => {
+const onEvent = async ({ auditConfigs, inputs, onFail, event } = {}) => {
   const isOnSuccess = event === 'onSuccess';
 
   console.log(
@@ -94,7 +88,7 @@ const onEvent = async ({
       throw error;
     }
 
-    return onComplete({ summary, extraData });
+    return { summary, extraData };
   } catch (error) {
     if (error.details) {
       console.error(error.details);

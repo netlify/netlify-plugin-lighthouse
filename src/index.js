@@ -55,13 +55,15 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
           return;
         }
         try {
-          await onEvent({
+          const results = await onEvent({
             auditConfigs,
             inputs,
-            onComplete: show,
             onFail: failPlugin,
             event: 'onSuccess',
           });
+
+          console.log('Show results: ', results);
+          show(results);
         } catch (err) {
           console.log(err);
         }
@@ -77,14 +79,19 @@ export default function lighthousePlugin({ constants, utils, inputs } = {}) {
         if (isDevelopment) {
           console.log(chalk.gray('Running onPostBuild event\n'));
         }
+        try {
+          const results = await onEvent({
+            auditConfigs,
+            inputs,
+            onFail: failBuild,
+            event: 'onPostBuild',
+          });
 
-        await onEvent({
-          auditConfigs,
-          inputs,
-          onComplete: show,
-          onFail: failBuild,
-          event: 'onPostBuild',
-        });
+          console.log('Show results: ', results);
+          show(results);
+        } catch (err) {
+          console.log(err);
+        }
 
         if (isDevelopment) {
           console.log(chalk.gray('Completed onPostBuild event\n'));

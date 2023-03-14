@@ -8,7 +8,7 @@ const getUtils = ({ utils }) => {
   const failBuild =
     utils?.build?.failBuild ||
     ((message, { error } = {}) => {
-      console.error(message, error && error.message);
+      console.error('MOCK_FAIL_BUILD', message, error && error.message);
       process.exitCode = 1;
     });
 
@@ -17,13 +17,15 @@ const getUtils = ({ utils }) => {
   const failPlugin =
     utils?.build?.failPlugin ||
     ((message, { error } = {}) => {
-      console.error(message, error && error.message);
+      console.error('MOCK_FAIL_PLUGIN', message, error && error.message);
       process.exitCode = 1;
     });
 
   // If available, displays the summary in the Netlify UI Deploy Summary section
   // https://docs.netlify.com/integrations/build-plugins/create-plugins/#logging
-  const show = utils?.status?.show || (({ summary }) => console.log(summary));
+  const show =
+    utils?.status?.show ||
+    (({ summary }) => console.log(`MOCK_SHOW: ${summary}`));
 
   return { failBuild, failPlugin, show };
 };
