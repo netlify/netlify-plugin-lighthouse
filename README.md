@@ -43,7 +43,7 @@ Then add the plugin to your `netlify.toml` configuration file:
     pwa = 0.9
 
   # optional, deploy the lighthouse report to a path under your site
-  [plugins.inputs]
+  [plugins.inputs.audits]
     output_path = "reports/lighthouse.html"
 ```
 
