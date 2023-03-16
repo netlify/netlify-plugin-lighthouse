@@ -10,7 +10,7 @@ dotenv.config();
 export default function lighthousePlugin(inputs) {
   // Run onPostBuild by default, unless RUN_ON_SUCCESS is set to true
   const defaultEvent =
-    inputs?.run_on_success || process.env.RUN_ON_SUCCESS === 'true'
+    inputs?.run_on_success === 'true' || process.env.RUN_ON_SUCCESS === 'true'
       ? 'onSuccess'
       : 'onPostBuild';
 
@@ -33,22 +33,10 @@ export default function lighthousePlugin(inputs) {
         });
 
         if (isDevelopment) {
-          console.log(
-            chalk.gray.bold('\n---------------------------------------'),
-          );
-          console.log(
-            chalk.gray.bold(`Running Lighthouse Plugin (${defaultEvent})`),
-          );
-          console.log(
-            chalk.gray.bold('---------------------------------------\n'),
-          );
+          console.log(chalk.gray.bold(`Running Lighthouse Plugin (onSuccess)`));
         }
 
-        if (isDevelopment) {
-          console.log(chalk.gray('Running onSuccess event\n'));
-        }
-
-        // If we don't have the deploy URL to test against, we can't run Lighthouse.
+        // If we don't have the deploy URL to test against, we can't run Lighthouse onSuccess.
         // If running locally, ensure you have a DEPLOY_URL set in your .env file
         // e.g., `DEPLOY_URL=https://www.netlify.com/`
         const deployUrl = process.env.DEPLOY_URL;
@@ -58,15 +46,15 @@ export default function lighthousePlugin(inputs) {
           );
           return;
         }
+
         try {
-          const results = await onEvent({
+          await onEvent({
             auditConfigs,
             inputs,
+            onComplete: show,
             onFail: failPlugin,
             event: 'onSuccess',
           });
-
-          show(results);
         } catch (err) {
           console.log(err);
         }
@@ -95,28 +83,18 @@ export default function lighthousePlugin(inputs) {
 
         if (isDevelopment) {
           console.log(
-            chalk.gray.bold('\n---------------------------------------'),
-          );
-          console.log(
-            chalk.gray.bold(`Running Lighthouse Plugin (${defaultEvent})`),
-          );
-          console.log(
-            chalk.gray.bold('---------------------------------------\n'),
+            chalk.gray.bold(`Running Lighthouse Plugin (onPostBuild)`),
           );
         }
 
-        if (isDevelopment) {
-          console.log(chalk.gray('Running onPostBuild event\n'));
-        }
         try {
-          const results = await onEvent({
+          await onEvent({
             auditConfigs,
             inputs,
+            onComplete: show,
             onFail: failBuild,
             event: 'onPostBuild',
           });
-
-          show(results);
         } catch (err) {
           console.log(err);
         }

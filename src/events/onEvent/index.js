@@ -5,7 +5,13 @@ import processResults from '../../lib/process-results/index.js';
 import runAudit from '../../lib/run-audit/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
 
-const onEvent = async ({ auditConfigs, inputs, onFail, event } = {}) => {
+const onEvent = async ({
+  auditConfigs,
+  inputs,
+  onComplete,
+  onFail,
+  event,
+} = {}) => {
   const isOnSuccess = event === 'onSuccess';
 
   console.log(
@@ -28,14 +34,13 @@ const onEvent = async ({ auditConfigs, inputs, onFail, event } = {}) => {
 
       const { serveDir, path, url, thresholds, output_path } = auditConfig;
       const fullPath = [serveDir, path].join('/');
-      const displayPath = [isOnSuccess ? url : serveDir, path].join('/');
 
       let countMessage = '';
       if (auditConfigs.length > 1) {
         countMessage = ` (${i}/${auditConfigs.length})`;
       }
 
-      console.log(`\nRunning Lighthouse on ${displayPath}${countMessage}`);
+      console.log(`Running Lighthouse on ${fullPath}${countMessage}`);
 
       const runner = isOnSuccess ? runAudit : runAuditWithServer;
       const { errors, summary, shortSummary, details, report, runtimeError } =
@@ -49,12 +54,10 @@ const onEvent = async ({ auditConfigs, inputs, onFail, event } = {}) => {
         });
 
       if (summary && !runtimeError) {
-        console.log(' ');
-        console.log(chalk.cyan.bold(`Lighthouse scores for ${displayPath}`));
+        console.log(chalk.cyan.bold(`Lighthouse scores for ${fullPath}`));
         summary.map((item) => {
           console.log(`- ${item.title}: ${Math.floor(item.score * 100)}`);
         });
-        console.log(' ');
       }
 
       if (runtimeError) {
@@ -88,7 +91,7 @@ const onEvent = async ({ auditConfigs, inputs, onFail, event } = {}) => {
       throw error;
     }
 
-    return { summary, extraData };
+    return onComplete({ summary, extraData });
   } catch (error) {
     if (error.details) {
       console.error(error.details);
