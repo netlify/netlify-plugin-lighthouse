@@ -2,17 +2,39 @@ import chalk from 'chalk';
 
 import getSettings from '../../lib/get-settings/index.js';
 import processResults from '../../lib/process-results/index.js';
-import runAudit from '../../lib/run-audit/index.js';
+import runAuditWithUrl from '../../lib/run-audit-with-url/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
+import getConfiguration from '../get-configuration/index.js';
 
-const onEvent = async ({
-  auditConfigs,
+const runEvent = async ({
+  event,
+  constants,
   inputs,
   onComplete,
   onFail,
-  event,
 } = {}) => {
   const isOnSuccess = event === 'onSuccess';
+
+  const deployUrl = process.env.DEPLOY_URL;
+
+  // If we don't have the deploy URL to test against, we can't run Lighthouse onSuccess.
+  // If running locally, ensure you have a DEPLOY_URL set in your .env file
+  // e.g., `DEPLOY_URL=https://www.netlify.com/`
+  if (isOnSuccess && !deployUrl) {
+    console.log(
+      chalk.red('DEPLOY_URL not available, skipping Lighthouse Plugin'),
+    );
+    return;
+  }
+
+  // Generate the config for each report we'll be running.
+  // For onSuccess, we pass a deployUrl
+  // For onPostBuild, we don't pass a deployUrl
+  const { auditConfigs } = getConfiguration({
+    constants,
+    inputs,
+    deployUrl: isOnSuccess ? deployUrl : undefined,
+  });
 
   console.log(
     `Generating Lighthouse report${
@@ -42,7 +64,7 @@ const onEvent = async ({
 
       console.log(`Running Lighthouse on ${fullPath}${countMessage}`);
 
-      const runner = isOnSuccess ? runAudit : runAuditWithServer;
+      const runner = isOnSuccess ? runAuditWithUrl : runAuditWithServer;
       const { errors, summary, shortSummary, details, report, runtimeError } =
         await runner({
           serveDir,
@@ -91,7 +113,7 @@ const onEvent = async ({
       throw error;
     }
 
-    return onComplete({ summary, extraData });
+    onComplete({ summary, extraData });
   } catch (error) {
     if (error.details) {
       console.error(error.details);
@@ -107,4 +129,4 @@ const onEvent = async ({
   }
 };
 
-export default onEvent;
+export default runEvent;

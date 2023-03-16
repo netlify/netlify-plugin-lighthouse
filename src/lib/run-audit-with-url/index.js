@@ -1,7 +1,7 @@
 import { formatResults } from '../../format.js';
 import { runLighthouse, getBrowserPath } from '../../lighthouse.js';
 
-const runAudit = async ({ path = '', url, thresholds, settings }) => {
+const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
   try {
     const browserPath = await getBrowserPath();
 
@@ -41,4 +41,4 @@ const runAudit = async ({ path = '', url, thresholds, settings }) => {
   }
 };
 
-export default runAudit;
+export default runAuditWithUrl;
