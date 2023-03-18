@@ -11,8 +11,6 @@ jest.unstable_mockModule('chalk', () => {
 
 const getConfiguration = (await import('.')).default;
 
-const getNodeMajorVersion = () => parseInt(process.version.match(/v(\d+)/)[1]);
-
 describe('config', () => {
   beforeEach(() => {
     delete process.env.PUBLISH_DIR;
@@ -169,15 +167,7 @@ describe('config', () => {
       audits: [{}],
     };
 
-    expect(() => getConfiguration({ constants, inputs })).toThrow(
-      getNodeMajorVersion() >= 19
-        ? new Error(
-            "Invalid JSON for 'thresholds' input: Unexpected token 'i', \"invalid_json\" is not valid JSON",
-          )
-        : new Error(
-            `Invalid JSON for 'thresholds' input: Unexpected token i in JSON at position 0`,
-          ),
-    );
+    expect(() => getConfiguration({ constants, inputs })).toThrow(/Invalid JSON for 'thresholds' input/);
   });
 
   it('should throw error on invalid audits json input', () => {
@@ -187,15 +177,7 @@ describe('config', () => {
       audits: 'invalid_json',
     };
 
-    expect(() => getConfiguration({ constants, inputs })).toThrow(
-      getNodeMajorVersion() >= 19
-        ? new Error(
-            "Invalid JSON for 'audits' input: Unexpected token 'i', \"invalid_json\" is not valid JSON",
-          )
-        : new Error(
-            `Invalid JSON for 'audits' input: Unexpected token i in JSON at position 0`,
-          ),
-    );
+    expect(() => getConfiguration({ constants, inputs })).toThrow(/Invalid JSON for 'thresholds' input/);
   });
 
   it('should use specific audit output_path when configured', () => {
