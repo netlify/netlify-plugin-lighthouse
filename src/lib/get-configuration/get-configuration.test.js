@@ -167,7 +167,9 @@ describe('config', () => {
       audits: [{}],
     };
 
-    expect(() => getConfiguration({ constants, inputs })).toThrow(/Invalid JSON for 'thresholds' input/);
+    expect(() => getConfiguration({ constants, inputs })).toThrow(
+      /Invalid JSON for 'thresholds' input/,
+    );
   });
 
   it('should throw error on invalid audits json input', () => {
@@ -177,7 +179,9 @@ describe('config', () => {
       audits: 'invalid_json',
     };
 
-    expect(() => getConfiguration({ constants, inputs })).toThrow(/Invalid JSON for 'thresholds' input/);
+    expect(() => getConfiguration({ constants, inputs })).toThrow(
+      /Invalid JSON for 'thresholds' input/,
+    );
   });
 
   it('should use specific audit output_path when configured', () => {
