@@ -180,7 +180,7 @@ describe('config', () => {
     };
 
     expect(() => getConfiguration({ constants, inputs })).toThrow(
-      /Invalid JSON for 'thresholds' input/,
+      /Invalid JSON for 'audits' input/,
     );
   });
 
