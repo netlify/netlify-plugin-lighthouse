@@ -6,13 +6,7 @@ import runAuditWithUrl from '../../lib/run-audit-with-url/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
 import getConfiguration from '../get-configuration/index.js';
 
-const runEvent = async ({
-  event,
-  constants,
-  inputs,
-  onComplete,
-  onFail,
-} = {}) => {
+const runEvent = async ({ event, constants, inputs } = {}) => {
   const isOnSuccess = event === 'onSuccess';
 
   const deployUrl = process.env.DEPLOY_URL;
@@ -113,15 +107,15 @@ const runEvent = async ({
       throw error;
     }
 
-    onComplete({ summary, extraData });
+    return { summary, extraData };
   } catch (error) {
     if (error.details) {
       console.error(error.details);
-      onFail(`${chalk.red('Failed with error:\n')}${error.message}`, {
+      throw new Error(`${chalk.red('Failed with error:\n')}${error.message}`, {
         errorMetadata,
       });
     } else {
-      onFail(`${chalk.red('Failed with error:\n')}`, {
+      throw new Error(`${chalk.red('Failed with error:\n')}`, {
         error,
         errorMetadata,
       });

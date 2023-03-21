@@ -18,15 +18,15 @@ export default function lighthousePlugin(inputs) {
         // Mock the required `utils` functions if running locally
         const { failPlugin, show } = getUtils({ utils });
         try {
-          await runEvent({
+          const { summary, extraData } = await runEvent({
             event: 'onSuccess',
             constants,
             inputs,
-            onComplete: show,
-            onFail: failPlugin,
           });
-        } catch (err) {
-          console.log(err);
+
+          show({ summary, extraData });
+        } catch (error) {
+          failPlugin(error);
         }
       },
     };
@@ -36,15 +36,14 @@ export default function lighthousePlugin(inputs) {
         // Mock the required `utils` functions if running locally
         const { failBuild, show } = getUtils({ utils });
         try {
-          await runEvent({
+          const { summary, extraData } = await runEvent({
             event: 'onPostBuild',
             constants,
             inputs,
-            onComplete: show,
-            onFail: failBuild,
           });
-        } catch (err) {
-          console.log(err);
+          show({ summary, extraData });
+        } catch (error) {
+          failBuild(error);
         }
       },
     };
