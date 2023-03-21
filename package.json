@@ -33,7 +33,7 @@
     "puppeteer": "^18.0.0"
   },
   "engines": {
-    "node": ">=14.15 <19"
+    "node": ">=14.15 <20"
   },
   "type": "module",
   "repository": {
@@ -52,7 +52,7 @@
     "eslint-plugin-import": "^2.27.4",
     "husky": "^8.0.1",
     "jest": "^29.0.0",
-    "netlify-plugin-cypress": "^2.2.0",
+    "netlify-plugin-cypress": "^2.2.1",
     "prettier": "^2.0.0"
   },
   "husky": {

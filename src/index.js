@@ -17,17 +17,14 @@ export default function lighthousePlugin(inputs) {
       onSuccess: async ({ constants, utils, inputs } = {}) => {
         // Mock the required `utils` functions if running locally
         const { failPlugin, show } = getUtils({ utils });
-        try {
-          await runEvent({
-            event: 'onSuccess',
-            constants,
-            inputs,
-            onComplete: show,
-            onFail: failPlugin,
-          });
-        } catch (err) {
-          console.log(err);
-        }
+
+        await runEvent({
+          event: 'onSuccess',
+          constants,
+          inputs,
+          onComplete: show,
+          onFail: failPlugin,
+        });
       },
     };
   } else {
@@ -35,17 +32,14 @@ export default function lighthousePlugin(inputs) {
       onPostBuild: async ({ constants, utils, inputs } = {}) => {
         // Mock the required `utils` functions if running locally
         const { failBuild, show } = getUtils({ utils });
-        try {
-          await runEvent({
-            event: 'onPostBuild',
-            constants,
-            inputs,
-            onComplete: show,
-            onFail: failBuild,
-          });
-        } catch (err) {
-          console.log(err);
-        }
+
+        await runEvent({
+          event: 'onPostBuild',
+          constants,
+          inputs,
+          onComplete: show,
+          onFail: failBuild,
+        });
       },
     };
   }
