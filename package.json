@@ -8,7 +8,7 @@
     "local-onsuccess": "RUN_ON_SUCCESS=true node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onSuccess());'",
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage --maxWorkers=1",
     "format:ci": "prettier --check 'src/**/*.js'"
   },
   "keywords": [
