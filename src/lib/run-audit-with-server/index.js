@@ -5,7 +5,7 @@ import { runLighthouse, getBrowserPath } from '../../lighthouse.js';
 import persistResults from '../persist-results/index.js';
 import getServer from '../get-server/index.js';
 
-const runAudit = async ({
+const runAuditWithServer = async ({
   serveDir,
   path = '',
   url,
@@ -15,7 +15,9 @@ const runAudit = async ({
 }) => {
   try {
     const { server } = getServer({ serveDir: serveDir, auditUrl: url });
+
     const browserPath = await getBrowserPath();
+
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
@@ -57,4 +59,4 @@ const runAudit = async ({
   }
 };
 
-export default runAudit;
+export default runAuditWithServer;

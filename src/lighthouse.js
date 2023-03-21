@@ -33,7 +33,7 @@ export const getBrowserPath = async () => {
 export const runLighthouse = async (browserPath, url, settings) => {
   let chrome;
   try {
-    const logLevel = 'info';
+    const logLevel = 'error';
     log.setLevel(logLevel);
     chrome = await chromeLauncher.launch({
       chromePath: browserPath,

@@ -1,5 +1,9 @@
 name: netlify-plugin-lighthouse
 inputs:
+  - name: audits
+    required: false
+    description: A list of audits to perform. Each list item is an object with either a url/path to scan and an optional thresholds mapping.
+
   # Deprecated, use audits
   - name: audit_url
     required: false
@@ -13,10 +17,10 @@ inputs:
     required: false
     description: Path to save the generated HTML Lighthouse report
 
-  - name: audits
-    required: false
-    description: A list of audits to perform. Each list item is an object with either a url/path to scan and an optional thresholds mapping.
-
   - name: settings
     required: false
     description: Lighthouse-specific settings, used to modify reporting criteria
+
+  - name: run_on_success
+    required: false
+    description: (Beta) Run Lighthouse against the deployed site

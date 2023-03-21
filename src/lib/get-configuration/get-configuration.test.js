@@ -23,7 +23,7 @@ describe('config', () => {
     const config = getConfiguration();
 
     expect(config).toEqual({
-      audits: [
+      auditConfigs: [
         {
           serveDir: undefined,
           url: undefined,
@@ -40,7 +40,7 @@ describe('config', () => {
     const config = getConfiguration();
 
     expect(config).toEqual({
-      audits: [
+      auditConfigs: [
         {
           serveDir: 'PUBLISH_DIR',
           url: 'AUDIT_URL',
@@ -59,7 +59,7 @@ describe('config', () => {
     const config = getConfiguration();
 
     expect(config).toEqual({
-      audits: [
+      auditConfigs: [
         {
           url: 'https://www.test.com',
           thresholds: { performance: 0.9 },
@@ -93,7 +93,7 @@ describe('config', () => {
     const config = getConfiguration({ constants, inputs });
 
     expect(config).toEqual({
-      audits: [
+      auditConfigs: [
         {
           serveDir: 'PUBLISH_DIR',
           url: 'url',
@@ -106,11 +106,15 @@ describe('config', () => {
 
   it('should append audits serveDir to PUBLISH_DIR', () => {
     const constants = { PUBLISH_DIR: 'PUBLISH_DIR' };
-    const inputs = { audits: [{ serveDir: 'route1', thresholds: { seo: 1 } }] };
+    const inputs = {
+      audits: [{ serveDir: 'route1', thresholds: { seo: 1 } }],
+    };
     const config = getConfiguration({ constants, inputs });
 
     expect(config).toEqual({
-      audits: [{ serveDir: 'PUBLISH_DIR/route1', thresholds: { seo: 1 } }],
+      auditConfigs: [
+        { serveDir: 'PUBLISH_DIR/route1', thresholds: { seo: 1 } },
+      ],
     });
   });
 
@@ -126,7 +130,7 @@ describe('config', () => {
     const config = getConfiguration({ constants, inputs });
 
     expect(config).toEqual({
-      audits: [
+      auditConfigs: [
         { serveDir: 'PUBLISH_DIR/route1', thresholds: { seo: 1 } },
         { serveDir: 'PUBLISH_DIR/route2', thresholds: { performance: 1 } },
       ],
@@ -156,7 +160,7 @@ describe('config', () => {
     const config = getConfiguration({ constants, inputs });
 
     expect(config).toEqual({
-      audits: [{ serveDir: 'PUBLISH_DIR/a/b', thresholds: {} }],
+      auditConfigs: [{ serveDir: 'PUBLISH_DIR/a/b', thresholds: {} }],
     });
   });
 
@@ -196,7 +200,7 @@ describe('config', () => {
     const config = getConfiguration({ constants, inputs });
 
     expect(config).toEqual({
-      audits: [
+      auditConfigs: [
         {
           serveDir: 'PUBLISH_DIR/route1',
           output_path: 'reports/lighthouse.html',
