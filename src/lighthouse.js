@@ -3,23 +3,6 @@ import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
 import chromeLauncher from 'chrome-launcher';
 
-// we set DEBUG_COLORS = 'true' to prevent the logger from prefixing a date when running in tty
-// keep the old DEBUG_COLORS value so we can return it to the original value
-let debugColorsSet = false;
-let debugColorsOriginalValue;
-if ('DEBUG_COLORS' in process.env) {
-  debugColorsSet = true;
-  debugColorsOriginalValue = process.env.DEBUG_COLORS;
-}
-process.env.DEBUG_COLORS = 'true';
-
-// we can return the original value after requiring the dependencies
-if (debugColorsSet) {
-  process.env.DEBUG_COLORS = debugColorsOriginalValue;
-} else {
-  delete process.env.DEBUG_COLORS;
-}
-
 export const getBrowserPath = async () => {
   const browserFetcher = puppeteer.createBrowserFetcher();
   const revisions = await browserFetcher.localRevisions();
