@@ -103,6 +103,10 @@ You can customize the behavior via the `audits` input:
   [[plugins.inputs.audits]]
     url = "https://www.example.com"
 
+  # to audit an absolute url which depends on ENV value
+  [[plugins.inputs.audits]]
+    url = "https://${DEPLOY_PRIME_URL}/home"
+
     # you can specify thresholds per audit
     [plugins.inputs.audits.thresholds]
       performance = 0.8
