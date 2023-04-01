@@ -58,6 +58,13 @@ const getConfiguration = ({ constants, inputs, deployUrl } = {}) => {
     ];
   } else {
     auditConfigs = audits.map((a) => {
+      // parse ENV values in urls
+      if (a.url) {
+        a.url = a.url.replace(
+          /\${[A-Z_]+}/g,
+          (match) => process.env[match.substring(2, match.length-1)] ?? match
+        );
+      }
       return {
         ...a,
         thresholds: a.thresholds || thresholds,
