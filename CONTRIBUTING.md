@@ -2,7 +2,7 @@
 
 ## Setup
 
-First fork this project
+First fork this project and install dependencies:
 
 ```bash
 git clone <your-forked-repo>
@@ -10,10 +10,19 @@ yarn install
 git checkout -b my-fix
 ```
 
-Then fix some code and
+If you are using an M1 Macbook, you might encounter an error while the `puppeteer` dependency installs the chromium browser. If this happens, try removing your `node_modules` folder and running:
 
 ```bash
-git commit -m "added this feature"
+export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
+yarn install
+unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD
+node node_modules/puppeteer/install.js
+```
+
+Once you're up and running, fix some code and:
+
+```bash
+git commit -m "fix: fixed this bug"
 git push origin my-fix
 ```
 
@@ -21,14 +30,14 @@ Lastly, open a pull request on Github.
 
 ## Releasing
 
-This repo uses [semantic versioning](https://semver.org/) with the help of [release-please](https://github.com/googleapis/release-please). 
+This repo uses [semantic versioning](https://semver.org/) with the help of [release-please](https://github.com/googleapis/release-please).
 We use [release-please](https://github.com/googleapis/release-please) workflow for releases. The [workflow](./.github/workflows/release-please.yml) is responsible for:
 
 - Creating release PRs
 - Once release PRs are merged it:
-	- creates a release [tag](https://github.com/netlify/netlify-plugin-lighthouse/releases)
-	- publishes the new version to [npm](https://www.npmjs.com/package/@netlify/plugin-lighthouse)
-	- creates an update PR in [plugins](https://github.com/netlify/plugins)
+  - creates a release [tag](https://github.com/netlify/netlify-plugin-lighthouse/releases)
+  - publishes the new version to [npm](https://www.npmjs.com/package/@netlify/plugin-lighthouse)
+  - creates an update PR in [plugins](https://github.com/netlify/plugins)
 
 Things to be aware of:
 
@@ -43,4 +52,3 @@ Things to be aware of:
 3. Merge the release PR
 4. Verify that the new version is available in npm
 5. Go to plugins and merge the version update PR
-

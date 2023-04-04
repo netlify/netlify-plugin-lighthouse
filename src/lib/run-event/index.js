@@ -62,19 +62,7 @@ const runEvent = async ({
         countMessage = ` (${i}/${auditConfigs.length})`;
       }
 
-      let presetMessage = '';
-      if (settings?.settings?.formFactor === 'desktop') {
-        presetMessage = ` using the "desktop" preset`;
-      }
-
-      let localeMessage = '';
-      if (settings?.settings?.locale) {
-        localeMessage = ` using the "${settings.settings.locale}" locale`;
-      }
-
-      console.log(
-        `Running Lighthouse on ${fullPath}${presetMessage}${localeMessage}${countMessage}`,
-      );
+      console.log(`Running Lighthouse on ${fullPath}${countMessage}`);
 
       const runner = isOnSuccess ? runAuditWithUrl : runAuditWithServer;
       const { errors, summary, shortSummary, details, report, runtimeError } =
