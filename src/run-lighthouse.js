@@ -28,7 +28,6 @@ export const runLighthouse = async (browserPath, url, settings) => {
       ],
       logLevel,
     });
-
     const results = await lighthouse(
       url,
       {
@@ -38,14 +37,6 @@ export const runLighthouse = async (browserPath, url, settings) => {
       },
       settings,
     );
-
-    // write results to a file for debugging
-    // try {
-    //   fs.writeFileSync('./results.json', JSON.stringify(results));
-    // } catch (err) {
-    //   console.log(11111, err);
-    // }
-
     return results;
   } finally {
     if (chrome) {
