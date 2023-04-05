@@ -20,6 +20,7 @@ describe('lighthousePlugin with single report per run (onSuccess)', () => {
     resetEnv();
     jest.clearAllMocks();
     process.env.RUN_ON_SUCCESS = true;
+    process.env.DEPLOY_URL = 'https://www.netlify.com';
   });
 
   it('should output expected log content', async () => {
