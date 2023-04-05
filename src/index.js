@@ -17,6 +17,7 @@ export default function lighthousePlugin(inputs) {
       onSuccess: async ({ constants, utils, inputs } = {}) => {
         // Mock the required `utils` functions if running locally
         const { failPlugin, show } = getUtils({ utils });
+
         await runEvent({
           event: 'onSuccess',
           constants,
@@ -31,6 +32,7 @@ export default function lighthousePlugin(inputs) {
       onPostBuild: async ({ constants, utils, inputs } = {}) => {
         // Mock the required `utils` functions if running locally
         const { failBuild, show } = getUtils({ utils });
+
         await runEvent({
           event: 'onPostBuild',
           constants,
