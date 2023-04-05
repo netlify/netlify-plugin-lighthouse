@@ -6,6 +6,8 @@ import runAuditWithUrl from '../../lib/run-audit-with-url/index.js';
 import runAuditWithServer from '../../lib/run-audit-with-server/index.js';
 import getConfiguration from '../get-configuration/index.js';
 
+import { formatStartMessage } from './helpers.js';
+
 const runEvent = async ({
   event,
   constants,
@@ -57,12 +59,14 @@ const runEvent = async ({
       const { serveDir, path, url, thresholds, output_path } = auditConfig;
       const fullPath = [serveDir, path].join('/');
 
-      let countMessage = '';
-      if (auditConfigs.length > 1) {
-        countMessage = ` (${i}/${auditConfigs.length})`;
-      }
+      const startMessage = formatStartMessage({
+        count: { i, total: auditConfigs.length },
+        path: fullPath,
+        formFactor: settings?.settings.formFactor,
+        locale: settings?.settings.locale,
+      });
 
-      console.log(`Running Lighthouse on ${fullPath}${countMessage}`);
+      console.log(startMessage);
 
       const runner = isOnSuccess ? runAuditWithUrl : runAuditWithServer;
       const { errors, summary, shortSummary, details, report, runtimeError } =
