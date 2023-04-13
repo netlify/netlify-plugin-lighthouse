@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.1.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.7...v4.1.0) (2023-04-13)
+
+
+### Features
+
+* Allow plugin to run onSuccess with toml setting or env var LIGHTHOUSE_RUN_ON_SUCCESS ([#570](https://github.com/netlify/netlify-plugin-lighthouse/issues/570)) ([7de67f4](https://github.com/netlify/netlify-plugin-lighthouse/commit/7de67f4418a7062401fbdf04daee521ab7a9c08a))
+
 ## [4.0.7](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.6...v4.0.7) (2023-01-25)
 
 
