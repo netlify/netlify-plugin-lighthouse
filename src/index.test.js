@@ -12,10 +12,10 @@ describe('lighthousePlugin plugin events', () => {
 
   describe('onSuccess', () => {
     beforeEach(() => {
-      process.env.RUN_ON_SUCCESS = 'true';
+      process.env.LIGHTHOUSE_RUN_ON_SUCCESS = 'true';
     });
     afterEach(() => {
-      delete process.env.RUN_ON_SUCCESS;
+      delete process.env.LIGHTHOUSE_RUN_ON_SUCCESS;
     });
     it('should return only the expected event function', async () => {
       const events = lighthousePlugin();
