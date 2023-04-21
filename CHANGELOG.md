@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [4.1.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.1.0...v4.1.1) (2023-04-21)
+
+
+### Bug Fixes
+
+* Fix chrome-launcher error preventing reports being generated ([#573](https://github.com/netlify/netlify-plugin-lighthouse/issues/573)) ([ae6e28e](https://github.com/netlify/netlify-plugin-lighthouse/commit/ae6e28e9be9311328f7b4cb6a893db1b01ac7e37))
+
 ## [4.1.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.0.7...v4.1.0) (2023-04-13)
 
 
