@@ -40,7 +40,7 @@ export const runLighthouse = async (browserPath, url, settings) => {
     return results;
   } finally {
     if (chrome) {
-      await chrome.kill().catch(() => undefined);
+      await chrome.kill();
     }
   }
 };
