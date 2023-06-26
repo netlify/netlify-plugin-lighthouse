@@ -55,6 +55,7 @@ const runAuditWithServer = async ({
       };
     }
   } catch (error) {
+    console.warn(error);
     return { error };
   }
 };
