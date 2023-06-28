@@ -22,7 +22,7 @@ describe('lighthousePlugin with failed threshold run (onSuccess)', () => {
   beforeEach(() => {
     resetEnv();
     jest.clearAllMocks();
-    process.env.RUN_ON_SUCCESS = true;
+    process.env.LIGHTHOUSE_RUN_ON_SUCCESS = 'true';
     process.env.DEPLOY_URL = 'https://www.netlify.com';
     process.env.THRESHOLDS = JSON.stringify({
       performance: 1,

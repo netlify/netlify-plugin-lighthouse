@@ -19,7 +19,7 @@ describe('lighthousePlugin with single not-found run (onSuccess)', () => {
   beforeEach(() => {
     resetEnv();
     jest.clearAllMocks();
-    process.env.RUN_ON_SUCCESS = true;
+    process.env.LIGHTHOUSE_RUN_ON_SUCCESS = 'true';
     process.env.DEPLOY_URL = 'https://www.netlify.com';
     process.env.AUDITS = JSON.stringify([{ path: 'this-page-does-not-exist' }]);
   });
@@ -32,7 +32,7 @@ describe('lighthousePlugin with single not-found run (onSuccess)', () => {
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: 404)',
     ];
 
-    await lighthousePlugin().onSuccess({ utils: mockUtils });
+    await lighthousePlugin().onSuccess({utils: mockUtils})
     expect(formatMockLog(console.log.mock.calls)).toEqual(logs);
   });
 
