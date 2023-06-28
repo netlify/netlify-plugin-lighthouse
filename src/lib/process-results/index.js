@@ -1,5 +1,3 @@
-import chalk from 'chalk';
-
 import prefixString from '../prefix-string/index.js';
 
 const processResults = ({ data, errors }) => {
@@ -56,20 +54,18 @@ const processResults = ({ data, errors }) => {
 
           if (runtimeError) {
             reports.push(obj);
-            return `Error testing '${chalk.magenta(path || url)}': ${
-              runtimeError.message
-            }`;
+            return `Error testing '${path || url}': ${runtimeError.message}`;
           }
 
           if (path) {
             obj.path = path;
             reports.push(obj);
-            return `Summary for path '${chalk.magenta(path)}': ${shortSummary}`;
+            return `Summary for path '${path}': ${shortSummary}`;
           }
           if (url) {
             obj.url = url;
             reports.push(obj);
-            return `Summary for url '${chalk.magenta(url)}': ${shortSummary}`;
+            return `Summary for url '${url}': ${shortSummary}`;
           }
           return `${shortSummary}`;
         },
