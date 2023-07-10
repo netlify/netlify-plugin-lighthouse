@@ -45,12 +45,12 @@ describe('lighthousePlugin with failed threshold run (onPostBuild)', () => {
       '- PWA: 30',
     ];
 
-    await lighthousePlugin({block_deploy_on_failed_threshold: 'true'}).onPostBuild({ utils: mockUtils });
+    await lighthousePlugin({fail_deploy_on_score_thresholds: 'true'}).onPostBuild({ utils: mockUtils });
     expect(formatMockLog(console.log.mock.calls)).toEqual(logs);
   });
 
   it('should not output expected success payload', async () => {
-    await lighthousePlugin({block_deploy_on_failed_threshold: 'true'}).onPostBuild({ utils: mockUtils,  });
+    await lighthousePlugin({fail_deploy_on_score_thresholds: 'true'}).onPostBuild({ utils: mockUtils,  });
     expect(mockUtils.status.show).not.toHaveBeenCalledWith();
   });
 
@@ -67,7 +67,7 @@ describe('lighthousePlugin with failed threshold run (onPostBuild)', () => {
       "   'Manifest doesn't have a maskable icon' received a score of 0",
     ];
 
-    await lighthousePlugin({block_deploy_on_failed_threshold: 'true'}).onPostBuild({ utils: mockUtils });
+    await lighthousePlugin({fail_deploy_on_score_thresholds: 'true'}).onPostBuild({ utils: mockUtils });
     const resultError = console.error.mock.calls[0][0];
     expect(stripAnsi(resultError).split('\n').filter(Boolean)).toEqual(error);
   });
@@ -99,7 +99,7 @@ describe('lighthousePlugin with failed threshold run (onPostBuild)', () => {
       ],
     };
 
-    await lighthousePlugin({block_deploy_on_failed_threshold: 'true'}).onPostBuild({ utils: mockUtils });
+    await lighthousePlugin({fail_deploy_on_score_thresholds: 'true'}).onPostBuild({ utils: mockUtils });
     const [resultMessage, resultPayload] =
       mockUtils.build.failBuild.mock.calls[0];
 

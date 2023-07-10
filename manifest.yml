@@ -21,6 +21,6 @@ inputs:
     required: false
     description: Lighthouse-specific settings, used to modify reporting criteria
 
-  - name: block_deploy_on_failed_threshold
+  - name: fail_deploy_on_score_thresholds
     required: false
-    description: Prevent deploy if minimum threshold scores are not met
+    description: Fail deploy if minimum threshold scores are not met

@@ -106,7 +106,7 @@ You can add additional configuration and/or inspect a different path, or multipl
 
 By default, the lighthouse plugin will run _after_ your deploy has been successful, auditing the live deploy content.
 
-To run the plugin _before_ the deploy is live, use the `block_deploy_on_failed_threshold` input to instead run during the `onPostBuild` event. 
+To run the plugin _before_ the deploy is live, use the `fail_deploy_on_score_thresholds` input to instead run during the `onPostBuild` event. 
 This will statically serve your build output folder, and audit the `index.html` (or other file if specified as below). Using this configuration, if minimum threshold scores are supplied and not met, the deploy will fail.
 Set the threshold based on `performance`, `accessibility`, `best-practices`, `seo`, or `pwa`.
 
@@ -116,7 +116,7 @@ Set the threshold based on `performance`, `accessibility`, `best-practices`, `se
 
   # Set the plugin to run prior to deploy, failing the build if minimum thresholds aren't set 
   [plugins.inputs]
-    block_deploy_on_failed_threshold = "true"
+    fail_deploy_on_score_thresholds = "true"
 
   # Set minimum thresholds for each report area
   [plugins.inputs.thresholds]

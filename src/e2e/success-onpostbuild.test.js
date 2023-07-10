@@ -35,7 +35,7 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
       '- PWA: 30',
     ];
     await lighthousePlugin({
-      block_deploy_on_failed_threshold: 'true',
+      fail_deploy_on_score_thresholds: 'true',
     }).onPostBuild({ utils: mockUtils });
     expect(formatMockLog(console.log.mock.calls)).toEqual(logs);
   });
@@ -65,7 +65,7 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
     };
 
     await lighthousePlugin({
-      block_deploy_on_failed_threshold: 'true',
+      fail_deploy_on_score_thresholds: 'true',
     }).onPostBuild({ utils: mockUtils });
     expect(mockUtils.status.show).toHaveBeenCalledWith(payload);
   });
@@ -74,7 +74,7 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
     mockConsoleError();
 
     await lighthousePlugin({
-      block_deploy_on_failed_threshold: 'true',
+      fail_deploy_on_score_thresholds: 'true',
     }).onPostBuild({ utils: mockUtils });
     expect(console.error).not.toHaveBeenCalled();
     expect(mockUtils.build.failBuild).not.toHaveBeenCalled();

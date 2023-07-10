@@ -7,9 +7,9 @@ dotenv.config();
 
 export default function lighthousePlugin(inputs) {
 
-  // Run onSuccess by default, unless inputs specify we should block_deploy_on_failed_threshold
+  // Run onSuccess by default, unless inputs specify we should fail_deploy_on_score_thresholds
   const defaultEvent =
-    inputs?.block_deploy_on_failed_threshold === 'true' 
+    inputs?.fail_deploy_on_score_thresholds === 'true' 
       ? 'onPostBuild'
       : 'onSuccess';
 
