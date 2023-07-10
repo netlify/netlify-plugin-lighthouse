@@ -4,8 +4,8 @@
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
   "scripts": {
-    "local": "node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onPostBuild());'",
-    "local-onsuccess": "LIGHTHOUSE_RUN_ON_SUCCESS=true node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onSuccess());'",
+    "local": "node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onSuccess());'",
+    "local-onpostbuild": "node -e 'import(\"./src/index.js\").then(index => index.default({block_deploy_on_failed_threshold: \"true\"})).then(events => events.onPostBuild());'",
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage --maxWorkers=1",
