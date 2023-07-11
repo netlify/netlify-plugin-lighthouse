@@ -107,8 +107,9 @@ You can add additional configuration and/or inspect a different path, or multipl
 By default, the lighthouse plugin will run _after_ your deploy has been successful, auditing the live deploy content.
 
 To run the plugin _before_ the deploy is live, use the `fail_deploy_on_score_thresholds` input to instead run during the `onPostBuild` event. 
-This will statically serve your build output folder, and audit the `index.html` (or other file if specified as below). Using this configuration, if minimum threshold scores are supplied and not met, the deploy will fail.
-Set the threshold based on `performance`, `accessibility`, `best-practices`, `seo`, or `pwa`.
+This will statically serve your build output folder, and audit the `index.html` (or other file if specified as below). Please note that sites or site paths using SSR/ISR (server-side rendering or Incremental Static Regeneration) cannot be served and audited in this way.
+
+Using this configuration, if minimum threshold scores are supplied and not met, the deploy will fail. Set the threshold based on `performance`, `accessibility`, `best-practices`, `seo`, or `pwa`.
 
 ```toml
 [[plugins]]
