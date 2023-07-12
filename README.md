@@ -34,14 +34,6 @@ Then add the plugin to your `netlify.toml` configuration file:
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
-  # optional, fails build when a category is below a threshold
-  [plugins.inputs.thresholds]
-    performance = 0.9
-    accessibility = 0.9
-    best-practices = 0.9
-    seo = 0.9
-    pwa = 0.9
-
   # optional, deploy the lighthouse report to a path under your site
   [plugins.inputs.audits]
     output_path = "reports/lighthouse.html"
@@ -51,7 +43,7 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 ```
 2:35:07 PM: ────────────────────────────────────────────────────────────────
-2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse
+2:35:07 PM:   @netlify/plugin-lighthouse (onSuccess event)  
 2:35:07 PM: ────────────────────────────────────────────────────────────────
 2:35:07 PM: 
 2:35:07 PM: Serving and scanning site from directory dist
