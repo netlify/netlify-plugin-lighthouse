@@ -5,6 +5,17 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [5.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.1.1...v5.0.0) (2023-07-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* Run plugin on live deploy URL by default  ([#588](https://github.com/netlify/netlify-plugin-lighthouse/issues/588))
+
+### Features
+
+* Run plugin on live deploy URL by default  ([#588](https://github.com/netlify/netlify-plugin-lighthouse/issues/588)) ([1116f78](https://github.com/netlify/netlify-plugin-lighthouse/commit/1116f782aefe3fac65f02724d39c0dd1a52da872))
+
 ## [4.1.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.1.0...v4.1.1) (2023-04-21)
 
 
