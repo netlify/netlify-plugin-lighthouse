@@ -24,21 +24,21 @@ describe('lighthousePlugin with custom device preset', () => {
     jest.clearAllMocks();
     process.env.PUBLISH_DIR = 'example';
     process.env.SETTINGS = JSON.stringify({ preset: 'desktop' });
+    process.env.DEPLOY_URL = 'https://www.netlify.com';
   });
 
   it('should output expected log content', async () => {
     const logs = [
       'Generating Lighthouse report. This may take a minute…',
-      'Running Lighthouse on example/ using the “desktop” preset',
-      'Serving and scanning site from directory example',
-      'Lighthouse scores for example/',
+      'Running Lighthouse on / using the “desktop” preset',
+      'Lighthouse scores for /',
       '- Performance: 100',
       '- Accessibility: 100',
       '- Best Practices: 100',
       '- SEO: 91',
       '- PWA: 30',
     ];
-    await lighthousePlugin().onPostBuild({ utils: mockUtils });
+    await lighthousePlugin().onSuccess({ utils: mockUtils });
     expect(formatMockLog(console.log.mock.calls)).toEqual(logs);
   });
 
@@ -51,7 +51,7 @@ describe('lighthousePlugin with custom device preset', () => {
             installable: false,
             locale: 'en-US',
           },
-          path: 'example/',
+          path: '/',
           report: '<!DOCTYPE html><h1>Lighthouse Report (mock)</h1>',
           summary: {
             accessibility: 100,
@@ -63,17 +63,17 @@ describe('lighthousePlugin with custom device preset', () => {
         },
       ],
       summary:
-        "Summary for path 'example/': Performance: 100, Accessibility: 100, Best Practices: 100, SEO: 91, PWA: 30",
+        "Summary for path '/': Performance: 100, Accessibility: 100, Best Practices: 100, SEO: 91, PWA: 30",
     };
 
-    await lighthousePlugin().onPostBuild({ utils: mockUtils });
+    await lighthousePlugin().onSuccess({ utils: mockUtils });
     expect(mockUtils.status.show).toHaveBeenCalledWith(payload);
   });
 
   it('should not output errors, or call fail events', async () => {
     mockConsoleError();
 
-    await lighthousePlugin().onPostBuild({ utils: mockUtils });
+    await lighthousePlugin().onSuccess({ utils: mockUtils });
     expect(console.error).not.toHaveBeenCalled();
     expect(mockUtils.build.failBuild).not.toHaveBeenCalled();
     expect(mockUtils.build.failPlugin).not.toHaveBeenCalled();

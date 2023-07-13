@@ -19,7 +19,6 @@ describe('lighthousePlugin with single not-found run (onSuccess)', () => {
   beforeEach(() => {
     resetEnv();
     jest.clearAllMocks();
-    process.env.LIGHTHOUSE_RUN_ON_SUCCESS = 'true';
     process.env.DEPLOY_URL = 'https://www.netlify.com';
     process.env.AUDITS = JSON.stringify([{ path: 'this-page-does-not-exist' }]);
   });

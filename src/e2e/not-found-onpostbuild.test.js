@@ -32,7 +32,9 @@ describe('lighthousePlugin with single not-found run (onPostBuild)', () => {
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: 404)',
     ];
 
-    await lighthousePlugin().onPostBuild({ utils: mockUtils });
+    await lighthousePlugin({
+      fail_deploy_on_score_thresholds: 'true',
+    }).onPostBuild({ utils: mockUtils });
     expect(formatMockLog(console.log.mock.calls)).toEqual(logs);
   });
 
@@ -52,14 +54,18 @@ describe('lighthousePlugin with single not-found run (onPostBuild)', () => {
         "Error testing 'example/this-page-does-not-exist': Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: 404)",
     };
 
-    await lighthousePlugin().onPostBuild({ utils: mockUtils });
+    await lighthousePlugin({
+      fail_deploy_on_score_thresholds: 'true',
+    }).onPostBuild({ utils: mockUtils });
     expect(mockUtils.status.show).toHaveBeenCalledWith(payload);
   });
 
   it('should not output errors, or call fail events', async () => {
     mockConsoleError();
 
-    await lighthousePlugin().onPostBuild({ utils: mockUtils });
+    await lighthousePlugin({
+      fail_deploy_on_score_thresholds: 'true',
+    }).onPostBuild({ utils: mockUtils });
     expect(console.error).not.toHaveBeenCalled();
     expect(mockUtils.build.failBuild).not.toHaveBeenCalled();
     expect(mockUtils.build.failPlugin).not.toHaveBeenCalled();
