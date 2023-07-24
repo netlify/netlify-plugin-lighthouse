@@ -1,7 +1,7 @@
 import { join } from 'path';
 
 import { formatResults } from '../../format.js';
-import { runLighthouse, getBrowserPath } from '../../lighthouse.js';
+import { runLighthouse, getBrowserPath } from '../../run-lighthouse.js';
 import persistResults from '../persist-results/index.js';
 import getServer from '../get-server/index.js';
 

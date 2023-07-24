@@ -6,12 +6,11 @@ import getUtils from './lib/get-utils/index.js';
 dotenv.config();
 
 export default function lighthousePlugin(inputs) {
-  // Run onPostBuild by default, unless LIGHTHOUSE_RUN_ON_SUCCESS env var is set to true, or run_on_success is specified in plugin inputs
+  // Run onSuccess by default, unless inputs specify we should fail_deploy_on_score_thresholds
   const defaultEvent =
-    inputs?.run_on_success === 'true' ||
-    process.env.LIGHTHOUSE_RUN_ON_SUCCESS === 'true'
-      ? 'onSuccess'
-      : 'onPostBuild';
+    inputs?.fail_deploy_on_score_thresholds === 'true'
+      ? 'onPostBuild'
+      : 'onSuccess';
 
   if (defaultEvent === 'onSuccess') {
     return {

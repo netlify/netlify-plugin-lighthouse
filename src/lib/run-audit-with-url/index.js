@@ -1,5 +1,5 @@
 import { formatResults } from '../../format.js';
-import { runLighthouse, getBrowserPath } from '../../lighthouse.js';
+import { runLighthouse, getBrowserPath } from '../../run-lighthouse.js';
 
 const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
   try {

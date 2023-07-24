@@ -1,14 +1,14 @@
 {
   "name": "@netlify/plugin-lighthouse",
-  "version": "4.1.1",
+  "version": "5.0.0",
   "description": "Netlify Plugin to run Lighthouse on each build",
   "main": "src/index.js",
   "scripts": {
-    "local": "node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onPostBuild());'",
-    "local-onsuccess": "LIGHTHOUSE_RUN_ON_SUCCESS=true node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onSuccess());'",
+    "local": "node -e 'import(\"./src/index.js\").then(index => index.default()).then(events => events.onSuccess());'",
+    "local-onpostbuild": "node -e 'import(\"./src/index.js\").then(index => index.default({fail_deploy_on_score_thresholds: \"true\"})).then(events => events.onPostBuild());'",
     "lint": "eslint 'src/**/*.js'",
     "format": "prettier --write 'src/**/*.js'",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --collect-coverage --maxWorkers=1",
     "format:ci": "prettier --check 'src/**/*.js'"
   },
   "keywords": [
@@ -53,7 +53,8 @@
     "husky": "^8.0.1",
     "jest": "^29.0.0",
     "netlify-plugin-cypress": "^2.2.1",
-    "prettier": "^2.0.0"
+    "prettier": "^2.0.0",
+    "strip-ansi": "^7.0.1"
   },
   "husky": {
     "hooks": {

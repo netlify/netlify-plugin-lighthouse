@@ -34,14 +34,6 @@ Then add the plugin to your `netlify.toml` configuration file:
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
-  # optional, fails build when a category is below a threshold
-  [plugins.inputs.thresholds]
-    performance = 0.9
-    accessibility = 0.9
-    best-practices = 0.9
-    seo = 0.9
-    pwa = 0.9
-
   # optional, deploy the lighthouse report to a path under your site
   [plugins.inputs.audits]
     output_path = "reports/lighthouse.html"
@@ -51,7 +43,7 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 ```
 2:35:07 PM: ────────────────────────────────────────────────────────────────
-2:35:07 PM:   2. onPostBuild command from @netlify/plugin-lighthouse
+2:35:07 PM:   @netlify/plugin-lighthouse (onSuccess event)  
 2:35:07 PM: ────────────────────────────────────────────────────────────────
 2:35:07 PM: 
 2:35:07 PM: Serving and scanning site from directory dist
@@ -73,31 +65,24 @@ The lighthouse scores are automatically printed to the **Deploy log** in the Net
 
 To customize how Lighthouse runs audits, you can make changes to the `netlify.toml` file.
 
-By default, the plugin will serve and audit the build directory of the site, inspecting the `index.html`.
-You can customize the behavior via the `audits` input:
+By default, the plugin will run after your build is deployed on the live deploy permalink, inspecting the home path `/`.
+You can add additional configuration and/or inspect a different path, or multiple additional paths by adding configuration in the `netlify.toml` file:
 
 ```toml
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
 
+  # Set minimum thresholds for each report area
   [plugins.inputs.thresholds]
     performance = 0.9
 
-  # to audit a sub path of the build directory
+  # to audit a path other than /
   # route1 audit will use the top level thresholds
   [[plugins.inputs.audits]]
     path = "route1"
 
-    # you can specify output_path per audit, relative to the path
+    # you can optionally specify an output_path per audit, relative to the path, where HTML report output will be saved
     output_path = "reports/route1.html"
-
-  # to audit an HTML file other than index.html in the build directory
-  [[plugins.inputs.audits]]
-    path = "contact.html"
-
-  # to audit an HTML file other than index.html in a sub path of the build directory
-  [[plugins.inputs.audits]]
-    path = "pages/contact.html"
 
   # to audit a specific absolute url
   [[plugins.inputs.audits]]
@@ -107,11 +92,42 @@ You can customize the behavior via the `audits` input:
     [plugins.inputs.audits.thresholds]
       performance = 0.8
 
+```
+
+#### Fail a deploy based on score thresholds
+
+By default, the lighthouse plugin will run _after_ your deploy has been successful, auditing the live deploy content.
+
+To run the plugin _before_ the deploy is live, use the `fail_deploy_on_score_thresholds` input to instead run during the `onPostBuild` event. 
+This will statically serve your build output folder, and audit the `index.html` (or other file if specified as below). Please note that sites or site paths using SSR/ISR (server-side rendering or Incremental Static Regeneration) cannot be served and audited in this way.
+
+Using this configuration, if minimum threshold scores are supplied and not met, the deploy will fail. Set the threshold based on `performance`, `accessibility`, `best-practices`, `seo`, or `pwa`.
+
+```toml
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+  # Set the plugin to run prior to deploy, failing the build if minimum thresholds aren't set 
+  [plugins.inputs]
+    fail_deploy_on_score_thresholds = "true"
+
+  # Set minimum thresholds for each report area
+  [plugins.inputs.thresholds]
+    performance = 0.9
+    accessibility: = 0.7
+
+  # to audit an HTML file other than index.html in the build directory
+  [[plugins.inputs.audits]]
+    path = "contact.html"
+
+  # to audit an HTML file other than index.html in a sub path of the build directory
+  [[plugins.inputs.audits]]
+    path = "pages/contact.html"
+
   # to serve only a sub directory of the build directory for an audit
   # pages/index.html will be audited, and files outside of this directory will not be served
   [[plugins.inputs.audits]]
     serveDir = "pages"
-
 ```
 
 ### Run Lighthouse audits for desktop
@@ -148,18 +164,6 @@ Updates to `netlify.toml` will take effect for new builds.
     locale = "es" # generates Lighthouse reports in Español
 ```
 
-### Fail Builds Based on Score Thresholds
-
-By default, the Lighthouse plugin will report the findings in the deploy logs. To fail a build based on a specific score, specify the inputs thresholds in your `netlify.toml` file. Set the threshold based on `performance`, `accessibility`, `best-practices`, `seo`, or `pwa`.
-
-```toml
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
-  
-  [plugins.inputs.thresholds]
-    performance = 0.9
-```
-
 ### Run Lighthouse Locally
 
 Fork and clone this repo.
@@ -173,21 +177,13 @@ yarn local
 
 ## Preview Lighthouse results within the Netlify UI
 
-Netlify offers an experimental feature through Netlify Labs that allows you to view Lighthouse scores for each of your builds on your site's Deploy Details page with a much richer format.
+The Netlify UI allows you to view Lighthouse scores for each of your builds on your site's Deploy Details page with a much richer format.
 
-You'll need to install the [Lighthouse build plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) on your site and then enable this experimental feature through Netlify Labs.
+You'll need to first install the [Lighthouse build plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) on your site.
 
-<img width="1400" alt="Deploy view with Lighthouse visualizations" src="https://user-images.githubusercontent.com/79875905/160019039-c3e529de-f389-42bc-a3d4-458c90d59e6a.png">
+<img width="1400" alt="Deploy view with Lighthouse visualizations" src="https://github.com/netlify/netlify-plugin-lighthouse/assets/20773163/144d7bd3-5b7b-4a18-826e-c8d582f92fab">
 
-If you have multiple audits (directories, paths, etc) defined in your build, we will display a roll-up of the average Lighthouse scores for all the current build's audits plus the results for each individual audit.
+If you have multiple audits (e.g. multiple paths) defined in your build, we will display a roll-up of the average Lighthouse scores for all the current build's audits plus the results for each individual audit.
 
-<img width="1400" alt="Deploy details with multiple audit Lighthouse results" src="https://user-images.githubusercontent.com/79875905/160019057-d29dffab-49f3-4fbf-a1ac-1f314e0cd837.png">
+<img width="1400" alt="Deploy details with multiple audit Lighthouse results" src="https://github.com/netlify/netlify-plugin-lighthouse/assets/20773163/b9887c64-db03-40c0-b7e9-5acba081f87b">
 
-Some items of note:
-
-- The [Lighthouse Build Plugin](https://app.netlify.com/plugins/@netlify/plugin-lighthouse/install) must be installed on your site(s) in order for these score visualizations to be displayed.
-- This Labs feature is currently only enabled at the user-level, so it will need to be enabled for each individual team member that wishes to see the Lighthouse scores displayed.
-
-Learn more in our official [Labs docs](https://docs.netlify.com/netlify-labs/experimental-features/lighthouse-visualization/).
-
-We have a lot planned for this feature and will be adding functionality regularly, but we'd also love to hear your thoughts. Please [share your feedback](https://netlify.qualtrics.com/jfe/form/SV_1NTbTSpvEi0UzWe) about this experimental feature and tell us what you think.

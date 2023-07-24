@@ -21,6 +21,6 @@ inputs:
     required: false
     description: Lighthouse-specific settings, used to modify reporting criteria
 
-  - name: run_on_success
+  - name: fail_deploy_on_score_thresholds
     required: false
-    description: (Beta) Run Lighthouse against the deployed site
+    description: Fail deploy if minimum threshold scores are not met
