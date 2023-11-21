@@ -1,4 +1,4 @@
-import getServePath from '.';
+import getServePath from './index.js';
 
 describe('getServePath', () => {
   it('returns undefined for dir thats not a string', () => {

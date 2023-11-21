@@ -1,4 +1,4 @@
-import getSettings from '.';
+import getSettings from './index.js';
 
 describe('replacements', () => {
   it('should return nothing with no settings set', () => {
