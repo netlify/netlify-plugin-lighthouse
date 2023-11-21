@@ -21,10 +21,10 @@ jobs:
           package-name: '@netlify/plugin-lighthouse'
       - uses: actions/checkout@v3
         if: ${{ steps.release.outputs.releases_created }}
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '*'
-          cache: 'npm'
+          node-version-file: '.nvmrc'
+          cache: yarn
           check-latest: true
           registry-url: 'https://registry.npmjs.org'
         if: ${{ steps.release.outputs.releases_created }}
