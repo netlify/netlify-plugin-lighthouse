@@ -18,7 +18,7 @@ jest.unstable_mockModule('express', () => {
     default: mockedExpress,
   };
 });
-const getServer = (await import('.')).default;
+const getServer = (await import('./index.js')).default;
 
 describe('getServer', () => {
   beforeEach(() => {

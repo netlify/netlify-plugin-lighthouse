@@ -9,7 +9,7 @@ jest.unstable_mockModule('chalk', () => {
   };
 });
 
-const getConfiguration = (await import('.')).default;
+const getConfiguration = (await import('./index.js')).default;
 
 describe('config', () => {
   beforeEach(() => {
