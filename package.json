@@ -33,7 +33,7 @@
     "puppeteer": "^18.0.0"
   },
   "engines": {
-    "node": ">=14.15 <20"
+    "node": ">=14.15"
   },
   "type": "module",
   "repository": {
