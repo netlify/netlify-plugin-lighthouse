@@ -114,7 +114,7 @@ Using this configuration, if minimum threshold scores are supplied and not met, 
   # Set minimum thresholds for each report area
   [plugins.inputs.thresholds]
     performance = 0.9
-    accessibility: = 0.7
+    accessibility = 0.7
 
   # to audit an HTML file other than index.html in the build directory
   [[plugins.inputs.audits]]
