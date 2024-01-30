@@ -5,6 +5,22 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [6.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v5.0.0...v6.0.0) (2024-01-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* mark compatible with Node v20 and up ([#612](https://github.com/netlify/netlify-plugin-lighthouse/issues/612))
+
+### Features
+
+* mark compatible with Node v20 and up ([#612](https://github.com/netlify/netlify-plugin-lighthouse/issues/612)) ([0681a72](https://github.com/netlify/netlify-plugin-lighthouse/commit/0681a7289f7e951d1c375027c7ee7a3ef9dae447))
+
+
+### Bug Fixes
+
+* remove typo ([#611](https://github.com/netlify/netlify-plugin-lighthouse/issues/611)) ([4f40958](https://github.com/netlify/netlify-plugin-lighthouse/commit/4f40958669851002aece0d004ef86a971ba99567))
+
 ## [5.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v4.1.1...v5.0.0) (2023-07-13)
 
 
