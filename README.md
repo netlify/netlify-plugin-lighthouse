@@ -1,5 +1,8 @@
 # Netlify Plugin Lighthouse
 
+> [!IMPORTANT]
+> Contributions and bug reports to the project are not being accepted at this time.
+
 A Netlify plugin to generate a Lighthouse report for every deploy
 
 ## Installation options
