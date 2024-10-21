@@ -5,6 +5,13 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [6.0.1](https://github.com/netlify/netlify-plugin-lighthouse/compare/v6.0.0...v6.0.1) (2024-10-21)
+
+
+### Bug Fixes
+
+* skip is-crawlable audit when running onSuccess against DEPLOY_URL ([#621](https://github.com/netlify/netlify-plugin-lighthouse/issues/621)) ([4be7b46](https://github.com/netlify/netlify-plugin-lighthouse/commit/4be7b464f1d48bd818488d97f2d24b093ccf31c7))
+
 ## [6.0.0](https://github.com/netlify/netlify-plugin-lighthouse/compare/v5.0.0...v6.0.0) (2024-01-30)
 
 
