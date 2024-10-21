@@ -7,7 +7,14 @@ const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
 
     const getResults = async () => {
       const fullPath = path ? `${url}/${path}` : url;
-      const results = await runLighthouse(browserPath, fullPath, settings);
+      console.log('Running lighthouse with settings', {
+        ...settings,
+        skipAudits: ['is-crawlable'],
+      });
+      const results = await runLighthouse(browserPath, fullPath, {
+        ...settings,
+        skipAudits: ['is-crawlable'],
+      });
 
       try {
         return { results };
