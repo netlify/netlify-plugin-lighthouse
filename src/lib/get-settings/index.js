@@ -20,9 +20,8 @@ const mergeSettingsSources = (inputSettings = {}) => {
   return Object.assign({}, envSettings, inputSettings);
 };
 
-const getSettings = (inputSettings) => {
+const getSettings = (inputSettings, isUsingDeployUrl) => {
   const settings = mergeSettingsSources(inputSettings);
-  if (Object.keys(settings).length === 0) return;
 
   // Set a base-level config based on the preset input value
   // (desktop is currently the only supported option)
@@ -33,6 +32,12 @@ const getSettings = (inputSettings) => {
   // We add individually to avoid passing anything unexpected to Lighthouse.
   if (settings.locale) {
     derivedSettings.settings.locale = settings.locale;
+  }
+
+  // If we are running against the Netlify deploy URL, the injected x-robots-tag will always cause the audit to fail,
+  // likely producing a false positive, so we skip in this case
+  if (isUsingDeployUrl) {
+    derivedSettings.settings.skipAudits = ['is-crawlable'];
   }
 
   return derivedSettings;

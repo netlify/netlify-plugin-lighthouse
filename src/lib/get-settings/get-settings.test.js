@@ -1,8 +1,10 @@
 import getSettings from './index.js';
 
 describe('replacements', () => {
-  it('should return nothing with no settings set', () => {
-    expect(getSettings()).toEqual(undefined);
+  it('should return the default config with no settings set', () => {
+    const derivedSettings = getSettings();
+    expect(derivedSettings.extends).toEqual('lighthouse:default');
+    expect(derivedSettings.settings).toEqual({});
   });
 
   it('should return a template config with preset set to desktop', () => {
@@ -32,6 +34,11 @@ describe('replacements', () => {
     });
     const derivedSettings = getSettings({ locale: 'es' });
     expect(derivedSettings.settings.locale).toEqual('es');
+  });
+
+  it('should skip is-crawlable audit when using deployUrl', () => {
+    const derivedSettings = getSettings({}, true);
+    expect(derivedSettings.settings.skipAudits).toEqual(['is-crawlable']);
   });
 
   it('should error with incorrect syntax for process.env.SETTINGS', () => {
