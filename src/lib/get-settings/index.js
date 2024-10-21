@@ -22,7 +22,11 @@ const mergeSettingsSources = (inputSettings = {}) => {
 
 const getSettings = (inputSettings, isUsingDeployUrl) => {
   const settings = mergeSettingsSources(inputSettings);
-  if (Object.keys(settings).length === 0) return;
+  if (Object.keys(settings).length === 0) {
+    return isUsingDeployUrl
+      ? undefined
+      : { settings: { skipAudits: ['is-crawlable'] } };
+  }
 
   // Set a base-level config based on the preset input value
   // (desktop is currently the only supported option)
