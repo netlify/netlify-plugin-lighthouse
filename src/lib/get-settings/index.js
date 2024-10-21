@@ -38,7 +38,7 @@ const getSettings = (inputSettings, isUsingDeployUrl) => {
   // If we are running against the Netlify deploy URL, the injected x-robots-tag will always cause the audit to fail,
   // likely producing a false positive, so we skip in this case
   if (isUsingDeployUrl) {
-    derivedSettings.settings.skipAudits = ['seo/is-crawlable'];
+    derivedSettings.settings.skipAudits = ['is-crawlable'];
   }
 
   return derivedSettings;

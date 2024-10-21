@@ -36,7 +36,7 @@ describe('replacements', () => {
 
   it('should add skipAudits if using a deployUrl', () => {
     const derivedSettings = getSettings({ preset: 'desktop' }, true);
-    expect(derivedSettings.settings.skipAudits).toEqual(['seo/is-crawlable']);
+    expect(derivedSettings.settings.skipAudits).toEqual(['is-crawlable']);
   });
 
   it('should error with incorrect syntax for process.env.SETTINGS', () => {
