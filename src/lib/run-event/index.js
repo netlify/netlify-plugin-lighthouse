@@ -49,8 +49,6 @@ const runEvent = async ({
   try {
     const settings = getSettings(inputs?.settings, isOnSuccess);
 
-    console.log('Configured settings:', settings);
-
     const allErrors = [];
     const data = [];
 
