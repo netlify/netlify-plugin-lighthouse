@@ -47,7 +47,7 @@ const runEvent = async ({
   let errorMetadata = [];
 
   try {
-    const settings = getSettings(inputs?.settings);
+    const settings = getSettings(inputs?.settings, isOnSuccess);
 
     const allErrors = [];
     const data = [];
