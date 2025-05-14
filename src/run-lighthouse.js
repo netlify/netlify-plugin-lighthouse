@@ -2,18 +2,13 @@ import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
 
-export const getBrowserPath = async () => {
-  // In newer Puppeteer versions, we can get the executable path directly
-  return puppeteer.executablePath();
-};
 
-export const runLighthouse = async (browserPath, url, settings) => {
+export const runLighthouse = async (url, settings) => {
   let chrome;
   try {
     const logLevel = 'error';
     log.setLevel(logLevel);
     chrome = await puppeteer.launch({
-      executablePath: browserPath,
       args: [
         '--headless',
         '--no-sandbox',

@@ -17,8 +17,7 @@ const runEvent = async ({
 } = {}) => {
   const isOnSuccess = event === 'onSuccess';
 
-  const deployUrl =
-    'https://68244ec43a5a6b46e855abe0--testing-secret-scanning-ui.netlify.app/';
+  const deployUrl = process.env.DEPLOY_URL;
 
   // If we don't have the deploy URL to test against, we can't run Lighthouse onSuccess.
   // If running locally, ensure you have a DEPLOY_URL set in your .env file
@@ -68,7 +67,6 @@ const runEvent = async ({
       });
 
       console.log(startMessage);
-      console.log('*** url', url);
 
       const runner = isOnSuccess ? runAuditWithUrl : runAuditWithServer;
       const { errors, summary, shortSummary, details, report, runtimeError } =
