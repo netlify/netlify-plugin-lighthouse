@@ -27,23 +27,13 @@ export const runLighthouse = async (url, settings) => {
     // Launch Chrome using puppeteer
     try {
       console.log('Launching Chrome with puppeteer...');
-      console.log('Puppeteer package:', JSON.stringify({
-        version: puppeteer.version,
-        browserRevision: puppeteer._preferredRevision
-      }));
       
       try {
-        console.log('Default browser path:', await puppeteer.executablePath());
+        // For newer Puppeteer versions, just log the install location
+        const installDir = process.env.PUPPETEER_CACHE_DIR || '/tmp/puppeteer';
+        console.log('Puppeteer install directory:', installDir);
       } catch (err) {
-        console.log('Error getting default browser path:', err.message);
-      }
-      
-      try {
-        const browserFetcher = puppeteer.createBrowserFetcher();
-        const revisionInfo = await browserFetcher.download();
-        console.log('Browser download info:', revisionInfo);
-      } catch (err) {
-        console.log('Error downloading browser:', err.message);
+        console.log('Error getting Puppeteer info:', err.message);
       }
       
       // Check for Chrome in Netlify environment first
@@ -101,18 +91,6 @@ export const runLighthouse = async (url, settings) => {
         };
         
         console.log('Launching browser with config:', launchConfig);
-        
-        try {
-          const execPath = await puppeteer.resolveExecutablePath();
-          console.log('Resolved executable path:', execPath);
-          launchConfig.executablePath = execPath;
-        } catch (err) {
-          console.log('Error resolving executable path:', err.message);
-        }
-        
-        // Add product and channel settings
-        launchConfig.product = 'chrome';
-        launchConfig.channel = 'chrome';
         
         console.log('Final launch config:', launchConfig);
         browser = await puppeteer.launch(launchConfig);
