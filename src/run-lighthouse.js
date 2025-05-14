@@ -1,17 +1,17 @@
 import lighthouse from 'lighthouse';
-import puppeteer from 'puppeteer';
+import chromeLauncher from 'chrome-launcher';
 import log from 'lighthouse-logger';
 
 export const runLighthouse = async (url, settings) => {
-  let browser;
+  let chrome;
   try {
     const logLevel = settings?.logLevel || 'error';
     log.setLevel(logLevel);
 
-    // Launch Chrome using Puppeteer with CI-friendly flags
-    browser = await puppeteer.launch({
-      headless: 'new',
-      args: [
+    // Launch Chrome using chrome-launcher with additional CI-friendly flags
+    chrome = await chromeLauncher.launch({
+      chromeFlags: [
+        '--headless=new',
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
@@ -21,18 +21,15 @@ export const runLighthouse = async (url, settings) => {
         '--disable-web-security',
         '--allow-running-insecure-content',
         '--disable-features=IsolateOrigins,site-per-process',
+        '--single-process', // Try running in a single process
       ],
-      ignoreDefaultArgs: ['--enable-automation'],
+      handleSIGINT: true,
+      chromePath: process.env.CHROME_PATH, // Allow custom Chrome path in CI
     });
-
-    // Get the browser's websocket endpoint and extract the port
-    const browserWSEndpoint = browser.wsEndpoint();
-    const port = parseInt(browserWSEndpoint.split(':')[2].split('/')[0], 10);
-
     const results = await lighthouse(
       url,
       {
-        port,
+        port: chrome.port,
         output: 'html',
         logLevel,
         onlyCategories: settings?.onlyCategories,
@@ -43,8 +40,8 @@ export const runLighthouse = async (url, settings) => {
     );
     return results;
   } finally {
-    if (browser) {
-      await browser.close();
+    if (chrome) {
+      await chrome.kill();
     }
   }
 };
