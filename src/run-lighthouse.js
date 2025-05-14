@@ -27,6 +27,25 @@ export const runLighthouse = async (url, settings) => {
     // Launch Chrome using puppeteer
     try {
       console.log('Launching Chrome with puppeteer...');
+      console.log('Puppeteer package:', JSON.stringify({
+        version: puppeteer.version,
+        browserRevision: puppeteer._preferredRevision
+      }));
+      
+      try {
+        console.log('Default browser path:', await puppeteer.executablePath());
+      } catch (err) {
+        console.log('Error getting default browser path:', err.message);
+      }
+      
+      try {
+        const browserFetcher = puppeteer.createBrowserFetcher();
+        const revisionInfo = await browserFetcher.download();
+        console.log('Browser download info:', revisionInfo);
+      } catch (err) {
+        console.log('Error downloading browser:', err.message);
+      }
+      
       // Check for Chrome in Netlify environment first
       const chromePaths = [
         '/opt/buildhome/.cache/puppeteer/chrome/linux-119.0.6045.105/chrome-linux64/chrome',
@@ -82,17 +101,35 @@ export const runLighthouse = async (url, settings) => {
         };
         
         console.log('Launching browser with config:', launchConfig);
+        
+        try {
+          const execPath = await puppeteer.resolveExecutablePath();
+          console.log('Resolved executable path:', execPath);
+          launchConfig.executablePath = execPath;
+        } catch (err) {
+          console.log('Error resolving executable path:', err.message);
+        }
+        
+        // Add product and channel settings
+        launchConfig.product = 'chrome';
+        launchConfig.channel = 'chrome';
+        
+        console.log('Final launch config:', launchConfig);
         browser = await puppeteer.launch(launchConfig);
 
         // Get browser information
-        const browserPath = browser.executablePath();
-        const wsEndpoint = browser.wsEndpoint();
-        
         console.log('Browser launched successfully');
-        console.log('Browser WebSocket endpoint:', wsEndpoint);
-        console.log(`Found Chrome at: ${browserPath}`);
         
-        launchOptions.chromePath = browserPath;
+        const wsEndpoint = browser.wsEndpoint();
+        console.log('Browser WebSocket endpoint:', wsEndpoint);
+        
+        // Use the launch config's executable path for chrome-launcher
+        if (launchConfig.executablePath) {
+          console.log(`Using Chrome at: ${launchConfig.executablePath}`);
+          launchOptions.chromePath = launchConfig.executablePath;
+        } else {
+          console.log('Using default Chrome path');
+        }
       } finally {
         if (browser) {
           try {
