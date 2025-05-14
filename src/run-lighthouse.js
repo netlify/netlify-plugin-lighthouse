@@ -10,13 +10,17 @@ export const runLighthouse = async (url, settings) => {
     log.setLevel(logLevel);
     chrome = await puppeteer.launch({
       args: [
-        '--headless',
+        '--headless=new',
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
         '--remote-debugging-port=0',
+        '--disable-software-rasterizer',
+        '--disable-setuid-sandbox',
+        '--no-zygote',
       ],
       logLevel,
+      ignoreDefaultArgs: ['--disable-extensions'],
     });
 
     // Get the debugging port from the browser's websocket endpoint
