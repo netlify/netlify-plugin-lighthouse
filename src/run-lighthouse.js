@@ -2,22 +2,18 @@ import puppeteer  from 'puppeteer';
 import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
 
-// export const getBrowserPath = async () => {
-//   const browserFetcher = new BrowserFetcher();
-//   const revisions = await browserFetcher.localRevisions();
-//   if (revisions.length <= 0) {
-//     throw new Error('Could not find local browser');
-//   }
-//   const info = await browserFetcher.revisionInfo(revisions[0]);
-//   return info.executablePath;
-// };
+export const getBrowserPath = async () => {
+  // In newer Puppeteer versions, we can get the executable path directly
+  return puppeteer.executablePath();
+};
 
-export const runLighthouse = async (url, settings) => {
+export const runLighthouse = async (browserPath, url, settings) => {
   let chrome;
   try {
     const logLevel = 'error';
     log.setLevel(logLevel);
     chrome = await puppeteer.launch({
+      executablePath: browserPath,
       args: [
         '--headless',
         '--no-sandbox',

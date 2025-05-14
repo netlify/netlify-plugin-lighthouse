@@ -1,7 +1,7 @@
 import { join } from 'path';
 
 import { formatResults } from '../../format.js';
-import { runLighthouse } from '../../run-lighthouse.js';
+import { runLighthouse, getBrowserPath } from '../../run-lighthouse.js';
 import persistResults from '../persist-results/index.js';
 import getServer from '../get-server/index.js';
 
@@ -16,13 +16,13 @@ const runAuditWithServer = async ({
   try {
     const { server } = getServer({ serveDir: serveDir, auditUrl: url });
 
-
+    const browserPath = await getBrowserPath();
 
     const { error, results } = await new Promise((resolve) => {
       const instance = server.listen(async () => {
         try {
           const fullPath = path ? `${server.url}/${path}` : server.url;
-          const results = await runLighthouse("PLACEHOLDER", fullPath, settings);
+          const results = await runLighthouse(browserPath, fullPath, settings);
           resolve({ error: false, results });
         } catch (error) {
           resolve({ error });
