@@ -1,37 +1,41 @@
-import puppeteer from 'puppeteer';
+import puppeteer  from 'puppeteer';
 import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
-import chromeLauncher from 'chrome-launcher';
 
-export const getBrowserPath = async () => {
-  const browserFetcher = puppeteer.createBrowserFetcher();
-  const revisions = await browserFetcher.localRevisions();
-  if (revisions.length <= 0) {
-    throw new Error('Could not find local browser');
-  }
-  const info = await browserFetcher.revisionInfo(revisions[0]);
-  return info.executablePath;
-};
+// export const getBrowserPath = async () => {
+//   const browserFetcher = new BrowserFetcher();
+//   const revisions = await browserFetcher.localRevisions();
+//   if (revisions.length <= 0) {
+//     throw new Error('Could not find local browser');
+//   }
+//   const info = await browserFetcher.revisionInfo(revisions[0]);
+//   return info.executablePath;
+// };
 
-export const runLighthouse = async (browserPath, url, settings) => {
+export const runLighthouse = async (url, settings) => {
   let chrome;
   try {
     const logLevel = 'error';
     log.setLevel(logLevel);
-    chrome = await chromeLauncher.launch({
-      chromePath: browserPath,
-      chromeFlags: [
+    chrome = await puppeteer.launch({
+      args: [
         '--headless',
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
+        '--remote-debugging-port=0'
       ],
       logLevel,
     });
+
+    // Get the debugging port from the browser's websocket endpoint
+    const browserWSEndpoint = chrome.wsEndpoint();
+    const port = parseInt(browserWSEndpoint.split(':')[2].split('/')[0], 10);
+
     const results = await lighthouse(
       url,
       {
-        port: chrome.port,
+        port,
         output: 'html',
         logLevel,
       },
@@ -40,7 +44,7 @@ export const runLighthouse = async (browserPath, url, settings) => {
     return results;
   } finally {
     if (chrome) {
-      await chrome.kill();
+      await chrome.close();
     }
   }
 };

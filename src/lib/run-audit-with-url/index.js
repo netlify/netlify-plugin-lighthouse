@@ -1,13 +1,11 @@
 import { formatResults } from '../../format.js';
-import { runLighthouse, getBrowserPath } from '../../run-lighthouse.js';
+import { runLighthouse } from '../../run-lighthouse.js';
 
 const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
   try {
-    const browserPath = await getBrowserPath();
-
     const getResults = async () => {
       const fullPath = path ? `${url}/${path}` : url;
-      const results = await runLighthouse(browserPath, fullPath, settings);
+      const results = await runLighthouse(fullPath, settings);
 
       try {
         return { results };
@@ -19,6 +17,7 @@ const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
     const { error, results } = await getResults();
 
     if (error) {
+      console.log("error line 22 run audit with url", error)
       return { error };
     } else {
       const { summary, shortSummary, details, report, errors, runtimeError } =
@@ -37,6 +36,7 @@ const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
       };
     }
   } catch (error) {
+    console.log("error line 41 run audit with url", error)
     return { error };
   }
 };
