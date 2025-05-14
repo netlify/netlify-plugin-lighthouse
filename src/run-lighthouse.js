@@ -1,7 +1,7 @@
 import lighthouse from 'lighthouse';
 import chromeLauncher from 'chrome-launcher';
 import log from 'lighthouse-logger';
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 
 export const runLighthouse = async (url, settings) => {
   let chrome;
@@ -22,11 +22,10 @@ export const runLighthouse = async (url, settings) => {
       handleSIGINT: true,
     };
 
-    // Launch Chrome using puppeteer-core
+    // Launch Chrome using puppeteer
     try {
-      console.log('Launching Chrome with puppeteer-core...');
+      console.log('Launching Chrome with puppeteer...');
       const browser = await puppeteer.launch({
-        channel: 'chrome',
         headless: 'new',
         args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
       });
@@ -37,13 +36,8 @@ export const runLighthouse = async (url, settings) => {
       console.log(`Found Chrome at: ${browserPath}`);
       launchOptions.chromePath = browserPath;
     } catch (error) {
-      console.log('Error launching Chrome with puppeteer:', error.message);
-      if (process.env.CHROME_PATH) {
-        console.log(`Falling back to CHROME_PATH: ${process.env.CHROME_PATH}`);
-        launchOptions.chromePath = process.env.CHROME_PATH;
-      } else {
-        console.log('Letting chrome-launcher find Chrome...');
-      }
+      console.error('Error launching Chrome with puppeteer:', error);
+      throw error;
     }
 
     chrome = await chromeLauncher.launch(launchOptions);
