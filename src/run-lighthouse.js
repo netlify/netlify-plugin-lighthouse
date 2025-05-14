@@ -8,8 +8,7 @@ export const getBrowserPath = async () => {
     headless: "new",
     args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
   });
-  const executablePath = browser.executablePath();
-  return executablePath;
+  return browser.browserPath;
 };
 
 export const runLighthouse = async (browserPath, url, settings) => {

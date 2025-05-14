@@ -3,7 +3,7 @@ const puppeteer = () =>
     return {
       default: {
         launch: () => {
-         return { executablePath: () => 'path'}
+         return { browserPath: 'path' }
         },
         createBrowserFetcher: () => ({
           localRevisions: () => Promise.resolve(['123']),
