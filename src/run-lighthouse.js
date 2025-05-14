@@ -1,8 +1,7 @@
 import lighthouse from 'lighthouse';
 import chromeLauncher from 'chrome-launcher';
 import log from 'lighthouse-logger';
-import puppeteer from 'puppeteer';
-import { install } from '@puppeteer/browsers';
+import puppeteer from 'puppeteer-core';
 
 export const runLighthouse = async (url, settings) => {
   let chrome;
@@ -23,28 +22,24 @@ export const runLighthouse = async (url, settings) => {
       handleSIGINT: true,
     };
 
-    // Install Chrome if needed and get its path
+    // Launch Chrome using puppeteer-core
     try {
-      console.log('Installing Chrome via puppeteer...');
-      await install({
-        browser: 'chrome',
-        buildId: 'stable'
-      });
-      
+      console.log('Launching Chrome with puppeteer-core...');
       const browser = await puppeteer.launch({
+        channel: 'chrome',
         headless: 'new',
         args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
       });
-      
+
       const browserPath = browser.executablePath();
-      console.log(`Using Chrome from puppeteer: ${browserPath}`);
-      launchOptions.chromePath = browserPath;
       await browser.close();
+
+      console.log(`Found Chrome at: ${browserPath}`);
+      launchOptions.chromePath = browserPath;
     } catch (error) {
-      console.log('Error installing/launching Chrome:', error.message);
-      // Fallback to environment variable if puppeteer's Chrome is not available
+      console.log('Error launching Chrome with puppeteer:', error.message);
       if (process.env.CHROME_PATH) {
-        console.log(`Using Chrome from environment: ${process.env.CHROME_PATH}`);
+        console.log(`Falling back to CHROME_PATH: ${process.env.CHROME_PATH}`);
         launchOptions.chromePath = process.env.CHROME_PATH;
       } else {
         console.log('Letting chrome-launcher find Chrome...');
