@@ -2,13 +2,10 @@ const puppeteer = () =>
   jest.unstable_mockModule('puppeteer', () => {
     return {
       default: {
-        launch: () => {
-         return { browserPath: 'path' }
-        },
-        createBrowserFetcher: () => ({
-          localRevisions: () => Promise.resolve(['123']),
-          revisionInfo: () => Promise.resolve({ executablePath: 'path' }),
-        }),
+        launch: () => ({
+          process: () => ({ spawnfile: 'path' }),
+          close: () => Promise.resolve()
+        })
       },
     };
   });

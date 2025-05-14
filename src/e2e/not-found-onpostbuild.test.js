@@ -25,6 +25,8 @@ describe('lighthousePlugin with single not-found run (onPostBuild)', () => {
 
   it('should output expected log content', async () => {
     const logs = [
+      "Persisting Lighthouse cache...",
+      "Lighthouse cache persisted",
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on example/this-page-does-not-exist',
       'Serving and scanning site from directory example',
