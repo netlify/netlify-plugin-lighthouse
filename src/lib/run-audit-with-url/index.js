@@ -17,7 +17,7 @@ const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
     const { error, results } = await getResults();
 
     if (error) {
-      console.log("error line 22 run audit with url", error)
+      console.log('error line 22 run audit with url', error);
       return { error };
     } else {
       const { summary, shortSummary, details, report, errors, runtimeError } =
@@ -36,7 +36,7 @@ const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
       };
     }
   } catch (error) {
-    console.log("error line 41 run audit with url", error)
+    console.log('error line 41 run audit with url', error);
     return { error };
   }
 };

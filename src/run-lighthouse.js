@@ -1,4 +1,4 @@
-import puppeteer  from 'puppeteer';
+import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
 
@@ -19,7 +19,7 @@ export const runLighthouse = async (browserPath, url, settings) => {
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
-        '--remote-debugging-port=0'
+        '--remote-debugging-port=0',
       ],
       logLevel,
     });
