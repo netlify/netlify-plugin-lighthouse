@@ -28,16 +28,21 @@ export const runLighthouse = async (url, settings) => {
     try {
       console.log('Launching Chrome with puppeteer...');
       
+      // Set cache directory before any Puppeteer operations
+      process.env.PUPPETEER_CACHE_DIR = '/tmp/puppeteer';
+      console.log('Setting Puppeteer cache directory:', process.env.PUPPETEER_CACHE_DIR);
+      
       try {
-        // For newer Puppeteer versions, just log the install location
-        const installDir = process.env.PUPPETEER_CACHE_DIR || '/tmp/puppeteer';
-        console.log('Puppeteer install directory:', installDir);
+        console.log('Installing Chrome...');
+        await puppeteer.browsers().install();
+        console.log('Chrome installation complete');
       } catch (err) {
-        console.log('Error getting Puppeteer info:', err.message);
+        console.log('Error installing Chrome:', err.message);
       }
       
       // Check for Chrome in Netlify environment first
       const chromePaths = [
+        '/opt/buildhome/.cache/puppeteer/chrome/linux-136.0.7103.92/chrome-linux64/chrome',
         '/opt/buildhome/.cache/puppeteer/chrome/linux-119.0.6045.105/chrome-linux64/chrome',
         '/usr/bin/google-chrome',
         '/usr/bin/chromium-browser'
@@ -78,7 +83,6 @@ export const runLighthouse = async (url, settings) => {
       try {
         const launchConfig = {
           headless: 'new',
-          ...(executablePath ? { executablePath } : {}),
           args: [
             '--no-sandbox',
             '--disable-gpu',
@@ -86,8 +90,7 @@ export const runLighthouse = async (url, settings) => {
             '--disable-software-rasterizer',
             '--disable-setuid-sandbox',
             '--no-zygote'
-          ],
-          cacheDirectory
+          ]
         };
         
         console.log('Launching browser with config:', launchConfig);
