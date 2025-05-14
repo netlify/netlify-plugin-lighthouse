@@ -10,7 +10,6 @@ export const getBrowserPath = async () => {
   });
   const path = browser.process().spawnfile;
   await browser.close();
-  console.log('got browser path : ', path);
   return path;
 };
 
