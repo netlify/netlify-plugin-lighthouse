@@ -5,27 +5,24 @@ import log from 'lighthouse-logger';
 export const runLighthouse = async (url, settings) => {
   let chrome;
   try {
-    const logLevel = settings?.logLevel || 'error';
+    // Set debug level logging to see what's happening
+    const logLevel = 'info';
     log.setLevel(logLevel);
 
-    // Launch Chrome using chrome-launcher with additional CI-friendly flags
+    console.log('Launching Chrome...');
+    // Launch Chrome with minimal flags
     chrome = await chromeLauncher.launch({
       chromeFlags: [
         '--headless=new',
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
-        '--disable-software-rasterizer',
-        '--disable-setuid-sandbox',
-        '--no-zygote',
-        '--disable-web-security',
-        '--allow-running-insecure-content',
-        '--disable-features=IsolateOrigins,site-per-process',
-        '--single-process', // Try running in a single process
       ],
+      logLevel,
       handleSIGINT: true,
-      chromePath: process.env.CHROME_PATH, // Allow custom Chrome path in CI
     });
+    console.log('Chrome launched on port:', chrome.port);
+    console.log('Starting Lighthouse audit for URL:', url);
     const results = await lighthouse(
       url,
       {
@@ -38,9 +35,14 @@ export const runLighthouse = async (url, settings) => {
       },
       settings,
     );
+    console.log('Lighthouse audit completed');
     return results;
+  } catch (error) {
+    console.error('Error during Lighthouse run:', error);
+    throw error;
   } finally {
     if (chrome) {
+      console.log('Cleaning up Chrome...');
       await chrome.kill();
     }
   }
