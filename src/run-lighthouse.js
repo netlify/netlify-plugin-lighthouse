@@ -1,45 +1,44 @@
-import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
+import chromeLauncher from 'chrome-launcher';
 import log from 'lighthouse-logger';
-
 
 export const runLighthouse = async (url, settings) => {
   let chrome;
   try {
-    const logLevel = 'error';
+    const logLevel = settings?.logLevel || 'error';
     log.setLevel(logLevel);
-    chrome = await puppeteer.launch({
-      args: [
+
+    // Launch Chrome using chrome-launcher
+    chrome = await chromeLauncher.launch({
+      chromeFlags: [
         '--headless=new',
         '--no-sandbox',
         '--disable-gpu',
         '--disable-dev-shm-usage',
-        '--remote-debugging-port=0',
         '--disable-software-rasterizer',
         '--disable-setuid-sandbox',
         '--no-zygote',
       ],
       logLevel,
-      ignoreDefaultArgs: ['--disable-extensions'],
+      handleSIGINT: true,
     });
-
-    // Get the debugging port from the browser's websocket endpoint
-    const browserWSEndpoint = chrome.wsEndpoint();
-    const port = parseInt(browserWSEndpoint.split(':')[2].split('/')[0], 10);
 
     const results = await lighthouse(
       url,
       {
-        port,
+        port: chrome.port,
         output: 'html',
         logLevel,
+        onlyCategories: settings?.onlyCategories,
+        locale: settings?.locale || 'en-US',
+        formFactor: settings?.preset === 'desktop' ? 'desktop' : 'mobile',
       },
       settings,
     );
     return results;
   } finally {
     if (chrome) {
-      await chrome.close();
+      await chrome.kill();
     }
   }
 };
