@@ -4,8 +4,8 @@ const puppeteer = () =>
       default: {
         launch: () => ({
           process: () => ({ spawnfile: 'path' }),
-          close: () => Promise.resolve()
-        })
+          close: () => Promise.resolve(),
+        }),
       },
     };
   });

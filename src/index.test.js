@@ -8,7 +8,7 @@ describe('lighthousePlugin plugin events', () => {
       });
       expect(events).toEqual({
         onPreBuild: expect.any(Function),
-        onPostBuild: expect.any(Function)
+        onPostBuild: expect.any(Function),
       });
     });
   });
@@ -19,7 +19,7 @@ describe('lighthousePlugin plugin events', () => {
       expect(events).toEqual({
         onPreBuild: expect.any(Function),
         onPostBuild: expect.any(Function),
-        onSuccess: expect.any(Function)
+        onSuccess: expect.any(Function),
       });
     });
   });

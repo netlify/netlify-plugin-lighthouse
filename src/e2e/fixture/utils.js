@@ -9,7 +9,7 @@ const mockUtils = {
   cache: {
     save: jest.fn(),
     restore: jest.fn(),
-  }
+  },
 };
 
 export default mockUtils;

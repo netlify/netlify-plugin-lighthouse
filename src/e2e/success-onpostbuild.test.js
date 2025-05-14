@@ -24,8 +24,8 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
 
   it('should output expected log content', async () => {
     const logs = [
-      "Persisting Lighthouse cache...",
-      "Lighthouse cache persisted",
+      'Persisting Lighthouse cache...',
+      'Lighthouse cache persisted',
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on example/',
       'Serving and scanning site from directory example',

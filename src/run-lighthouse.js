@@ -5,8 +5,8 @@ import chromeLauncher from 'chrome-launcher';
 
 export const getBrowserPath = async () => {
   const browser = await puppeteer.launch({
-    headless: "new",
-    args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage']
+    headless: 'new',
+    args: ['--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
   });
   const path = browser.process().spawnfile;
   await browser.close();
