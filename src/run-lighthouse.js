@@ -28,54 +28,26 @@ export const runLighthouse = async (url, settings) => {
     try {
       console.log('Launching Chrome with puppeteer...');
       
-      // Set cache directory before any Puppeteer operations
-      process.env.PUPPETEER_CACHE_DIR = '/tmp/puppeteer';
-      console.log('Setting Puppeteer cache directory:', process.env.PUPPETEER_CACHE_DIR);
+      // Set Puppeteer browser path to a writable location
+      const browserPath = '/tmp/puppeteer/chrome/linux-136.0.7103.92/chrome-linux64/chrome';
+      process.env.PUPPETEER_BROWSER_PATH = browserPath;
+      console.log('Setting Puppeteer browser path:', process.env.PUPPETEER_BROWSER_PATH);
       
+      // Create the directory structure if it doesn't exist
       try {
-        console.log('Installing Chrome...');
-        await puppeteer.browsers().install();
-        console.log('Chrome installation complete');
+        await fs.promises.mkdir('/tmp/puppeteer/chrome/linux-136.0.7103.92/chrome-linux64', { recursive: true });
+        console.log('Browser directory structure created');
       } catch (err) {
-        console.log('Error installing Chrome:', err.message);
+        console.error('Error creating browser directory:', err.message);
       }
       
-      // Check for Chrome in Netlify environment first
-      const chromePaths = [
-        '/opt/buildhome/.cache/puppeteer/chrome/linux-136.0.7103.92/chrome-linux64/chrome',
-        '/opt/buildhome/.cache/puppeteer/chrome/linux-119.0.6045.105/chrome-linux64/chrome',
-        '/usr/bin/google-chrome',
-        '/usr/bin/chromium-browser'
-      ];
-      
-      let executablePath;
-      for (const path of chromePaths) {
-        try {
-          await fs.promises.access(path);
-          executablePath = path;
-          console.log('Found Chrome at:', path);
-          break;
-        } catch (err) {
-          console.log(`Chrome not found at ${path}`);
-        }
-      }
-      
-      if (!executablePath) {
-        console.log('No Chrome installation found, using bundled Chromium');
-        // Let puppeteer use its bundled version
-        executablePath = undefined;
-      }
-      
-      // Use /tmp directory which should be writable in Netlify
-      const cacheDirectory = '/tmp/puppeteer';
-      console.log('Using cache directory:', cacheDirectory);
-      
-      // Ensure cache directory exists
+      // Verify the browser path exists
       try {
-        await fs.promises.mkdir(cacheDirectory, { recursive: true });
-        console.log('Cache directory created/verified');
+        await fs.promises.access(browserPath);
+        console.log('Browser exists at:', browserPath);
+        launchOptions.chromePath = browserPath;
       } catch (err) {
-        console.warn('Could not create cache directory:', err.message);
+        console.log('Browser not found at configured path, will use default');
       }
       
       // Launch browser for Lighthouse with specific configuration for Netlify
@@ -94,23 +66,11 @@ export const runLighthouse = async (url, settings) => {
         };
         
         console.log('Launching browser with config:', launchConfig);
-        
-        console.log('Final launch config:', launchConfig);
         browser = await puppeteer.launch(launchConfig);
-
-        // Get browser information
         console.log('Browser launched successfully');
         
         const wsEndpoint = browser.wsEndpoint();
         console.log('Browser WebSocket endpoint:', wsEndpoint);
-        
-        // Use the launch config's executable path for chrome-launcher
-        if (launchConfig.executablePath) {
-          console.log(`Using Chrome at: ${launchConfig.executablePath}`);
-          launchOptions.chromePath = launchConfig.executablePath;
-        } else {
-          console.log('Using default Chrome path');
-        }
       } finally {
         if (browser) {
           try {
@@ -123,7 +83,6 @@ export const runLighthouse = async (url, settings) => {
       }
     } catch (error) {
       console.error('Error launching Chrome with puppeteer:', error);
-      throw error;
     }
 
     chrome = await chromeLauncher.launch(launchOptions);
