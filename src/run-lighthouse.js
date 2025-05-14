@@ -2,16 +2,21 @@ import lighthouse from 'lighthouse';
 import chromeLauncher from 'chrome-launcher';
 import log from 'lighthouse-logger';
 
+// Common Chrome paths in CI environments
+const CI_CHROME_PATHS = [
+  '/usr/bin/google-chrome',
+  '/usr/bin/google-chrome-stable',
+];
+
 export const runLighthouse = async (url, settings) => {
   let chrome;
   try {
-    // Set debug level logging to see what's happening
-    const logLevel = 'info';
+    const logLevel = settings?.logLevel || 'error';
     log.setLevel(logLevel);
 
     console.log('Launching Chrome...');
     // Launch Chrome with minimal flags
-    chrome = await chromeLauncher.launch({
+    const launchOptions = {
       chromeFlags: [
         '--headless=new',
         '--no-sandbox',
@@ -20,7 +25,29 @@ export const runLighthouse = async (url, settings) => {
       ],
       logLevel,
       handleSIGINT: true,
-    });
+    };
+
+    // In CI, Chrome might be installed in a custom location
+    if (process.env.CHROME_PATH) {
+      console.log(`Using Chrome from: ${process.env.CHROME_PATH}`);
+      launchOptions.chromePath = process.env.CHROME_PATH;
+    } else {
+      // Try common CI paths
+      for (const path of CI_CHROME_PATHS) {
+        try {
+          const { execSync } = await import('child_process');
+          execSync(`test -f ${path}`);
+          launchOptions.chromePath = path;
+          console.log(`Found Chrome at: ${path}`);
+          break;
+        } catch (e) {
+          // Path doesn't exist, try next one
+          continue;
+        }
+      }
+    }
+
+    chrome = await chromeLauncher.launch(launchOptions);
     console.log('Chrome launched on port:', chrome.port);
     console.log('Starting Lighthouse audit for URL:', url);
     const results = await lighthouse(
