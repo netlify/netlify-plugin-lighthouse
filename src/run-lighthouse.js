@@ -2,12 +2,6 @@ import lighthouse from 'lighthouse';
 import chromeLauncher from 'chrome-launcher';
 import log from 'lighthouse-logger';
 
-// Common Chrome paths in CI environments
-const CI_CHROME_PATHS = [
-  '/usr/bin/google-chrome',
-  '/usr/bin/google-chrome-stable',
-];
-
 export const runLighthouse = async (url, settings) => {
   let chrome;
   try {
@@ -27,24 +21,13 @@ export const runLighthouse = async (url, settings) => {
       handleSIGINT: true,
     };
 
-    // In CI, Chrome might be installed in a custom location
+    // Let chrome-launcher find Chrome in the environment
     if (process.env.CHROME_PATH) {
-      console.log(`Using Chrome from: ${process.env.CHROME_PATH}`);
+      console.log(`Using Chrome from environment: ${process.env.CHROME_PATH}`);
       launchOptions.chromePath = process.env.CHROME_PATH;
     } else {
-      // Try common CI paths
-      for (const path of CI_CHROME_PATHS) {
-        try {
-          const { execSync } = await import('child_process');
-          execSync(`test -f ${path}`);
-          launchOptions.chromePath = path;
-          console.log(`Found Chrome at: ${path}`);
-          break;
-        } catch (e) {
-          // Path doesn't exist, try next one
-          continue;
-        }
-      }
+      // Let chrome-launcher find Chrome automatically
+      console.log('Letting chrome-launcher find Chrome...');
     }
 
     chrome = await chromeLauncher.launch(launchOptions);
