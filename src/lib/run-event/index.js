@@ -53,7 +53,6 @@ const runEvent = async ({
     const data = [];
 
     let i = 0;
-    console.log('Running Lighthouse audits', auditConfigs);
     for (const auditConfig of auditConfigs) {
       i++;
 

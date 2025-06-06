@@ -35,6 +35,8 @@ describe('lighthousePlugin with custom locale', () => {
 
   it('should output expected log content', async () => {
     const logs = [
+      'Restoring Lighthouse cache...',
+      'Lighthouse cache restored',
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on / using the “es” locale',
       'Lighthouse scores for /',
@@ -43,6 +45,8 @@ describe('lighthousePlugin with custom locale', () => {
       '- Prácticas recomendadas: 100',
       '- SEO: 91',
       '- PWA: 30',
+      'Persisting Lighthouse cache...',
+      'Lighthouse cache persisted',
     ];
 
     await lighthousePlugin().onSuccess({ utils: mockUtils });
