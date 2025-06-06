@@ -32,8 +32,8 @@ export default function lighthousePlugin(inputs) {
 
   if (defaultEvent === 'onSuccess') {
     return {
-      onPreBuild,
-      onPostBuild: ({ utils }) => persistCache({ utils }),
+      // onPreBuild,
+      // onPostBuild: ({ utils }) => persistCache({ utils }),
       onSuccess: async ({ constants, utils, inputs } = {}) => {
         console.log('🚨 LIGHTHOUSE PLUGIN onSuccess invoked');
         // Mock the required `utils` functions if running locally
