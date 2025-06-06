@@ -10,14 +10,14 @@ dotenv.config();
 
 const puppeteerCacheDir = join(homedir(), '.cache', 'puppeteer');
 
-const onPreBuild = async ({ utils } = {}) => {
+const restorePuppeteerCache = async ({ utils } = {}) => {
   console.log('Restoring Lighthouse cache...');
   // Puppeteer relies on a global cache since v19.x, which otherwise would not be persisted in Netlify builds
   await utils?.cache.restore(puppeteerCacheDir);
   console.log('Lighthouse cache restored');
 };
 
-const persistCache = async ({ utils } = {}) => {
+const persistPuppeteerCache = async ({ utils } = {}) => {
   console.log('Persisting Lighthouse cache...');
   await utils?.cache.save(puppeteerCacheDir);
   console.log('Lighthouse cache persisted');
@@ -32,10 +32,9 @@ export default function lighthousePlugin(inputs) {
 
   if (defaultEvent === 'onSuccess') {
     return {
-      // onPreBuild,
-      // onPostBuild: ({ utils }) => persistCache({ utils }),
       onSuccess: async ({ constants, utils, inputs } = {}) => {
         console.log('🚨 LIGHTHOUSE PLUGIN onSuccess invoked');
+        await restorePuppeteerCache({ utils });
         // Mock the required `utils` functions if running locally
         const { failPlugin, show } = getUtils({ utils });
 
@@ -46,17 +45,16 @@ export default function lighthousePlugin(inputs) {
           onComplete: show,
           onFail: failPlugin,
         });
+        await persistPuppeteerCache({ utils });
       },
     };
   } else {
     return {
-      onPreBuild,
       onPostBuild: async ({ constants, utils, inputs } = {}) => {
+        await restorePuppeteerCache({ utils });
         // Mock the required `utils` functions if running locally
         const { failBuild, show } = getUtils({ utils });
-        console.log('🚨 LIGHTHOUSE PLUGIN onPostBuild invoked');
 
-        await persistCache({ utils });
         await runEvent({
           event: 'onPostBuild',
           constants,
@@ -64,6 +62,7 @@ export default function lighthousePlugin(inputs) {
           onComplete: show,
           onFail: failBuild,
         });
+        await persistPuppeteerCache({ utils });
       },
     };
   }
