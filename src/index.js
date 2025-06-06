@@ -33,7 +33,6 @@ export default function lighthousePlugin(inputs) {
   if (defaultEvent === 'onSuccess') {
     return {
       onSuccess: async ({ constants, utils, inputs } = {}) => {
-        console.log('🚨 LIGHTHOUSE PLUGIN onSuccess invoked');
         await restorePuppeteerCache({ utils });
         // Mock the required `utils` functions if running locally
         const { failPlugin, show } = getUtils({ utils });
