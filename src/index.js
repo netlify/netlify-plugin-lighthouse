@@ -35,6 +35,7 @@ export default function lighthousePlugin(inputs) {
       onPreBuild,
       onPostBuild: ({ utils }) => persistCache({ utils }),
       onSuccess: async ({ constants, utils, inputs } = {}) => {
+        console.log('🚨 LIGHTHOUSE PLUGIN onSuccess invoked');
         // Mock the required `utils` functions if running locally
         const { failPlugin, show } = getUtils({ utils });
 
@@ -53,6 +54,7 @@ export default function lighthousePlugin(inputs) {
       onPostBuild: async ({ constants, utils, inputs } = {}) => {
         // Mock the required `utils` functions if running locally
         const { failBuild, show } = getUtils({ utils });
+        console.log('🚨 LIGHTHOUSE PLUGIN onPostBuild invoked');
 
         await persistCache({ utils });
         await runEvent({
