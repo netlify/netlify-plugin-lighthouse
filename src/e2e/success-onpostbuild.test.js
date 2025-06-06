@@ -26,7 +26,7 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
     const logs = [
       'Restoring Lighthouse cache...',
       'Lighthouse cache restored',
-  
+
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on example/',
       'Serving and scanning site from directory example',
