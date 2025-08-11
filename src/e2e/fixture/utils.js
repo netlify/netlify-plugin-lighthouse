@@ -6,6 +6,10 @@ const mockUtils = {
   status: {
     show: jest.fn(),
   },
+  cache: {
+    save: jest.fn(),
+    restore: jest.fn(),
+  },
 };
 
 export default mockUtils;

@@ -34,6 +34,8 @@ describe('lighthousePlugin with failed threshold run (onPostBuild)', () => {
 
   it('should output expected log content', async () => {
     const logs = [
+      'Restoring Lighthouse cache...',
+      'Lighthouse cache restored',
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on example/',
       'Serving and scanning site from directory example',
@@ -43,6 +45,8 @@ describe('lighthousePlugin with failed threshold run (onPostBuild)', () => {
       '- Best Practices: 100',
       '- SEO: 91',
       '- PWA: 30',
+      'Persisting Lighthouse cache...',
+      'Lighthouse cache persisted',
     ];
 
     await lighthousePlugin({

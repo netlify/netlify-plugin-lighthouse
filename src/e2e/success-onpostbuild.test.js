@@ -24,6 +24,9 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
 
   it('should output expected log content', async () => {
     const logs = [
+      'Restoring Lighthouse cache...',
+      'Lighthouse cache restored',
+
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on example/',
       'Serving and scanning site from directory example',
@@ -33,6 +36,8 @@ describe('lighthousePlugin with single report per run (onPostBuild)', () => {
       '- Best Practices: 100',
       '- SEO: 91',
       '- PWA: 30',
+      'Persisting Lighthouse cache...',
+      'Lighthouse cache persisted',
     ];
     await lighthousePlugin({
       fail_deploy_on_score_thresholds: 'true',

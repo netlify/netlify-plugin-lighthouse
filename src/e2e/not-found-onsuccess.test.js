@@ -25,10 +25,14 @@ describe('lighthousePlugin with single not-found run (onSuccess)', () => {
 
   it('should output expected log content', async () => {
     const logs = [
+      'Restoring Lighthouse cache...',
+      'Lighthouse cache restored',
       'Generating Lighthouse report. This may take a minute…',
       'Running Lighthouse on /this-page-does-not-exist',
       'ERRORED_DOCUMENT_REQUEST',
       'Lighthouse was unable to reliably load the page you requested. Make sure you are testing the correct URL and that the server is properly responding to all requests. (Status code: 404)',
+      'Persisting Lighthouse cache...',
+      'Lighthouse cache persisted',
     ];
 
     await lighthousePlugin().onSuccess({ utils: mockUtils });

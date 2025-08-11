@@ -1,8 +1,8 @@
 import lighthousePlugin from './index.js';
 
 describe('lighthousePlugin plugin events', () => {
-  describe('onPostBuild', () => {
-    it('should return only the expected event function', async () => {
+  describe('when fail_deploy_on_score_thresholds is true', () => {
+    it('should return onPostBuild events', async () => {
       const events = lighthousePlugin({
         fail_deploy_on_score_thresholds: 'true',
       });
@@ -12,8 +12,8 @@ describe('lighthousePlugin plugin events', () => {
     });
   });
 
-  describe('onSuccess', () => {
-    it('should return only the expected event function', async () => {
+  describe('default behavior', () => {
+    it('should return onSuccess event', async () => {
       const events = lighthousePlugin();
       expect(events).toEqual({
         onSuccess: expect.any(Function),
