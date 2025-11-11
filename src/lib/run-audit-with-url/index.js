@@ -22,7 +22,7 @@ const runAuditWithUrl = async ({ path = '', url, thresholds, settings }) => {
       return { error };
     } else {
       const { summary, shortSummary, details, report, errors, runtimeError } =
-        formatResults({
+        await formatResults({
           results,
           thresholds,
         });

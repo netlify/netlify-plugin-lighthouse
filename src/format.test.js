@@ -140,8 +140,10 @@ describe('format', () => {
       report: '<!doctype html>\n' + '<html lang="en">Hi</html>\n',
     });
 
-    it('should return formatted results', () => {
-      expect(formatResults({ results: getResults(), thresholds: {} })).toEqual({
+    it('should return formatted results', async () => {
+      expect(
+        await formatResults({ results: getResults(), thresholds: {} }),
+      ).toEqual({
         details: {
           formFactor: undefined,
           installable: false,
@@ -154,11 +156,11 @@ describe('format', () => {
       });
     });
 
-    it('should return formatted results with passing thresholds', () => {
+    it('should return formatted results with passing thresholds', async () => {
       const thresholds = {
         performance: 0.1,
       };
-      const formattedResults = formatResults({
+      const formattedResults = await formatResults({
         results: getResults(),
         thresholds,
       });
@@ -173,11 +175,11 @@ describe('format', () => {
       ]);
     });
 
-    it('should return formatted results with failing thresholds', () => {
+    it('should return formatted results with failing thresholds', async () => {
       const thresholds = {
         performance: 1,
       };
-      const formattedResults = formatResults({
+      const formattedResults = await formatResults({
         results: getResults(),
         thresholds,
       });
@@ -197,7 +199,7 @@ describe('format', () => {
       ]);
     });
 
-    it('should use supplied config settings and data to populate `details`', () => {
+    it('should use supplied config settings and data to populate `details`', async () => {
       const results = getResults();
       results.lhr.configSettings = {
         locale: 'es',
@@ -208,7 +210,7 @@ describe('format', () => {
         score: 1,
       };
 
-      const formattedResults = formatResults({ results, thresholds: {} });
+      const formattedResults = await formatResults({ results, thresholds: {} });
       expect(formattedResults.details).toEqual({
         formFactor: 'desktop',
         installable: true,

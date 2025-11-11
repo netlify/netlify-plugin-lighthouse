@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { minify } from 'html-minifier';
+import { minify } from 'html-minifier-terser';
 
 import makeReplacements from './replacements.js';
 
@@ -40,7 +40,7 @@ export const formatShortSummary = (categories) => {
     .join(', ');
 };
 
-export const formatResults = ({ results, thresholds }) => {
+export const formatResults = async ({ results, thresholds }) => {
   const runtimeError = results.lhr.runtimeError;
 
   const categories = Object.values(results.lhr.categories).map(
@@ -71,7 +71,7 @@ export const formatResults = ({ results, thresholds }) => {
   const installable = results.lhr.audits['installable-manifest']?.score === 1;
   const details = { installable, formFactor, locale };
 
-  const report = minify(formattedReport, {
+  const report = await minify(formattedReport, {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
     removeRedundantAttributes: true,
