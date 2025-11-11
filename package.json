@@ -30,7 +30,7 @@
     "express": "^4.17.1",
     "html-minifier-terser": "^7.2.0",
     "lighthouse": "^9.6.3",
-    "puppeteer": "^24.8.2"
+    "puppeteer": "24.8.2"
   },
   "engines": {
     "node": ">=18.14.0"
@@ -68,6 +68,7 @@
     "tar-fs": "^2.1.4",
     "cross-spawn": "^7.0.5",
     "braces": "^3.0.3",
-    "@babel/helpers": "^7.26.10"
+    "@babel/helpers": "^7.26.10",
+    "@koa/cors": "^5.0.0"
   }
 }
