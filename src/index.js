@@ -1,5 +1,6 @@
-import { join } from 'path';
+import { existsSync } from 'fs';
 import { homedir } from 'os';
+import { join } from 'path';
 
 import * as dotenv from 'dotenv';
 
@@ -13,14 +14,26 @@ const puppeteerCacheDir = join(homedir(), '.cache', 'puppeteer');
 const restorePuppeteerCache = async ({ utils } = {}) => {
   console.log('Restoring Lighthouse cache...');
   // Puppeteer relies on a global cache since v19.x, which otherwise would not be persisted in Netlify builds
+  // Note: We use system Chrome now (skipDownload: true), so this cache may be empty
   await utils?.cache.restore(puppeteerCacheDir);
   console.log('Lighthouse cache restored');
 };
 
 const persistPuppeteerCache = async ({ utils } = {}) => {
   console.log('Persisting Lighthouse cache...');
-  await utils?.cache.save(puppeteerCacheDir);
-  console.log('Lighthouse cache persisted');
+  // Only cache if the directory exists and is not empty
+  // Since we use system Chrome (skipDownload: true), this may not exist
+  if (existsSync(puppeteerCacheDir)) {
+    try {
+      await utils?.cache.save(puppeteerCacheDir);
+      console.log('Lighthouse cache persisted');
+    } catch (error) {
+      // Non-critical error - cache persistence failed but build can continue
+      console.log('Note: Lighthouse cache persistence skipped');
+    }
+  } else {
+    console.log('Note: Lighthouse cache not found (using system Chrome)');
+  }
 };
 
 export default function lighthousePlugin(inputs) {
