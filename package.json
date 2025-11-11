@@ -53,8 +53,8 @@
     "husky": "^8.0.1",
     "jest": "^29.0.0",
     "netlify-plugin-cypress": "^2.2.1",
-    "prettier": "^2.0.0",
-    "strip-ansi": "^7.0.1"
+    "prettier": "3.6.2",
+    "strip-ansi": "^7.1.2"
   },
   "husky": {
     "hooks": {
