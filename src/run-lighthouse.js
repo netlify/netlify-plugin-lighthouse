@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
-import chromeLauncher from 'chrome-launcher';
+import * as chromeLauncher from 'chrome-launcher';
 
 export const getBrowserPath = async () => {
   const browser = await puppeteer.launch({
