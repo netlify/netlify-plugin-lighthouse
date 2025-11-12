@@ -5,6 +5,16 @@
 
 * feat: reduce summary sent to only id and score ([#448](https://github.com/netlify/netlify-plugin-lighthouse/issues/448)) ([969cc58](https://github.com/netlify/netlify-plugin-lighthouse/commit/969cc589c33f53925ea26d47ae31a7d3152c58c0))
 
+## [6.0.4](https://github.com/netlify/netlify-plugin-lighthouse/compare/v6.0.3...v6.0.4) (2025-11-12)
+
+
+### Bug Fixes
+
+* add updated resolutions to resolve high severity dependencies ([#638](https://github.com/netlify/netlify-plugin-lighthouse/issues/638)) ([37c5ee5](https://github.com/netlify/netlify-plugin-lighthouse/commit/37c5ee5332ff27830b92d1a1dd6ea70263d98f02))
+* update critical dependencies ([#632](https://github.com/netlify/netlify-plugin-lighthouse/issues/632)) ([f133623](https://github.com/netlify/netlify-plugin-lighthouse/commit/f1336233219f46e9dbbe5b01fac52d111b6b5b8c))
+* update html-minifier to be html-minifier-terser to solve vulnerability ([#634](https://github.com/netlify/netlify-plugin-lighthouse/issues/634)) ([43f7d15](https://github.com/netlify/netlify-plugin-lighthouse/commit/43f7d159a16a4ba577f1d7a418c5d40aeb804057))
+* update multiple dependencies ([#637](https://github.com/netlify/netlify-plugin-lighthouse/issues/637)) ([10559bf](https://github.com/netlify/netlify-plugin-lighthouse/commit/10559bf2ec7195d130fa635f2663cce33e81370b))
+
 ## [6.0.3](https://github.com/netlify/netlify-plugin-lighthouse/compare/v6.0.2...v6.0.3) (2025-08-12)
 
 
