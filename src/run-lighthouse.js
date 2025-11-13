@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import lighthouse from 'lighthouse';
 import log from 'lighthouse-logger';
-import chromeLauncher from 'chrome-launcher';
+import { launch } from 'chrome-launcher';
 
 export const getBrowserPath = async () => {
   const browser = await puppeteer.launch({
@@ -18,7 +18,7 @@ export const runLighthouse = async (browserPath, url, settings) => {
   try {
     const logLevel = 'error';
     log.setLevel(logLevel);
-    chrome = await chromeLauncher.launch({
+    chrome = await launch({
       chromePath: browserPath,
       chromeFlags: [
         '--headless',
