@@ -44,8 +44,8 @@
     "url": "https://github.com/netlify/netlify-plugin-lighthouse/issues"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.0.0",
-    "@commitlint/config-conventional": "^17.0.0",
+    "@commitlint/cli": "^20.0.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "cypress": "^13.17.0",
     "eslint": "^8.57.1",
     "eslint-plugin-cypress": "^2.15.2",
