@@ -64,7 +64,7 @@
   "resolutions": {
     "koa": "^2.15.4",
     "ws": "^8.17.1",
-    "cookie": "^0.7.0",
+    "cookie": "^1.0.0",
     "tar-fs": "^2.1.4",
     "cross-spawn": "^7.0.5",
     "braces": "^3.0.3",
